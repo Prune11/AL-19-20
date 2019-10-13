@@ -1,7 +1,7 @@
 # Week 42:
 - Start of POC
-- 
-- Flag 
+- Definition of first sprint (end 18/10)
+- Green Flag 
 
 # Week 41:
 Nothing to report
