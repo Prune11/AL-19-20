@@ -7,6 +7,8 @@
     <name>Credirama</name>
     <modules>
         <module>manageEntrepriseAccounts</module>
+        <module>MarchantCLI</module>
+        <module>BankCLI</module>
     </modules>
 
     <groupId>fr.unice.polytech.credirama</groupId>
