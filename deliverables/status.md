@@ -1,3 +1,8 @@
+# Week 43
+- Start coding the POC (web services, component and CLI)
+- Defined the communication interface
+- Green Flag
+
 # Week 42:
 - Start of POC
 - Definition of first sprint (end 18/10)

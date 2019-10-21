@@ -1,10 +1,11 @@
 package fr.unice.polytech.credirama;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-@org.springframework.web.bind.annotation.RestController
-public class RestController {
+
+@RestController
+public class TestController {
 
     @GetMapping("/hello")
     public String hello() {
