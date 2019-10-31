@@ -1,7 +1,10 @@
 # Week 43
 - Start coding the POC (web services, component and CLI)
 - Defined the communication interface
-- Green Flag
+- Postponed end of second sprint (30/10) because of trouble with persistence 
+- Definition of third sprint
+- Some delay because lot of work in other classes, but nothing major
+- Orange Flag
 
 # Week 42:
 - Start of POC
@@ -17,4 +20,5 @@ Green flag
 Nothing to report
 Everything is fine
 Green flag
+
 
