@@ -4,7 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @ToString
 @EqualsAndHashCode
@@ -12,12 +14,54 @@ import java.util.List;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Account> accountList;
 
-    private Contract contract;
+    public Client(){
+
+    }
+
+    public Client(String name){
+        this.name = name;
+        this.accountList = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Account> getAccountList() {
+        return accountList;
+    }
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
+    }
+
+    public void addAccount(Account account){
+        this.accountList.add(account);
+    }
+
+    public Client resultToSend(){
+        for (Account account : accountList){
+            account.setOwner(null);
+        }
+        return this;
+    }
 }

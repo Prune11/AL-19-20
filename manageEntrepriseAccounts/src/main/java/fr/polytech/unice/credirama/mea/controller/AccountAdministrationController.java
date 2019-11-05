@@ -33,7 +33,7 @@ public class AccountAdministrationController {
     }
 
     @PostMapping("/create")
-    public Account createAccount(@RequestBody String owner, @RequestBody Contract contract){
+    public Account createAccount(@RequestBody Integer owner, @RequestBody Contract contract){
         return this.manageEnterpriseAccount.createAccount(owner, contract);
     }
 
@@ -53,8 +53,8 @@ public class AccountAdministrationController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteAll(){
-        this.manageEnterpriseAccount.deleteAll();
+    public void deleteAllAccounts(){
+        this.manageEnterpriseAccount.deleteAllAccounts();
     }
 
 

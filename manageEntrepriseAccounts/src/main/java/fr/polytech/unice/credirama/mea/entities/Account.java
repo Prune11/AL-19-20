@@ -15,7 +15,9 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String owner;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client owner;
 
     @Enumerated(EnumType.STRING)
     private Contract contract;
@@ -29,7 +31,7 @@ public class Account {
 
     }
 
-    public Account(String owner, Contract contract, double balance) {
+    public Account(Client owner, Contract contract, double balance) {
         this.owner = owner;
         this.contract = contract;
         this.balance = balance;
@@ -44,11 +46,11 @@ public class Account {
         this.id = id;
     }
 
-    public String getOwner() {
+    public Client getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(Client owner) {
         this.owner = owner;
     }
 
@@ -74,6 +76,16 @@ public class Account {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public Account updateForSave(){
+        this.owner.addAccount(this);
+        return this;
+    }
+
+    public Account resultToSend(){
+        this.owner.setAccountList(new ArrayList<>());
+        return this;
     }
 
     public List<Transaction> addTransaction(Transaction transaction){

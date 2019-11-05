@@ -1,6 +1,7 @@
 package fr.polytech.unice.credirama.mea.component;
 
 import fr.polytech.unice.credirama.mea.entities.Account;
+import fr.polytech.unice.credirama.mea.entities.Client;
 import fr.polytech.unice.credirama.mea.entities.Contract;
 import fr.polytech.unice.credirama.mea.entities.Transaction;
 
@@ -22,7 +23,7 @@ public interface ManageEnterpriseAccount {
 
     Account getAccountById(Integer id);
 
-    Account createAccount(String owner, Contract contract);
+    Account createAccount(Integer id, Contract contract);
 
     Account updateContract(Integer id, Contract contract);
 
@@ -30,6 +31,16 @@ public interface ManageEnterpriseAccount {
 
     String deleteAccount(Integer id);
 
-    void deleteAll();
+    void deleteAllAccounts();
+
+    List<Client> getAllClients();
+
+    Client getClientById(Integer id);
+
+    Client createClient(String owner);
+
+    String deleteClient(Integer id);
+
+    String deleteAllClients();
 
 }
