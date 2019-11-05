@@ -1,4 +1,4 @@
-package fr.unice.polytech.credirama.marchant.cli.entity;
+package fr.unice.polytech.credirama.bank.cli.entities;
 
 import java.util.ArrayList;
 import java.util.List;
