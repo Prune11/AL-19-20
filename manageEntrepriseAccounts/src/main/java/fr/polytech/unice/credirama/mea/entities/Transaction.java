@@ -13,8 +13,10 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private Account from;
-    private Account to;
+    private int accountFrom;
+
+    private int accountTo;
+
     private double amount;
     /**
      * TODO: Add Date?
@@ -25,21 +27,41 @@ public class Transaction {
 
     }
 
-    public Transaction(Account from, Account to, double amount) {
-        this.from = from;
-        this.to = to;
+    public Transaction(int accountFrom, int accountTo, double amount){
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
         this.amount = amount;
     }
 
-    public Account getFrom() {
-        return this.from;
+    public long getId() {
+        return id;
     }
 
-    public Account getTo() {
-        return this.to;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getAccountFrom() {
+        return accountFrom;
+    }
+
+    public void setAccountFrom(int accountFrom) {
+        this.accountFrom = accountFrom;
+    }
+
+    public int getAccountTo() {
+        return accountTo;
+    }
+
+    public void setAccountTo(int accountTo) {
+        this.accountTo = accountTo;
     }
 
     public double getAmount() {
-        return this.amount;
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 }

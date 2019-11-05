@@ -37,18 +37,19 @@ public class AccountAccessController {
         //account = user
         Account account = accountRepo.findById(id).get();
         //Recover all transactions
-        Iterator<Transaction> transactionIterator = transactionRepo.findAll().iterator();
-        List<Transaction> transactions = new ArrayList<>();
-        //Looking for transactions where from or to is user
-        while(transactionIterator.hasNext()){
-            if (transactionIterator.next().getFrom() == account ||
-                    transactionIterator.next().getTo() == account) {
-                //Add to the return List, only if user is from or to
-                transactions.add(transactionIterator.next());
-            }
-        }
-        return transactions;
-
-
+        return account.getTransactions();
     }
+
+    @GetMapping("/operations/from/{idFrom}/to/{idTo}/amount/{amount}")
+    public void test(@PathVariable(name = "idFrom") Integer idFrom, @PathVariable(name = "idTo") Integer idTo, @PathVariable(name = "amount") Double amount) {
+        Account accountFrom = accountRepo.findById(idFrom).get();
+        Account accountTo = accountRepo.findById(idTo).get();
+        Transaction transaction = new Transaction(accountFrom.getId(), accountTo.getId(), amount);
+        Transaction transactionWithID = transactionRepo.save(transaction);
+        accountFrom.addTransaction(transactionWithID);
+        accountRepo.save(accountFrom);
+        accountTo.addTransaction(transactionWithID);
+        accountRepo.save(accountTo);
+    }
+
 }
