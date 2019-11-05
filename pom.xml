@@ -23,6 +23,7 @@
     </parent>
 
     <properties>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
         <java.version>1.8</java.version>
     </properties>
 
@@ -97,9 +98,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.kafka</groupId>
-            <artifactId>
-                spring-kafka
-            </artifactId>
+            <artifactId>spring-kafka</artifactId>
         </dependency>
     </dependencies>
 

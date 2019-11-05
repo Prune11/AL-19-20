@@ -1,7 +1,8 @@
-package fr.unice.polytech.credirama.bank.cli;
+package fr.unice.polytech.credirama.marchant.cli.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeExceptionMapper;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -12,6 +13,7 @@ import org.springframework.shell.InputProvider;
 import org.springframework.shell.Shell;
 import org.springframework.shell.jline.InteractiveShellApplicationRunner;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,12 @@ public class ExampleApplicationRunnerConfiguration {
     public CommandLineRunner exampleCommandLineRunner(ConfigurableEnvironment environment) {
         return new ExampleCommandLineRunner(shell, environment);
     }
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
+
 
     @Bean
     public ExitCodeExceptionMapper exitCodeExceptionMapper() {
