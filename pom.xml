@@ -7,7 +7,7 @@
     <name>Credirama</name>
     <modules>
         <module>manageEntrepriseAccounts</module>
-        <module>MarchantCLI</module>
+        <module>MerchantCLI</module>
         <module>BankCLI</module>
     </modules>
 
