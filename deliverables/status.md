@@ -1,3 +1,10 @@
+# Week 44
+- Problems with persistence solved
+- Resolution of implementation and conception problems
+- Pretty dump
+- Some delay due to other courses
+- Orange flag
+ 
 # Week 43
 - Start coding the POC (web services, component and CLI)
 - Defined the communication interface
