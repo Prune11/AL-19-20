@@ -81,6 +81,9 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         Client client = clientRepo.findById(clientId).get();
         Account account = new Account(client, contract, 0.0);
         accountRepo.save(account);
+        account.updateForSave();
+        accountRepo.save(account);
+        clientRepo.save(client);
         return account.resultToSend();
     }
 
