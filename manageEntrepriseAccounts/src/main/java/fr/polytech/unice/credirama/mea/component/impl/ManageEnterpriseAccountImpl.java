@@ -42,27 +42,35 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
     }
 
     public void addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType) {
-        Account accountFrom = accountRepo.findById(idFrom).get();
-        Account accountTo = accountRepo.findById(idTo).get();
-        double amountFee = amount * accountFrom.getContract().getFee();
-        Transaction transaction = new Transaction(accountFrom.getId(), accountTo.getId(), amount, amountFee, transactionType);
-        Transaction transactionWithID = transactionRepo.save(transaction);
-        accountFrom.addTransaction(transactionWithID);
-        accountRepo.save(accountFrom);
-        accountTo.addTransaction(transactionWithID);
-        accountRepo.save(accountTo);
+        if (idFrom == 0) {
+            Account accountTo = accountRepo.findById(idTo).get();
+            Transaction transaction = new Transaction(0, accountTo.getId(), amount, 0, transactionType);
+            Transaction transactionWithID = transactionRepo.save(transaction);
+            accountTo.addTransaction(transactionWithID);
+            accountRepo.save(accountTo);
+        } else {
+            Account accountFrom = accountRepo.findById(idFrom).get();
+            Account accountTo = accountRepo.findById(idTo).get();
+            double amountFee = amount * accountFrom.getContract().getFee();
+            Transaction transaction = new Transaction(accountFrom.getId(), accountTo.getId(), amount, amountFee, transactionType);
+            Transaction transactionWithID = transactionRepo.save(transaction);
+            accountFrom.addTransaction(transactionWithID);
+            accountRepo.save(accountFrom);
+            accountTo.addTransaction(transactionWithID);
+            accountRepo.save(accountTo);
+        }
     }
 
     public List<Account> getAllAccounts() {
         Iterator<Account> accountIterator = accountRepo.findAll().iterator();
         List<Account> accounts = new ArrayList<>();
         while (accountIterator.hasNext()) {
-            accounts.add(accountIterator.next());
+            accounts.add(accountIterator.next().resultToSend());
         }
         return accounts;
     }
 
-    public Account getTest(){
+    public Account getTest() {
         Client client = new Client("Michel");
         Client clientWithId = clientRepo.save(client);
         Account account = new Account(clientWithId, Contract.DIAMOND, 2.2);
@@ -74,12 +82,12 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
     }
 
     public Account getAccountById(Integer id) {
-        return accountRepo.findById(id).get();
+        return accountRepo.findById(id).get().resultToSend();
     }
 
-    public Account createAccount(Integer clientId, Contract contract){
+    public Account createAccount(Integer clientId, Contract contract) {
         Client client = clientRepo.findById(clientId).get();
-        Account account = new Account(client, contract, 0.0);
+        Account account = new Account(client, contract, 10.0);
         accountRepo.save(account);
         account.updateForSave();
         accountRepo.save(account);
@@ -94,7 +102,7 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return account.resultToSend();
     }
 
-    public Account updateClient(Integer id, String newOwner){
+    public Account updateClient(Integer id, String newOwner) {
         Client client = clientRepo.findById(id).get();
         Account account = accountRepo.findById(id).get();
         account.setOwner(client);
@@ -107,7 +115,7 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return "Account " + id + " has been deleted.";
     }
 
-    public void deleteAllAccounts(){
+    public void deleteAllAccounts() {
         accountRepo.deleteAll();
     }
 
@@ -123,33 +131,33 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return map;
     }
 
-    public List<Client> getAllClients(){
+    public List<Client> getAllClients() {
         Iterator<Client> clientIterator = clientRepo.findAll().iterator();
         List<Client> clients = new ArrayList<>();
-        while(clientIterator.hasNext()){
+        while (clientIterator.hasNext()) {
             clients.add(clientIterator.next().resultToSend());
         }
         return clients;
     }
 
-    public Client getClientById(Integer id){
+    public Client getClientById(Integer id) {
         return clientRepo.findById(id).get().resultToSend();
     }
 
 
-    public Client createClient(String owner){
+    public Client createClient(String owner) {
         Client client = new Client(owner);
         this.clientRepo.save(client);
         return client.resultToSend();
     }
 
-    public String deleteClient(Integer id){
+    public String deleteClient(Integer id) {
         clientRepo.deleteById(id);
         return "Client " + id + " has been deleted.";
     }
 
 
-    public String deleteAllClients(){
+    public String deleteAllClients() {
         this.clientRepo.deleteAll();
         return "All clients have been deleted.";
     }

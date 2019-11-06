@@ -1,9 +1,9 @@
 package fr.unice.polytech.credirama.bank.cli.service;
 
-import fr.unice.polytech.credirama.bank.cli.entities.Account;
-import fr.unice.polytech.credirama.bank.cli.entities.Client;
-import fr.unice.polytech.credirama.bank.cli.entities.Contract;
+import fr.unice.polytech.credirama.bank.cli.entities.*;
 import fr.unice.polytech.credirama.bank.cli.entities.dto.CreateAccountRequest;
+import fr.unice.polytech.credirama.bank.cli.entities.dto.TotalFeeResponse;
+import fr.unice.polytech.credirama.bank.cli.entities.dto.TransactionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -23,11 +23,16 @@ public class CrediramaService {
 
     public Account createAccount(int clientId, Contract contract) {
         CreateAccountRequest request = new CreateAccountRequest(clientId, contract);
-        return this.restTemplate.postForObject(CREDIRAMA_URL + "/accounts/create/", request, Account.class);
+        return this.restTemplate.postForObject(CREDIRAMA_URL + "/accounts/create", request, Account.class);
     }
 
     public Client createClient(String clientName) {
-        return this.restTemplate.postForObject(CREDIRAMA_URL + "/clients/", clientName, Client.class);
+        return this.restTemplate.postForObject(CREDIRAMA_URL + "/clients", clientName, Client.class);
+    }
+
+    public Transaction makeTransaction(int originAccountKey, int destinationAccountKey, double amount, TransactionType transactionType) {
+        TransactionRequest request = new TransactionRequest(amount, transactionType, originAccountKey, destinationAccountKey);
+        return this.restTemplate.postForObject(CREDIRAMA_URL + "/access/operations", request, Transaction.class);
     }
 
     /************ GET *************/
@@ -41,7 +46,7 @@ public class CrediramaService {
     }
 
     public List getAllClient() {
-        return this.restTemplate.getForObject(CREDIRAMA_URL + "/clients/", List.class);
+        return this.restTemplate.getForObject(CREDIRAMA_URL + "/clients", List.class);
     }
 
     public Client getClient(int clientId) {
@@ -60,9 +65,8 @@ public class CrediramaService {
         return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/contract/" + accountKey, Contract.class);
     }
 
-    public boolean makeTransaction(int originAccountKey, int destinationAccountKey, double amount, String transactionType) {
-        this.restTemplate.getForObject(CREDIRAMA_URL + "/access/operations/from/" + originAccountKey + "/to/" + destinationAccountKey + "/amount/" + amount + "/type/" + transactionType, Boolean.class);
-        return true;
+    public TotalFeeResponse getTotalFees(int accountId) {
+        return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/fees/" + accountId, TotalFeeResponse.class);
     }
 
     /************ DELETE *************/

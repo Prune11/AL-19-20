@@ -4,6 +4,8 @@ import fr.polytech.unice.credirama.mea.component.ManageEnterpriseAccount;
 import fr.polytech.unice.credirama.mea.entities.Contract;
 import fr.polytech.unice.credirama.mea.entities.Transaction;
 import fr.polytech.unice.credirama.mea.entities.TransactionType;
+import fr.polytech.unice.credirama.mea.entities.dto.TotalFeeResponse;
+import fr.polytech.unice.credirama.mea.entities.dto.TransactionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -33,14 +35,14 @@ public class AccountAccessController {
         return this.manageEnterpriseAccount.getOperationsById(id);
     }
 
-    @GetMapping("/operations/from/{idFrom}/to/{idTo}/amount/{amount}/type/{type}")
-    public void test(@PathVariable(name = "idFrom") Integer idFrom, @PathVariable(name = "idTo") Integer idTo, @PathVariable(name = "amount") Double amount, @PathVariable(name = "type") String type) {
-        this.manageEnterpriseAccount.addTransaction(idFrom, idTo, amount, TransactionType.valueOf(type));
+    @PostMapping("/operations")
+    public void makeTransaction(@RequestBody TransactionRequest request) {
+        this.manageEnterpriseAccount.addTransaction(request.getFromId(), request.getToId(), request.getAmount(), request.getType());
     }
 
     @GetMapping("/fees/{id}")
-    public Map<Transaction, Double> getTotalOfFees(@PathVariable(name = "id") Integer id) {
-        return this.manageEnterpriseAccount.getTransactionsAndFees(id);
+    public TotalFeeResponse getTotalOfFees(@PathVariable(name = "id") Integer accountId) {
+        return new TotalFeeResponse(this.manageEnterpriseAccount.getTransactionsAndFees(accountId));
     }
 
 }

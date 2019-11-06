@@ -1,8 +1,8 @@
-package fr.unice.polytech.credirama.bank.cli.command;
+package fr.unice.polytech.credirama.merchant.cli.command;
 
-import fr.unice.polytech.credirama.bank.cli.entities.Transaction;
-import fr.unice.polytech.credirama.bank.cli.entities.TransactionType;
-import fr.unice.polytech.credirama.bank.cli.service.CrediramaService;
+import fr.unice.polytech.credirama.merchant.cli.entity.Transaction;
+import fr.unice.polytech.credirama.merchant.cli.entity.TransactionType;
+import fr.unice.polytech.credirama.merchant.cli.service.CrediramaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;

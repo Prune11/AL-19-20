@@ -17,4 +17,8 @@ public class Transaction {
 
     private double amount;
 
+    private double feeAmount;
+
+    private TransactionType transactionType;
+
 }

@@ -2,6 +2,9 @@ package fr.unice.polytech.credirama.merchant.cli.service;
 
 import fr.unice.polytech.credirama.merchant.cli.entity.Contract;
 import fr.unice.polytech.credirama.merchant.cli.entity.Transaction;
+import fr.unice.polytech.credirama.merchant.cli.entity.TransactionType;
+import fr.unice.polytech.credirama.merchant.cli.entity.dto.TotalFeeResponse;
+import fr.unice.polytech.credirama.merchant.cli.entity.dto.TransactionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,6 +18,13 @@ public class CrediramaService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    /************ CREATE *********/
+
+    public Transaction makeTransaction(int originAccountKey, int destinationAccountKey, double amount, TransactionType transactionType) {
+        TransactionRequest request = new TransactionRequest(amount, transactionType, originAccountKey, destinationAccountKey);
+        return this.restTemplate.postForObject(CREDIRAMA_URL + "/access/operations", request, Transaction.class);
+    }
 
     /************ GET *************/
 
@@ -32,6 +42,10 @@ public class CrediramaService {
 
     public Transaction makeTransaction(int originAccountKey, int destinationAccountKey, double amount) {
         return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/operations/from/" + originAccountKey + "/to/" + destinationAccountKey + "/amount/" + amount, Transaction.class);
+    }
+
+    public TotalFeeResponse getTotalFees(int accountId) {
+        return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/fees/" + accountId, TotalFeeResponse.class);
     }
 
     /************ PRETTY DUMP *************/
