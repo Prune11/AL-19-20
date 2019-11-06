@@ -2,7 +2,7 @@ package fr.unice.polytech.credirama.bank.cli.command;
 
 import fr.unice.polytech.credirama.bank.cli.entities.Client;
 import fr.unice.polytech.credirama.bank.cli.entities.Contract;
-import fr.unice.polytech.credirama.bank.cli.service.AccountAdministrationService;
+import fr.unice.polytech.credirama.bank.cli.service.CrediramaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -12,34 +12,71 @@ import org.springframework.shell.standard.ShellOption;
 public class AdministrationCommands {
 
     @Autowired
-    private AccountAdministrationService accountAdministrationService;
+    private CrediramaService crediramaService;
 
-    @ShellMethod("Create a account for a client")
-    public String createAccount(@ShellOption({"-cl"}) int clientId, @ShellOption({"-c"}) String contract) {
+    @ShellMethod(value = "Create a account for a client", key = "create-account")
+    public String createAccount(@ShellOption(value = {"-cl", "--clientId"}, help = "The client ID") int clientId,
+                                @ShellOption(value = {"-c", "--contract"}, help = "The original contract for this account") String contract) {
         Contract c = Contract.valueOf(contract);
-        accountAdministrationService.createAccount(clientId, c);
+        crediramaService.createAccount(clientId, c);
         return "Account successfully created for client " + clientId + " with contract " + contract;
     }
 
-    @ShellMethod("Create a client")
-    public String createClient(@ShellOption({"-n", "-name"}) String clientName) {
-        Client client = accountAdministrationService.createClient(clientName);
+    @ShellMethod(value = "Create a client", key = "create-client")
+    public String createClient(@ShellOption(value = {"-n", "--name"}, help = "The name of the new client") String clientName) {
+        Client client = crediramaService.createClient(clientName);
         return client.toString();
     }
 
-    @ShellMethod("Get an overview of an account")
-    public String getAccount(@ShellOption({"-cl"}) int clientId) {
-        return accountAdministrationService.getAccount(clientId).toString();
+    @ShellMethod(value = "Get an overview of an account", key = "get-account")
+    public String getAccount(@ShellOption(value = {"-cl", "--clientId"}, help = "The client ID") int clientId) {
+        return crediramaService.getAccount(clientId).toString();
     }
 
-    @ShellMethod("Get all account")
+    @ShellMethod(value = "Get all account", key = "get-accounts")
     public String getAccounts() {
-        return accountAdministrationService.getAccounts().toString();
+        return crediramaService.getAccounts().toString();
     }
 
-    @ShellMethod("Update contract type")
-    public String updateContract(@ShellOption({"-a"}) int accountId, @ShellOption({"-c"}) String contract) {
+    @ShellMethod(value = "Update contract type", key = "update-contract")
+    public String updateContract(@ShellOption(value = {"-a", "--accountId"}, help = "The Id of the account you wish to change contract") int accountId,
+                                 @ShellOption(value = {"-c"}, help = "The new contract") String contract) {
         Contract c = Contract.valueOf(contract);
-        return accountAdministrationService.updateContract(accountId, c).toString();
+        return crediramaService.updateContract(accountId, c).toString();
+    }
+
+    @ShellMethod("Get client by Id")
+    public String getClient(@ShellOption({"-cl"}) int clientId) {
+        return crediramaService.getClient(clientId).toString();
+    }
+
+    @ShellMethod("Get all clients")
+    public String getClients() {
+        return crediramaService.getAllClient().toString();
+    }
+
+    @ShellMethod("Update the owner of the account")
+    public String updateOwner(@ShellOption({"-a"}) int accountId, @ShellOption({"-c"}) Client client) {
+        return crediramaService.updateOwner(accountId, client).toString();
+    }
+
+    public String deleteAccount(@ShellOption({"-a"}) int accountId) {
+        crediramaService.deleteAccount(accountId);
+        return "Done";
+    }
+
+    public String deleteAccounts() {
+        crediramaService.deletetAllAccount();
+        return "Done";
+    }
+
+    public String deleteClient(@ShellOption({"-cl"}) int clientId) {
+        crediramaService.deleteClient(clientId);
+        return "Done";
+    }
+
+    public String deleteClients() {
+        crediramaService.deleteAllClient();
+        return "Done";
     }
 }
