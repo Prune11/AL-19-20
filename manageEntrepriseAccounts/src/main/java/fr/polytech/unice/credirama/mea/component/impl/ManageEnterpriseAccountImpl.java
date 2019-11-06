@@ -5,15 +5,14 @@ import fr.polytech.unice.credirama.mea.entities.Account;
 import fr.polytech.unice.credirama.mea.entities.Client;
 import fr.polytech.unice.credirama.mea.entities.Contract;
 import fr.polytech.unice.credirama.mea.entities.Transaction;
+import fr.polytech.unice.credirama.mea.entities.TransactionType;
 import fr.polytech.unice.credirama.mea.repo.AccountRepo;
 import fr.polytech.unice.credirama.mea.repo.ClientRepo;
 import fr.polytech.unice.credirama.mea.repo.TransactionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
@@ -42,10 +41,11 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return account.getTransactions();
     }
 
-    public void test(Integer idFrom, Integer idTo, Double amount) {
+    public void addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType) {
         Account accountFrom = accountRepo.findById(idFrom).get();
         Account accountTo = accountRepo.findById(idTo).get();
-        Transaction transaction = new Transaction(accountFrom.getId(), accountTo.getId(), amount);
+        double amountFee = amount * accountFrom.getContract().getFee();
+        Transaction transaction = new Transaction(accountFrom.getId(), accountTo.getId(), amount, amountFee, transactionType);
         Transaction transactionWithID = transactionRepo.save(transaction);
         accountFrom.addTransaction(transactionWithID);
         accountRepo.save(accountFrom);
@@ -53,11 +53,11 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         accountRepo.save(accountTo);
     }
 
-    public List<Account> getAllAccounts(){
+    public List<Account> getAllAccounts() {
         Iterator<Account> accountIterator = accountRepo.findAll().iterator();
         List<Account> accounts = new ArrayList<>();
-        while(accountIterator.hasNext()){
-            accounts.add(accountIterator.next().resultToSend());
+        while (accountIterator.hasNext()) {
+            accounts.add(accountIterator.next());
         }
         return accounts;
     }
@@ -73,8 +73,8 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return account.resultToSend();
     }
 
-    public Account getAccountById(Integer id){
-        return accountRepo.findById(id).get().resultToSend();
+    public Account getAccountById(Integer id) {
+        return accountRepo.findById(id).get();
     }
 
     public Account createAccount(Integer clientId, Contract contract){
@@ -87,7 +87,7 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return account.resultToSend();
     }
 
-    public Account updateContract(Integer id, Contract contract){
+    public Account updateContract(Integer id, Contract contract) {
         Account account = accountRepo.findById(id).get();
         account.setContract(contract);
         accountRepo.save(account);
@@ -102,13 +102,25 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return account.resultToSend();
     }
 
-    public String deleteAccount(Integer id){
+    public String deleteAccount(Integer id) {
         accountRepo.deleteById(id);
         return "Account " + id + " has been deleted.";
     }
 
     public void deleteAllAccounts(){
         accountRepo.deleteAll();
+    }
+
+    @Override
+    public Map<Transaction, Double> getTransactionsAndFees(Integer id) {
+        Account account = accountRepo.findById(id).get();
+        Map<Transaction, Double> map = new HashMap<>();
+        for (Transaction t : account.getTransactions()) {
+            if (t.getType() == TransactionType.CREDIT_CARD || t.getType() == TransactionType.DEBIT_CARD) {
+                map.put(t, t.getFees());
+            }
+        }
+        return map;
     }
 
     public List<Client> getAllClients(){

@@ -18,6 +18,11 @@ public class Transaction {
     private int accountTo;
 
     private double amount;
+
+    private TransactionType transactionType;
+
+    private double feeAmount;
+
     /**
      * TODO: Add Date?
      */
@@ -27,10 +32,12 @@ public class Transaction {
 
     }
 
-    public Transaction(int accountFrom, int accountTo, double amount){
+    public Transaction(int accountFrom, int accountTo, double amount, double feeAmount, TransactionType transactionType) {
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
         this.amount = amount;
+        this.feeAmount = feeAmount;
+        this.transactionType = transactionType;
     }
 
     public long getId() {
@@ -63,5 +70,13 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public TransactionType getType() {
+        return this.transactionType;
+    }
+
+    public Double getFees() {
+        return this.feeAmount;
     }
 }

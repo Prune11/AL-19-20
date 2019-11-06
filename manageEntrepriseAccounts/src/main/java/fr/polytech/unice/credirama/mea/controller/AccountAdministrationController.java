@@ -44,19 +44,20 @@ public class AccountAdministrationController {
     }
 
     @PostMapping("/update/{id}/owner")
-    public Account updateClient(@PathVariable(name = "id") Integer id, @RequestBody String newOwner) {
+    public Account updateClient(@PathVariable(name = "id") Integer id, @RequestBody String newOwner){
         return this.manageEnterpriseAccount.updateClient(id, newOwner);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteAccount(@PathVariable(name = "id") Integer id) {
+    public String deleteAccount(@PathVariable(name = "id") Integer id){
         return this.manageEnterpriseAccount.deleteAccount(id);
     }
 
     @DeleteMapping("/delete")
-    public void deleteAllAccounts() {
+    public void deleteAllAccounts(){
         this.manageEnterpriseAccount.deleteAllAccounts();
     }
+
 
 
 }

@@ -32,8 +32,8 @@ public class AccessAccountCommands {
     }
 
     @ShellMethod("Make a transaction from an account ot another account with specifice amount of money")
-    public String makeTransaction(int originAccountKey, int destinationAccountKey, double amount) {
-        crediramaService.makeTransaction(originAccountKey, destinationAccountKey, amount);
+    public String makeTransaction(int originAccountKey, int destinationAccountKey, double amount, String type) {
+        crediramaService.makeTransaction(originAccountKey, destinationAccountKey, amount, type);
         return "A trasaction from account " + originAccountKey + " to account " + destinationAccountKey + " with " + amount + "dkk has been made";
     }
 

@@ -60,8 +60,8 @@ public class CrediramaService {
         return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/contract/" + accountKey, Contract.class);
     }
 
-    public boolean makeTransaction(int originAccountKey, int destinationAccountKey, double amount) {
-        this.restTemplate.getForObject(CREDIRAMA_URL + "/access/operations/from/" + originAccountKey + "/to/" + destinationAccountKey + "/amount/" + amount, Boolean.class);
+    public boolean makeTransaction(int originAccountKey, int destinationAccountKey, double amount, String transactionType) {
+        this.restTemplate.getForObject(CREDIRAMA_URL + "/access/operations/from/" + originAccountKey + "/to/" + destinationAccountKey + "/amount/" + amount + "/type/" + transactionType, Boolean.class);
         return true;
     }
 
