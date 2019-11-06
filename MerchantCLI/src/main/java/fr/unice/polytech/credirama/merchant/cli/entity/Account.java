@@ -7,7 +7,7 @@ public class Account {
 
     private int id;
 
-    private String owner;
+    private Client owner;
 
     private Contract contract;
 
@@ -15,11 +15,11 @@ public class Account {
 
     private double balance;
 
-    public Account() {
+    public Account(){
 
     }
 
-    public Account(String owner, Contract contract, double balance) {
+    public Account(Client owner, Contract contract, double balance) {
         this.owner = owner;
         this.contract = contract;
         this.balance = balance;
@@ -34,11 +34,11 @@ public class Account {
         this.id = id;
     }
 
-    public String getOwner() {
+    public Client getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(Client owner) {
         this.owner = owner;
     }
 

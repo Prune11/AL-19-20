@@ -14,6 +14,7 @@ import java.util.List;
 public class CrediramaService {
 
     private static final String CREDIRAMA_URL = "http://localhost:8081";
+//    private static final String CREDIRAMA_URL = "https://credirama.free.beeceptor.com";
 
     @Autowired
     private RestTemplate restTemplate;
