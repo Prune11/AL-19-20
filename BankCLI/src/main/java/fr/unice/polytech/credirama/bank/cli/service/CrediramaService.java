@@ -87,11 +87,11 @@ public class CrediramaService {
 
 
     public Account updateContract(int accountId, Contract contract) {
-        return this.restTemplate.postForObject(CREDIRAMA_URL + "/accounts/" + accountId + "/contract", contract, Account.class);
+        return this.restTemplate.postForObject(CREDIRAMA_URL + "/accounts/update/" + accountId + "/contract", contract, Account.class);
     }
 
     public Account updateOwner(int accountId, Client client) {
-        return this.restTemplate.postForObject(CREDIRAMA_URL + "/accounts/update/" + accountId + "owner", client, Account.class);
+        return this.restTemplate.postForObject(CREDIRAMA_URL + "/accounts/update/" + accountId + "/owner", client, Account.class);
     }
 
     /************ PRETTY DUMP *************/

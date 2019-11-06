@@ -1,8 +1,14 @@
 package fr.unice.polytech.credirama.merchant.cli.entity;
 
-import java.util.ArrayList;
+import lombok.*;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class Client {
 
     private int id;
@@ -11,35 +17,4 @@ public class Client {
 
     private List<Account> accountList;
 
-    public Client() {
-    }
-
-    public Client(String name) {
-        this.name = name;
-        this.accountList = new ArrayList<>();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Account> getAccountList() {
-        return accountList;
-    }
-
-    public void setAccountList(List<Account> accountList) {
-        this.accountList = accountList;
-    }
 }
