@@ -23,12 +23,12 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private Contract contract;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Transaction> transactions;
 
     private double balance;
 
-    public Account(){
+    public Account() {
 
     }
 
@@ -79,22 +79,23 @@ public class Account {
         this.transactions = transactions;
     }
 
-    public Account updateForSave(){
+    public Account updateForSave() {
         this.owner.addAccount(this);
         return this;
     }
 
-    public Account resultToSend(){
+    public Account resultToSend() {
         this.owner.setAccountList(new ArrayList<>());
         return this;
     }
 
-    public List<Transaction> addTransaction(Transaction transaction){
+    public List<Transaction> addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
-        if(transaction.getToId() == this.id){
+        if (transaction.getToId() == this.id) {
             this.balance += transaction.getAmount();
         } else {
             this.balance -= transaction.getAmount();
+            this.balance -= transaction.getFeeAmount();
         }
         return this.transactions;
     }
