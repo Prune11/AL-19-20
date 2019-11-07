@@ -27,7 +27,7 @@ public class MerchantApplicationRunnerConfiguration {
 
     @Bean
     public PromptProvider myPromptProvider() {
-        return () -> new AttributedString("Merchant-CLI:> ", AttributedStyle.DEFAULT.foreground(AttributedStyle.BLUE).bold());
+        return () -> new AttributedString("Merchant-CLI:> ", AttributedStyle.DEFAULT.foreground(AttributedStyle.CYAN).bold());
     }
 
 

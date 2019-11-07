@@ -1,5 +1,6 @@
 package fr.unice.polytech.credirama.merchant.cli.command;
 
+import fr.unice.polytech.credirama.merchant.cli.entity.Contract;
 import fr.unice.polytech.credirama.merchant.cli.entity.Transaction;
 import fr.unice.polytech.credirama.merchant.cli.entity.TransactionType;
 import fr.unice.polytech.credirama.merchant.cli.service.CrediramaService;
@@ -30,7 +31,8 @@ public class AccessAccountCommands {
 
     @ShellMethod("Show the contract for an account")
     public String showContract(@ShellOption(value = {"-a", "--accountId"}, help = "The account Id") int accountKey) {
-        return "The account " + accountKey + " has the following contract : " + crediramaService.getContract(accountKey);
+        Contract contract = crediramaService.getContract(accountKey);
+        return "The account " + accountKey + " has the following contract : " + contract.name() + ", " + contract.getFee() + "% of fees";
     }
 
     @ShellMethod(value = "Make a transaction from an account ot another account with specific amount of money", key = "transaction")
@@ -40,12 +42,12 @@ public class AccessAccountCommands {
                                   @ShellOption(value = {"-T", "--type"}, help = "The type for this transaction, possible values : CREDIT_CARD, DEBIT_CARD, TRANSFER") String type) {
         TransactionType transactionType = TransactionType.valueOf(type);
         Transaction transaction = crediramaService.makeTransaction(originAccountKey, destinationAccountKey, amount, transactionType);
-        return "A " + type + "  transaction from account " + originAccountKey + " to account " + destinationAccountKey + " with " + amount + "dkk has been made : " + transaction.toString();
+        return "A " + type + "  transaction from account " + originAccountKey + " to account " + destinationAccountKey + " with " + amount + " dkk " + "and fees " + transaction.getFeeAmount() + " has been made : " + transaction.toString();
     }
 
     @ShellMethod(value = "Get all the fee for all transaction", key = "fees")
-    public String getTotalFees(@ShellOption(value = {"-a", "--accountId"}, help = "The account Id") int accountId) {
-        return this.crediramaService.getTotalFees(accountId).toString();
+    public double getTotalFees(@ShellOption(value = {"-a", "--accountId"}, help = "The account Id") int accountId) {
+        return this.crediramaService.getTotalFees(accountId);
     }
 
 }

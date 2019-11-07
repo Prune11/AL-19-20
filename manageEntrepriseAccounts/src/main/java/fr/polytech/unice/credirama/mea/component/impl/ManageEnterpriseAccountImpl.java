@@ -149,7 +149,7 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
 
     public Client createClient(String owner) {
         Client client = new Client(owner);
-        this.clientRepo.save(client);
+        client = this.clientRepo.save(client);
         return client.resultToSend();
     }
 

@@ -1,8 +1,8 @@
-${AnsiColor.WHITE} _____ ______ ___________ ___________  ___  ___  ___  ___        ______  ___   _   _  _   __      _____  _     _____
+${AnsiColor.BRIGHT_GREEN} _____ ______ ___________ ___________  ___  ___  ___  ___        ______  ___   _   _  _   __      _____  _     _____
 ${AnsiColor.BRIGHT_GREEN}/  __ \| ___ \  ___|  _  \_   _| ___ \/ _ \ |  \/  | / _ \       | ___ \/ _ \ | \ | || | / /     /  __ \| |   |_   _|
 ${AnsiColor.BRIGHT_GREEN}| /  \/| |_/ / |__ | | | | | | | |_/ / /_\ \| .  . |/ /_\ \______| |_/ / /_\ \|  \| || |/ /______| /  \/| |     | |
 ${AnsiColor.BRIGHT_GREEN}| |    |    /|  __|| | | | | | |    /|  _  || |\/| ||  _  |______| ___ \  _  || . ` ||    \______| |    | |     | |
 ${AnsiColor.BRIGHT_GREEN}| \__/\| |\ \| |___| |/ / _| |_| |\ \| | | || |  | || | | |      | |_/ / | | || |\  || |\  \     | \__/\| |_____| |_
 ${AnsiColor.BRIGHT_GREEN} \____/\_| \_\____/|___/  \___/\_| \_\_| |_/\_|  |_/\_| |_/      \____/\_| |_/\_| \_/\_| \_/      \____/\_____/\___/
 
-${Ansi.AnsiColor.BRIGHT_GREEN} :: Spring Boot :: ${AnsiColor.BRIGHT_BLACK}${spring-boot.formatted-version}${Ansi.DEFAULT}
+${AnsiColor.BRIGHT_YELLOW} :: Spring Boot :: ${AnsiColor.BRIGHT_BLACK}${spring-boot.formatted-version}${Ansi.DEFAULT}

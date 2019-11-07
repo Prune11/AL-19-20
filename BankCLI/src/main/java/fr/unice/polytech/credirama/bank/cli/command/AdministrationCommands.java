@@ -19,14 +19,14 @@ public class AdministrationCommands {
     public String createAccount(@ShellOption(value = {"-cl", "--clientId"}, help = "The client Id") int clientId,
                                 @ShellOption(value = {"-c", "--contract"}, help = "The original contract for this account, possible values : WOOD, STONE, IRON, DIAMOND") String contract) {
         Contract c = Contract.valueOf(contract);
-        crediramaService.createAccount(clientId, c);
-        return "Account successfully created for client " + clientId + " with contract " + contract + ", " + c.getFee() + "% of fees";
+        Account account = crediramaService.createAccount(clientId, c);
+        return "Account successfully created with id " + account.getId() + " for client " + account.getOwner().getName() + " with contract " + account.getContract().name() + ", " + account.getContract().getFee() + "% of fees";
     }
 
     @ShellMethod(value = "Create a client", key = "create-client")
     public String createClient(@ShellOption(value = {"-n", "--name"}, help = "The name of the new client") String clientName) {
         Client client = crediramaService.createClient(clientName);
-        return "The client " + clientName + " has been successfully created";
+        return "The client " + client.getName() + " has been successfully created with id " + client.getId();
     }
 
     @ShellMethod(value = "Get an overview of an account", key = "get-account")
@@ -45,7 +45,7 @@ public class AdministrationCommands {
         Contract before = crediramaService.getContract(accountId);
         Contract c = Contract.valueOf(contract);
         Account a = crediramaService.updateContract(accountId, c);
-        return "The account " + accountId + " of " + a.getOwner().getName() + "has change contract from " + before.name() + " with " + before.getFee() + "% of fees, to " + c.name() + " with " + c.getFee() + "% of fees";
+        return "The account " + accountId + " of " + a.getOwner().getName() + " has change contract from " + before.name() + " with " + before.getFee() + "% of fees, to " + c.name() + " with " + c.getFee() + "% of fees";
     }
 
     @ShellMethod("Get client by Id")
@@ -71,7 +71,7 @@ public class AdministrationCommands {
 
     @ShellMethod("Delete all accounts")
     public String deleteAccounts() {
-        crediramaService.deletetAllAccount();
+        crediramaService.deleteAllAccount();
         return "Done";
     }
 

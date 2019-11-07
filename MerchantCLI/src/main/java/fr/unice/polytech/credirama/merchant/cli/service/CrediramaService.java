@@ -3,6 +3,7 @@ package fr.unice.polytech.credirama.merchant.cli.service;
 import fr.unice.polytech.credirama.merchant.cli.entity.Contract;
 import fr.unice.polytech.credirama.merchant.cli.entity.Transaction;
 import fr.unice.polytech.credirama.merchant.cli.entity.TransactionType;
+import fr.unice.polytech.credirama.merchant.cli.entity.dto.PrettyDumpResponse;
 import fr.unice.polytech.credirama.merchant.cli.entity.dto.TotalFeeResponse;
 import fr.unice.polytech.credirama.merchant.cli.entity.dto.TransactionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +41,13 @@ public class CrediramaService {
         return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/contract/" + accountKey, Contract.class);
     }
 
-    public Transaction makeTransaction(int originAccountKey, int destinationAccountKey, double amount) {
-        return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/operations/from/" + originAccountKey + "/to/" + destinationAccountKey + "/amount/" + amount, Transaction.class);
-    }
-
-    public TotalFeeResponse getTotalFees(int accountId) {
-        return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/fees/" + accountId, TotalFeeResponse.class);
+    public Double getTotalFees(int accountId) {
+        return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/fees/" + accountId, Double.class);
     }
 
     /************ PRETTY DUMP *************/
 
-    public String prettyDump() {
-        return this.restTemplate.getForObject(CREDIRAMA_URL + "/prettyDump", String.class);
+    public PrettyDumpResponse prettyDump() {
+        return this.restTemplate.getForObject(CREDIRAMA_URL + "/prettyDump", PrettyDumpResponse.class);
     }
 }
