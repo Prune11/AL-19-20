@@ -5,6 +5,7 @@ import fr.polytech.unice.credirama.mea.entities.Client;
 import fr.polytech.unice.credirama.mea.entities.Contract;
 import fr.polytech.unice.credirama.mea.entities.Transaction;
 import fr.polytech.unice.credirama.mea.entities.TransactionType;
+import fr.polytech.unice.credirama.mea.entities.dto.PrettyDumpResponse;
 
 import java.util.List;
 
@@ -46,5 +47,4 @@ public interface ManageEnterpriseAccount {
 
    double getTransactionsAndFees(Integer id);
 
-    String getPrettyDump();
 }

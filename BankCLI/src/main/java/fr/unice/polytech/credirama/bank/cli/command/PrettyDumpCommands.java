@@ -13,8 +13,13 @@ public class PrettyDumpCommands {
     private CrediramaService crediramaService;
 
     @ShellMethod(value = "Get a pretty dump of the whole system", key = "dump")
-    public String prettyDump(@ShellOption(value = {"-b"}, help = "Beautify Json") boolean beautify) {
-        return crediramaService.prettyDump();
+    public String prettyDump(@ShellOption(value = {"-p", "--pretty-print"}, help = "Pretty print Json") boolean beautify,
+                             @ShellOption(value = {"-s", "--save"}, help = "Save pretty dump in a json file") boolean save) {
+        String dump = crediramaService.prettyDump();
+        if (beautify) {
+
+        }
+        return dump;
     }
 
 }
