@@ -1,26 +1,22 @@
 package fr.polytech.unice.credirama.mea.controller;
 
-import fr.polytech.unice.credirama.mea.component.ManageEnterpriseAccount;
-import fr.polytech.unice.credirama.mea.entities.Contract;
-import fr.polytech.unice.credirama.mea.entities.Transaction;
-import fr.polytech.unice.credirama.mea.entities.dto.TotalFeeResponse;
-import fr.polytech.unice.credirama.mea.entities.dto.TransactionRequest;
+import fr.polytech.unice.credirama.mea.component.PrettyDump;
+import fr.polytech.unice.credirama.mea.entities.dto.PrettyDumpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/prettyDump", produces = "application/json")
 public class PrettyDumpController {
 
-    @Qualifier("manageEnterpriseAccount")
     @Autowired
-    private ManageEnterpriseAccount manageEnterpriseAccount;
+    private PrettyDump prettyDump;
 
-    @GetMapping("")
-    public String getPrettyDump() {
-        return this.manageEnterpriseAccount.getPrettyDump();
+    @GetMapping
+    public PrettyDumpResponse getPrettyDump() {
+        return this.prettyDump.getPrettyDump();
     }
+
 }

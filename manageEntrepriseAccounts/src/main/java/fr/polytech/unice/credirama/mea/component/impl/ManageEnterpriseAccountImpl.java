@@ -19,13 +19,13 @@ import java.util.*;
 public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
 
     @Autowired
-    AccountRepo accountRepo;
+    private AccountRepo accountRepo;
 
     @Autowired
-    TransactionRepo transactionRepo;
+    private TransactionRepo transactionRepo;
 
     @Autowired
-    ClientRepo clientRepo;
+    private ClientRepo clientRepo;
 
     public Contract getContractById(Integer id) {
         Account account = accountRepo.findById(id).get();
@@ -163,26 +163,4 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return "All clients have been deleted.";
     }
 
-    public List<Transaction> getAllTransactions() {
-        Iterator<Transaction> transactionIterator = transactionRepo.findAll().iterator();
-        List<Transaction> transactions = new ArrayList<>();
-        while (transactionIterator.hasNext()) {
-            transactions.add(transactionIterator.next());
-        }
-        return transactions;
-    }
-
-    public String getPrettyDump(){
-        List<Client> clients = getAllClients();
-        List<Account> accounts = new ArrayList<>();
-        for (Client client : clients) {
-            for(Account account : client.getAccountList()){
-                account.setOwner(client.cloneForPrettyDump());
-                accounts.add(account);
-            }
-        }
-        List<Transaction> transactions = getAllTransactions();
-        String path =  PrettyDumpWriter.writePrettyDump(clients, accounts, transactions);
-        return "You can find the current state of the system in this file: " + path;
-    }
 }
