@@ -47,4 +47,6 @@ public interface ManageEnterpriseAccount {
     String deleteAllClients();
 
     Map<Transaction, Double> getTransactionsAndFees(Integer id);
+
+    String getPrettyDump();
 }

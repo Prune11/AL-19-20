@@ -1,4 +1,4 @@
-package fr.polytech.unice.credirama.mea.component;
+package fr.polytech.unice.credirama.mea;
 
 import java.io.*;
 import java.util.*;
@@ -6,18 +6,20 @@ import fr.polytech.unice.credirama.mea.entities.*;
 
 import javax.validation.constraints.NotNull;
 
-public class PrettyDumpFormat {
-    private static void getInfoAccount(@NotNull Account a, @NotNull FileWriter file) {
+public class PrettyDumpWriter {
+
+    private static FileWriter getInfoAccount(@NotNull Account a, @NotNull FileWriter file) {
         try {
             file.write("\t{\n" +
                     "\t\tID: " + a.getId() + "\n" +
+                    "\t\tOwner: " + a.getOwner().getId() + "\n" +
                     "\t\tBalance: " + a.getBalance() + "\n" +
-                    "\t\tContract: " + a.getContract() + "\n" +
-                    "\t\tTransactions: [");
-            Iterator<Transaction> itTransactions = a.getTransactions().iterator();
-            while (itTransactions.hasNext()) {
-                file.write((int) itTransactions.next().getId());
-                if (itTransactions.hasNext()) {
+                    "\t\tContract: " + a.getContract().name() + "\n" +
+                    "\t\tTransactions: [ ");
+            List<Transaction> transactions = a.getTransactions();
+            for(int i = 0; i < transactions.size(); i++){
+                file.write("" + transactions.get(i).getId());
+                if(i < transactions.size() - 1){
                     file.write(", ");
                 }
             }
@@ -26,9 +28,10 @@ public class PrettyDumpFormat {
         catch (Exception e) {
             System.out.println("Error on writing");
         }
+        return file;
     }
 
-    private static void getInfoTransaction (@NotNull Transaction t, @NotNull FileWriter file) {
+    private static FileWriter getInfoTransaction (@NotNull Transaction t, @NotNull FileWriter file) {
         try {
             file.write("\t{\n" +
                     "\t\tID:" + (int) t.getId() + "\n" +
@@ -40,18 +43,25 @@ public class PrettyDumpFormat {
         catch (Exception e) {
             System.out.println("Error on writing");
         }
+        return file;
     }
 
-    private static void getInfoClient(@NotNull Client c, @NotNull  FileWriter file) {
+    private static FileWriter getInfoClient(@NotNull Client c, @NotNull  FileWriter file) {
         try {
             file.write("\t{\n" +
                     "\t\tID: " + c.getId() + "\n" +
                     "\t\tName: " + c.getName() + "\n" +
                     "\t\tAccounts: [ ");
-            Iterator<Account> itAccounts = c.getAccountList().iterator();
+            /*Iterator<Account> itAccounts = c.getAccountList().iterator();
             while (itAccounts.hasNext()) {
                 file.write(itAccounts.next().getId());
                 if (itAccounts.hasNext()) {
+                    file.write(", ");
+                }
+            }*/
+            for(int i = 0; i < c.getAccountList().size(); i++){
+                file.write("" + c.getAccountList().get(i).getId());
+                if (i < c.getAccountList().size() - 1) {
                     file.write(", ");
                 }
             }
@@ -60,6 +70,7 @@ public class PrettyDumpFormat {
         catch (Exception e) {
             System.out.println("Error on writing");
         }
+        return file;
     }
 
     private static int parseTime(Calendar date) {
@@ -71,9 +82,10 @@ public class PrettyDumpFormat {
         }
     }
 
-    private static void writePrettyDump(List<Client> clients, List<Account> accounts, List<Transaction> transactions) {
+    public static String writePrettyDump(List<Client> clients, List<Account> accounts, List<Transaction> transactions) {
         //Create new prettyDump file
         FileWriter file = null;
+        String path = "";
         try {
             //Naming the new file
             Calendar date = Calendar.getInstance();
@@ -83,45 +95,30 @@ public class PrettyDumpFormat {
             int hour = parseTime(date);
             int minute = date.get(Calendar.MINUTE);
             String fileLocation = System.getProperty("user.dir") + "/prettydump/";
-            String fileName = String.valueOf(year) + String.valueOf(month) + String.valueOf(day) + "_" + String.valueOf(hour) + String.valueOf(minute);
+            String fileName = year + "" + month + "" + day + "" + hour +""+ minute;
             //Creating the new file
-            File newPD = new File(fileLocation + fileName + ".txt");
+            path = fileLocation + fileName + ".txt";
+            File newPD = new File(path);
             file = new FileWriter(newPD);
 
             file.write("Clients: [ \n");
             for (Client c : clients) {
-                getInfoClient(c, file);
+                file = getInfoClient(c, file);
             }
             file.write("]\nAccounts: [ \n");
             for (Account a : accounts) {
-                getInfoAccount(a, file);
+                file = getInfoAccount(a, file);
             }
             file.write("]\nTransactions: [ \n");
             for (Transaction t: transactions) {
-                getInfoTransaction(t, file);
+                file = getInfoTransaction(t, file);
             }
             file.write("]\n");
             file.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return path;
     }
-
-    /*public static void main(String[] args) {
-        Client client = new Client("Michel");
-        Client elena = new Client ("Elena");
-        Account account = new Account(client, Contract.IRON, 5);
-        Account accElena = new Account(elena, Contract.DIAMOND, 3);
-        Transaction virement = new Transaction(elena.getId(), client.getId(), 3);
-        List<Client> lc = new ArrayList<Client>();
-        lc.add(elena);
-        lc.add(client);
-        List<Account> la = new ArrayList<Account>();
-        la.add(account);
-        la.add(accElena);
-        List<Transaction> lt = new ArrayList<>();
-        lt.add(virement);
-        writePrettyDump(lc, la, lt);
-    }*/
 
 }

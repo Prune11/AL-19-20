@@ -30,6 +30,14 @@ public class Client {
         this.accountList = new ArrayList<>();
     }
 
+    public Client cloneForPrettyDump(){
+        Client client = new Client();
+        client.setId(this.id);
+        client.setName(this.name);
+        client.setAccountList(null);
+        return client;
+    }
+
     public int getId() {
         return id;
     }
@@ -56,6 +64,10 @@ public class Client {
 
     public void addAccount(Account account){
         this.accountList.add(account);
+    }
+
+    public void removeAccount(Account account){
+        this.accountList.remove(account);
     }
 
     public Client resultToSend(){
