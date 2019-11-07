@@ -37,7 +37,8 @@ public class AccountAccessController {
 
     @PostMapping("/operations")
     public Transaction makeTransaction(@RequestBody TransactionRequest request) {
-        return this.manageEnterpriseAccount.addTransaction(request.getFromId(), request.getToId(), request.getAmount(), request.getType());
+        Transaction t = this.manageEnterpriseAccount.addTransaction(request.getFromId(), request.getToId(), request.getAmount(), request.getType());
+        return t;
     }
 
     @GetMapping("/fees/{id}")

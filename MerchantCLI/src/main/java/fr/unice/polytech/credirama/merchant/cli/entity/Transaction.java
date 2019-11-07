@@ -11,11 +11,11 @@ public class Transaction {
 
     private long id;
 
-    private int accountFrom;
-
-    private int accountTo;
-
     private double amount;
+
+    private int fromId;
+
+    private int toId;
 
     private double feeAmount;
 

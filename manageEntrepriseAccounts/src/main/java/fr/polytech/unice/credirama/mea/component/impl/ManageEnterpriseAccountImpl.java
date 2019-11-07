@@ -127,8 +127,8 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         Account account = accountRepo.findById(id).get();
         double total = 0;
         for (Transaction t : account.getTransactions()) {
-            if (t.getType() == TransactionType.CREDIT_CARD || t.getType() == TransactionType.DEBIT_CARD) {
-                total += t.getFees();
+            if (t.getTransactionType() == TransactionType.CREDIT_CARD || t.getTransactionType() == TransactionType.DEBIT_CARD) {
+                total += t.getFeeAmount();
             }
         }
         return total;

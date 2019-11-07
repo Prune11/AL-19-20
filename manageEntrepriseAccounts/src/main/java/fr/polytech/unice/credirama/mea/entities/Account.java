@@ -91,7 +91,7 @@ public class Account {
 
     public List<Transaction> addTransaction(Transaction transaction){
         this.transactions.add(transaction);
-        if(transaction.getAccountTo() == this.id){
+        if(transaction.getToId() == this.id){
             this.balance += transaction.getAmount();
         } else {
             this.balance -= transaction.getAmount();

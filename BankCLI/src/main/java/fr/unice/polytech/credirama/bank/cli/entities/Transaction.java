@@ -11,9 +11,9 @@ public class Transaction {
 
     private long id;
 
-    private int accountFrom;
+    private int fromId;
 
-    private int accountTo;
+    private int toId;
 
     private double amount;
 

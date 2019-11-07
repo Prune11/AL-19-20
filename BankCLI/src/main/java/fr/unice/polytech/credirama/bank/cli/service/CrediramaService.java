@@ -33,8 +33,7 @@ public class CrediramaService {
 
     public Transaction makeTransaction(int originAccountKey, int destinationAccountKey, double amount, TransactionType transactionType) {
         TransactionRequest request = new TransactionRequest(amount, transactionType, originAccountKey, destinationAccountKey);
-        Transaction t = this.restTemplate.postForObject(CREDIRAMA_URL + "/access/operations", request, Transaction.class);
-        return t;
+        return this.restTemplate.postForObject(CREDIRAMA_URL + "/access/operations", request, Transaction.class);
     }
 
     /************ GET *************/
