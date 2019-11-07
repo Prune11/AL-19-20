@@ -7,6 +7,7 @@ import fr.polytech.unice.credirama.mea.entities.Client;
 import fr.polytech.unice.credirama.mea.entities.Contract;
 import fr.polytech.unice.credirama.mea.entities.Transaction;
 import fr.polytech.unice.credirama.mea.entities.TransactionType;
+import fr.polytech.unice.credirama.mea.entities.dto.AccountDTO;
 import fr.polytech.unice.credirama.mea.repo.AccountRepo;
 import fr.polytech.unice.credirama.mea.repo.ClientRepo;
 import fr.polytech.unice.credirama.mea.repo.TransactionRepo;
@@ -176,11 +177,11 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
 
     public String getPrettyDump() {
         List<Client> clients = getAllClients();
-        List<Account> accounts = new ArrayList<>();
+        List<AccountDTO> accounts = new ArrayList<>();
         for (Client client : clients) {
             for (Account account : client.getAccountList()) {
                 account.setOwner(client.cloneForPrettyDump());
-                accounts.add(account);
+                accounts.add(new AccountDTO(account));
             }
         }
         List<Transaction> transactions = getAllTransactions();

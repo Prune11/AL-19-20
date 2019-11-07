@@ -3,22 +3,23 @@ package fr.polytech.unice.credirama.mea;
 import java.io.*;
 import java.util.*;
 import fr.polytech.unice.credirama.mea.entities.*;
+import fr.polytech.unice.credirama.mea.entities.dto.AccountDTO;
 
 import javax.validation.constraints.NotNull;
 
 public class PrettyDumpWriter {
 
-    private static FileWriter getInfoAccount(@NotNull Account a, @NotNull FileWriter file) {
+    private static FileWriter getInfoAccount(@NotNull AccountDTO a, @NotNull FileWriter file) {
         try {
             file.write("\t{\n" +
                     "\t\tID: " + a.getId() + "\n" +
-                    "\t\tOwner: " + a.getOwner().getId() + "\n" +
+                    "\t\tOwner: " + a.getOwnerId() + "\n" +
                     "\t\tBalance: " + a.getBalance() + "\n" +
                     "\t\tContract: " + a.getContract().name() + "\n" +
                     "\t\tTransactions: [ ");
-            List<Transaction> transactions = a.getTransactions();
+            List<Long> transactions = a.getTransactions();
             for(int i = 0; i < transactions.size(); i++){
-                file.write("" + transactions.get(i).getId());
+                file.write("" + transactions.get(i));
                 if(i < transactions.size() - 1){
                     file.write(", ");
                 }
@@ -82,7 +83,7 @@ public class PrettyDumpWriter {
         }
     }
 
-    public static String writePrettyDump(List<Client> clients, List<Account> accounts, List<Transaction> transactions) {
+    public static String writePrettyDump(List<Client> clients, List<AccountDTO> accounts, List<Transaction> transactions) {
         //Create new prettyDump file
         FileWriter file = null;
         String path = "";
@@ -106,7 +107,7 @@ public class PrettyDumpWriter {
                 file = getInfoClient(c, file);
             }
             file.write("]\nAccounts: [ \n");
-            for (Account a : accounts) {
+            for (AccountDTO a : accounts) {
                 file = getInfoAccount(a, file);
             }
             file.write("]\nTransactions: [ \n");

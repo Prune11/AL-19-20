@@ -5,6 +5,8 @@ import fr.polytech.unice.credirama.mea.component.PrettyDump;
 import fr.polytech.unice.credirama.mea.entities.Account;
 import fr.polytech.unice.credirama.mea.entities.Client;
 import fr.polytech.unice.credirama.mea.entities.Transaction;
+import fr.polytech.unice.credirama.mea.entities.dto.AccountDTO;
+import fr.polytech.unice.credirama.mea.entities.dto.ClientDTO;
 import fr.polytech.unice.credirama.mea.entities.dto.PrettyDumpResponse;
 import fr.polytech.unice.credirama.mea.repo.AccountRepo;
 import fr.polytech.unice.credirama.mea.repo.ClientRepo;
@@ -33,17 +35,19 @@ public class PrettyDumpImpl implements PrettyDump {
     public PrettyDumpResponse getPrettyDump() {
         PrettyDumpResponse response = new PrettyDumpResponse();
         List<Client> clients = getAllClients();
-//        List<Account> accounts = new ArrayList<>();
-//        for (Client client : clients) {
-//            for (Account account : client.getAccountList()) {
-//                account.setOwner(client.cloneForPrettyDump());
-//                accounts.add(account);
-//            }
-//        }
-        List<Account> accounts = getAllAccounts();
+        List<AccountDTO> accounts = new ArrayList<>();
+        List<ClientDTO> clientDTOs = new ArrayList<>();
+        for (Client client : clients) {
+            for (Account account : client.getAccountList()) {
+                account.setOwner(client.cloneForPrettyDump());
+                accounts.add(new AccountDTO(account));
+            }
+            clientDTOs.add(new ClientDTO(client));
+        }
+        //List<Account> accounts = getAllAccounts();
         List<Transaction> transactions = getAllTransactions();
         response.setAccounts(accounts);
-        response.setClients(clients);
+        response.setClients(clientDTOs);
         response.setTransactions(transactions);
 
         Calendar date = Calendar.getInstance();
