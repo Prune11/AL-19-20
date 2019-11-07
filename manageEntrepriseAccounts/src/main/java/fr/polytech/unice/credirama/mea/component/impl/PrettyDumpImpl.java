@@ -56,8 +56,10 @@ public class PrettyDumpImpl implements PrettyDump {
         int day = date.get(Calendar.DATE);
         int hour = parseTime(date);
         int minute = date.get(Calendar.MINUTE);
+        int second = date.get(Calendar.SECOND);
+        int millisecond = date.get(Calendar.MILLISECOND);
 
-        String timestamp = year + "-" + month + "-" + day + "-" + hour + "-" + minute;
+        String timestamp = year + "-" + month + "-" + day + "-" + hour + "-" + minute + "-" + second + "-" + millisecond;
 
         response.setTimestamp(timestamp);
 

@@ -20,7 +20,7 @@ public class AdministrationCommands {
                                 @ShellOption(value = {"-c", "--contract"}, help = "The original contract for this account, possible values : WOOD, STONE, IRON, DIAMOND") String contract) {
         Contract c = Contract.valueOf(contract);
         crediramaService.createAccount(clientId, c);
-        return "Account successfully created for client " + clientId + " with contract " + contract + " : " + c.getFee();
+        return "Account successfully created for client " + clientId + " with contract " + contract + ", " + c.getFee() + "% of fees";
     }
 
     @ShellMethod(value = "Create a client", key = "create-client")
@@ -45,7 +45,7 @@ public class AdministrationCommands {
         Contract before = crediramaService.getContract(accountId);
         Contract c = Contract.valueOf(contract);
         Account a = crediramaService.updateContract(accountId, c);
-        return "The account " + accountId + " of " + a.getOwner().getName() + "has change contract from " + before + " to " + c;
+        return "The account " + accountId + " of " + a.getOwner().getName() + "has change contract from " + before.name() + " with " + before.getFee() + "% of fees, to " + c.name() + " with " + c.getFee() + "% of fees";
     }
 
     @ShellMethod("Get client by Id")

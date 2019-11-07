@@ -1,5 +1,6 @@
 package fr.unice.polytech.credirama.bank.cli.command;
 
+import fr.unice.polytech.credirama.bank.cli.entities.Contract;
 import fr.unice.polytech.credirama.bank.cli.entities.Transaction;
 import fr.unice.polytech.credirama.bank.cli.entities.TransactionType;
 import fr.unice.polytech.credirama.bank.cli.service.CrediramaService;
@@ -30,7 +31,8 @@ public class AccessAccountCommands {
 
     @ShellMethod("Show the contract for an account")
     public String showContract(@ShellOption(value = {"-a", "--accountId"}, help = "The account Id") int accountKey) {
-        return "The account " + accountKey + " has the following contract : " + crediramaService.getContract(accountKey);
+        Contract contract = crediramaService.getContract(accountKey);
+        return "The account " + accountKey + " has the following contract : " + contract.name() + ", " + contract.getFee() + "% of fees";
     }
 
     @ShellMethod(value = "Make a transaction from an account ot another account with specific amount of money", key = "transaction")
