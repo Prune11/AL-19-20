@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,6 +45,20 @@ public class PrettyDumpImpl implements PrettyDump {
         response.setAccounts(accounts);
         response.setClients(clients);
         response.setTransactions(transactions);
+
+        Calendar date = Calendar.getInstance();
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DATE);
+        int hour = parseTime(date);
+        int minute = date.get(Calendar.MINUTE);
+
+        String timestamp = year + "-" + month + "-" + day + "-" + hour + "-" + minute;
+
+        response.setTimestamp(timestamp);
+
+        PrettyDumpWriter.writePrettyDump(clients, accounts, transactions);
+
         return response;
     }
 
@@ -72,5 +87,14 @@ public class PrettyDumpImpl implements PrettyDump {
             clients.add(clientIterator.next().resultToSend());
         }
         return clients;
+    }
+
+    private int parseTime(Calendar date) {
+        if (date.get(Calendar.AM_PM) == 1) {
+            //PM
+            return date.get(Calendar.HOUR) + 12;
+        } else {
+            return date.get(Calendar.HOUR);
+        }
     }
 }
