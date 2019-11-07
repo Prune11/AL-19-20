@@ -2,6 +2,7 @@ package fr.polytech.unice.credirama.mea;
 
 import java.io.*;
 import java.util.*;
+
 import fr.polytech.unice.credirama.mea.entities.*;
 import fr.polytech.unice.credirama.mea.entities.dto.AccountDTO;
 
@@ -18,36 +19,34 @@ public class PrettyDumpWriter {
                     "\t\tContract: " + a.getContract().name() + "\n" +
                     "\t\tTransactions: [ ");
             List<Long> transactions = a.getTransactions();
-            for(int i = 0; i < transactions.size(); i++){
+            for (int i = 0; i < transactions.size(); i++) {
                 file.write("" + transactions.get(i));
-                if(i < transactions.size() - 1){
+                if (i < transactions.size() - 1) {
                     file.write(", ");
                 }
             }
             file.write(" ]\n\t}\n");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error on writing");
         }
         return file;
     }
 
-    private static FileWriter getInfoTransaction (@NotNull Transaction t, @NotNull FileWriter file) {
+    private static FileWriter getInfoTransaction(@NotNull Transaction t, @NotNull FileWriter file) {
         try {
             file.write("\t{\n" +
                     "\t\tID:" + (int) t.getId() + "\n" +
-                    "\t\tFrom: " + t.getAccountFrom() + "\n" +
-                    "\t\tTo: " + t.getAccountTo() + "\n" +
-                    "\t\tAmount: " + t.getAmount() +"\n" +
+                    "\t\tFrom: " + t.getFromId() + "\n" +
+                    "\t\tTo: " + t.getToId() + "\n" +
+                    "\t\tAmount: " + t.getAmount() + "\n" +
                     "\t}\n");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error on writing");
         }
         return file;
     }
 
-    private static FileWriter getInfoClient(@NotNull Client c, @NotNull  FileWriter file) {
+    private static FileWriter getInfoClient(@NotNull Client c, @NotNull FileWriter file) {
         try {
             file.write("\t{\n" +
                     "\t\tID: " + c.getId() + "\n" +
@@ -60,15 +59,14 @@ public class PrettyDumpWriter {
                     file.write(", ");
                 }
             }*/
-            for(int i = 0; i < c.getAccountList().size(); i++){
+            for (int i = 0; i < c.getAccountList().size(); i++) {
                 file.write("" + c.getAccountList().get(i).getId());
                 if (i < c.getAccountList().size() - 1) {
                     file.write(", ");
                 }
             }
             file.write(" ]\n\t}\n");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error on writing");
         }
         return file;
@@ -96,7 +94,7 @@ public class PrettyDumpWriter {
             int hour = parseTime(date);
             int minute = date.get(Calendar.MINUTE);
             String fileLocation = System.getProperty("user.dir") + "/prettydump/";
-            String fileName = year + "" + month + "" + day + "" + hour +""+ minute;
+            String fileName = year + "" + month + "" + day + "" + hour + "" + minute;
             //Creating the new file
             path = fileLocation + fileName + ".json";
             File newPD = new File(path);
@@ -111,7 +109,7 @@ public class PrettyDumpWriter {
                 file = getInfoAccount(a, file);
             }
             file.write("]\nTransactions: [ \n");
-            for (Transaction t: transactions) {
+            for (Transaction t : transactions) {
                 file = getInfoTransaction(t, file);
             }
             file.write("]\n");
