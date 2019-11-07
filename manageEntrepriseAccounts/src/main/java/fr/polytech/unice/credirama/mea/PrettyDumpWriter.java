@@ -97,7 +97,7 @@ public class PrettyDumpWriter {
             String fileLocation = System.getProperty("user.dir") + "/prettydump/";
             String fileName = year + "" + month + "" + day + "" + hour +""+ minute;
             //Creating the new file
-            path = fileLocation + fileName + ".txt";
+            path = fileLocation + fileName + ".json";
             File newPD = new File(path);
             file = new FileWriter(newPD);
 

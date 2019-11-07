@@ -20,5 +20,7 @@ public class PrettyDumpResponse {
 
     private List<Transaction> transactions;
 
+    private String timestamp;
+
 }
 

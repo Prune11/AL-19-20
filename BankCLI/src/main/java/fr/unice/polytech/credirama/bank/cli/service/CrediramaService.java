@@ -2,6 +2,7 @@ package fr.unice.polytech.credirama.bank.cli.service;
 
 import fr.unice.polytech.credirama.bank.cli.entities.*;
 import fr.unice.polytech.credirama.bank.cli.entities.dto.CreateAccountRequest;
+import fr.unice.polytech.credirama.bank.cli.entities.dto.PrettyDumpResponse;
 import fr.unice.polytech.credirama.bank.cli.entities.dto.TotalFeeResponse;
 import fr.unice.polytech.credirama.bank.cli.entities.dto.TransactionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +101,7 @@ public class CrediramaService {
 
     /************ PRETTY DUMP *************/
 
-    public String prettyDump() {
-        return this.restTemplate.getForObject(CREDIRAMA_URL + "/prettyDump", String.class);
+    public PrettyDumpResponse prettyDump() {
+        return this.restTemplate.getForObject(CREDIRAMA_URL + "/prettyDump", PrettyDumpResponse.class);
     }
 }
