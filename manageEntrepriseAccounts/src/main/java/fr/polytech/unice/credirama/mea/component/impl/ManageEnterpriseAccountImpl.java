@@ -42,24 +42,26 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return account.getTransactions();
     }
 
-    public void addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType) {
+    public Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType) {
+        Transaction transactionWithID;
         if (idFrom == 0) {
             Account accountTo = accountRepo.findById(idTo).get();
             Transaction transaction = new Transaction(0, accountTo.getId(), amount, 0, transactionType);
-            Transaction transactionWithID = transactionRepo.save(transaction);
+            transactionWithID = transactionRepo.save(transaction);
             accountTo.addTransaction(transactionWithID);
             accountRepo.save(accountTo);
         } else {
             Account accountFrom = accountRepo.findById(idFrom).get();
             Account accountTo = accountRepo.findById(idTo).get();
-            double amountFee = amount * accountFrom.getContract().getFee();
+            double amountFee = amount * accountFrom.getContract().getFee() / 100;
             Transaction transaction = new Transaction(accountFrom.getId(), accountTo.getId(), amount, amountFee, transactionType);
-            Transaction transactionWithID = transactionRepo.save(transaction);
+            transactionWithID = transactionRepo.save(transaction);
             accountFrom.addTransaction(transactionWithID);
             accountRepo.save(accountFrom);
             accountTo.addTransaction(transactionWithID);
             accountRepo.save(accountTo);
         }
+        return transactionWithID;
     }
 
     public List<Account> getAllAccounts() {
@@ -121,15 +123,15 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
     }
 
     @Override
-    public Map<Transaction, Double> getTransactionsAndFees(Integer id) {
+    public double getTransactionsAndFees(Integer id) {
         Account account = accountRepo.findById(id).get();
-        Map<Transaction, Double> map = new HashMap<>();
+        double total = 0;
         for (Transaction t : account.getTransactions()) {
             if (t.getType() == TransactionType.CREDIT_CARD || t.getType() == TransactionType.DEBIT_CARD) {
-                map.put(t, t.getFees());
+                total += t.getFees();
             }
         }
-        return map;
+        return total;
     }
 
     public List<Client> getAllClients() {
@@ -172,17 +174,17 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return transactions;
     }
 
-    public String getPrettyDump(){
+    public String getPrettyDump() {
         List<Client> clients = getAllClients();
         List<Account> accounts = new ArrayList<>();
         for (Client client : clients) {
-            for(Account account : client.getAccountList()){
+            for (Account account : client.getAccountList()) {
                 account.setOwner(client.cloneForPrettyDump());
                 accounts.add(account);
             }
         }
         List<Transaction> transactions = getAllTransactions();
-        String path =  PrettyDumpWriter.writePrettyDump(clients, accounts, transactions);
+        String path = PrettyDumpWriter.writePrettyDump(clients, accounts, transactions);
         return "You can find the current state of the system in this file: " + path;
     }
 }

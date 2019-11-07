@@ -40,12 +40,12 @@ public class AccessAccountCommands {
                                   @ShellOption(value = {"-T", "--type"}, help = "The type for this transaction, possible values : CREDIT_CARD, DEBIT_CARD, TRANSFER") String type) {
         TransactionType transactionType = TransactionType.valueOf(type);
         Transaction transaction = crediramaService.makeTransaction(originAccountKey, destinationAccountKey, amount, transactionType);
-        return "A " + type + "  transaction from account " + originAccountKey + " to account " + destinationAccountKey + " with " + amount + "dkk has been made : " + transaction.toString();
+        return "A " + type + "  transaction from account " + originAccountKey + " to account " + destinationAccountKey + " with " + amount + " dkk " + "and fees " + transaction.getFeeAmount() + " has been made : " + transaction.toString();
     }
 
     @ShellMethod(value = "Get all the fee for all transaction", key = "fees")
-    public String getTotalFees(@ShellOption(value = {"-a", "--accountId"}, help = "The account Id") int accountId) {
-        return this.crediramaService.getTotalFees(accountId).toString();
+    public double getTotalFees(@ShellOption(value = {"-a", "--accountId"}, help = "The account Id") int accountId) {
+        return this.crediramaService.getTotalFees(accountId);
     }
 
 }

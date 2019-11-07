@@ -6,9 +6,7 @@ import fr.polytech.unice.credirama.mea.entities.Contract;
 import fr.polytech.unice.credirama.mea.entities.Transaction;
 import fr.polytech.unice.credirama.mea.entities.TransactionType;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface ManageEnterpriseAccount {
 
@@ -18,7 +16,7 @@ public interface ManageEnterpriseAccount {
 
     List<Transaction> getOperationsById(Integer id);
 
-    void addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType);
+    Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType);
 
     List<Account> getAllAccounts();
 
@@ -46,7 +44,7 @@ public interface ManageEnterpriseAccount {
 
     String deleteAllClients();
 
-    Map<Transaction, Double> getTransactionsAndFees(Integer id);
+   double getTransactionsAndFees(Integer id);
 
     String getPrettyDump();
 }

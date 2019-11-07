@@ -32,7 +32,8 @@ public class CrediramaService {
 
     public Transaction makeTransaction(int originAccountKey, int destinationAccountKey, double amount, TransactionType transactionType) {
         TransactionRequest request = new TransactionRequest(amount, transactionType, originAccountKey, destinationAccountKey);
-        return this.restTemplate.postForObject(CREDIRAMA_URL + "/access/operations", request, Transaction.class);
+        Transaction t = this.restTemplate.postForObject(CREDIRAMA_URL + "/access/operations", request, Transaction.class);
+        return t;
     }
 
     /************ GET *************/
@@ -65,8 +66,8 @@ public class CrediramaService {
         return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/contract/" + accountKey, Contract.class);
     }
 
-    public TotalFeeResponse getTotalFees(int accountId) {
-        return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/fees/" + accountId, TotalFeeResponse.class);
+    public double getTotalFees(int accountId) {
+        return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/fees/" + accountId, Double.class);
     }
 
     /************ DELETE *************/

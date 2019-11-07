@@ -36,13 +36,13 @@ public class AccountAccessController {
     }
 
     @PostMapping("/operations")
-    public void makeTransaction(@RequestBody TransactionRequest request) {
-        this.manageEnterpriseAccount.addTransaction(request.getFromId(), request.getToId(), request.getAmount(), request.getType());
+    public Transaction makeTransaction(@RequestBody TransactionRequest request) {
+        return this.manageEnterpriseAccount.addTransaction(request.getFromId(), request.getToId(), request.getAmount(), request.getType());
     }
 
     @GetMapping("/fees/{id}")
-    public TotalFeeResponse getTotalOfFees(@PathVariable(name = "id") Integer accountId) {
-        return new TotalFeeResponse(this.manageEnterpriseAccount.getTransactionsAndFees(accountId));
+    public double getTotalOfFees(@PathVariable(name = "id") Integer accountId) {
+        return this.manageEnterpriseAccount.getTransactionsAndFees(accountId);
     }
 
 }

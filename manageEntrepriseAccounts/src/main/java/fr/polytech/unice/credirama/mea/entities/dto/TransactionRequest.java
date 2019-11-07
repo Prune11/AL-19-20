@@ -18,4 +18,6 @@ public class TransactionRequest {
 
     private int toId;
 
+    private double fees;
+    
 }
