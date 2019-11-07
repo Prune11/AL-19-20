@@ -29,6 +29,7 @@ public class AccountDTO {
     private double balance;
 
     public AccountDTO(Account account) {
+        this.id = account.getId();
         this.ownerId = account.getOwner().getId();
         this.contract = account.getContract();
         this.balance = account.getBalance();
