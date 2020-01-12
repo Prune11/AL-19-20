@@ -15,10 +15,6 @@ public interface ManageEnterpriseAccount {
 
     double getBalanceById(Integer id);
 
-    List<Transaction> getOperationsById(Integer id);
-
-    Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType);
-
     List<Account> getAllAccounts();
 
     Account getTest();
@@ -44,7 +40,5 @@ public interface ManageEnterpriseAccount {
     String deleteClient(Integer id);
 
     String deleteAllClients();
-
-   double getTransactionsAndFees(Integer id);
 
 }

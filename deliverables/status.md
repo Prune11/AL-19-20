@@ -1,3 +1,6 @@
+# Week 45
+- Soutenance
+
 # Week 44
 - Problems with persistence solved
 - Resolution of implementation and conception problems

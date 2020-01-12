@@ -38,33 +38,6 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return account.getBalance();
     }
 
-    public List<Transaction> getOperationsById(Integer id) {
-        Account account = accountRepo.findById(id).get();
-        return account.getTransactions();
-    }
-
-    public Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType) {
-        Transaction transactionWithID;
-        if (idFrom == 0) {
-            Account accountTo = accountRepo.findById(idTo).get();
-            Transaction transaction = new Transaction(0, accountTo.getId(), amount, 0, transactionType);
-            transactionWithID = transactionRepo.save(transaction);
-            accountTo.addTransaction(transactionWithID);
-            accountRepo.save(accountTo);
-        } else {
-            Account accountFrom = accountRepo.findById(idFrom).get();
-            Account accountTo = accountRepo.findById(idTo).get();
-            double amountFee = amount * accountFrom.getContract().getFee() / 100;
-            Transaction transaction = new Transaction(accountFrom.getId(), accountTo.getId(), amount, amountFee, transactionType);
-            transactionWithID = transactionRepo.save(transaction);
-            accountFrom.addTransaction(transactionWithID);
-            accountRepo.save(accountFrom);
-            accountTo.addTransaction(transactionWithID);
-            accountRepo.save(accountTo);
-        }
-        return transactionWithID;
-    }
-
     public List<Account> getAllAccounts() {
         Iterator<Account> accountIterator = accountRepo.findAll().iterator();
         List<Account> accounts = new ArrayList<>();
@@ -123,16 +96,6 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         accountRepo.deleteAll();
     }
 
-    @Override
-    public double getTransactionsAndFees(Integer id) {
-        Account account = accountRepo.findById(id).get();
-        double total = 0;
-        for (Transaction t : account.getTransactions()) {
-            total += t.getFeeAmount();
-        }
-        return total;
-    }
-
     public List<Client> getAllClients() {
         Iterator<Client> clientIterator = clientRepo.findAll().iterator();
         List<Client> clients = new ArrayList<>();
@@ -164,14 +127,6 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return "All clients have been deleted.";
     }
 
-    public List<Transaction> getAllTransactions() {
-        Iterator<Transaction> transactionIterator = transactionRepo.findAll().iterator();
-        List<Transaction> transactions = new ArrayList<>();
-        while (transactionIterator.hasNext()) {
-            transactions.add(transactionIterator.next());
-        }
-        return transactions;
-    }
 
     public String getPrettyDump() {
         List<Client> clients = getAllClients();
@@ -182,7 +137,7 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
                 accounts.add(new AccountDTO(account));
             }
         }
-        List<Transaction> transactions = getAllTransactions();
+        List<Transaction> transactions = new ArrayList<>();
         String path = PrettyDumpWriter.writePrettyDump(clients, accounts, transactions);
         return "You can find the current state of the system in this file: " + path;
     }

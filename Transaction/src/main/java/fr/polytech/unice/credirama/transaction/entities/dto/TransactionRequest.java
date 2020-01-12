@@ -1,6 +1,7 @@
-package fr.polytech.unice.credirama.mea.entities.dto;
+package fr.polytech.unice.credirama.transaction.entities.dto;
 
-import fr.polytech.unice.credirama.mea.entities.TransactionType;
+import fr.polytech.unice.credirama.transaction.entities.Contract;
+import fr.polytech.unice.credirama.transaction.entities.TransactionType;
 import lombok.*;
 
 @Data
@@ -19,5 +20,7 @@ public class TransactionRequest {
     private int toId;
 
     private double fees;
-    
+
+    private Contract contract;
+
 }

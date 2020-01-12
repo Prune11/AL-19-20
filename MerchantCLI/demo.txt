@@ -1,0 +1,21 @@
+# Bank
+create-client Michel
+create-account 1 WOOD
+create-client Roger
+creat-account 2 WOOD
+# Merchant
+balance 2
+transaction 2 1 5 TRANSFER
+balance 2
+transaction 0 2 5 TRANSFER
+balance 2
+fees 2
+show-contract 2
+# Bank
+update-contract 2 STONE
+# Merchant
+transaction 2 1 5 TRANSFER
+balance 2
+fees 2
+# Bank
+dump -p
