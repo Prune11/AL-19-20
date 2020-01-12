@@ -1,0 +1,21 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: build
+    image: maven3:latest
+    commands:
+      - mvn clean package
+#  - name: build docker
+#    image: a voir
+#    commands:
+#      - docker-compose up --build
+
+
+trigger:
+  branch:
+    - master
+  event:
+    - push
+    - cron
