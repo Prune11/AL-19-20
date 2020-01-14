@@ -1,4 +1,4 @@
-[![Build Status](https://cloud.drone.io/api/badges/Prune11/AL-19-20/status.svg)](https://cloud.drone.io/Prune11/AL-19-20)
+[![Build Status](https://cloud.drone.io/api/badges/Prune11/AL-19-20/status.svg)](https://cloud.drone.io/Prune11/AL-19-20) [![Coverage Status](https://coveralls.io/repos/github/Prune11/AL-19-20/badge.svg?branch=master)](https://coveralls.io/github/Prune11/AL-19-20?branch=master)
 # AL-19-20
 
 ## Getting started
