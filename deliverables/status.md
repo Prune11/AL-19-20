@@ -1,3 +1,9 @@
+# Week 03
+- Update diagrams, Scope and architecture according to the new specifications given
+- Add Drone CI pipeline
+- Add Cucumber functional tests
+- Green flag
+
 # Week 45
 - Soutenance
 
