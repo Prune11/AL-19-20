@@ -1,5 +1,6 @@
 package fr.polytech.unice.credirama.mea.entities;
 
+import fr.polytech.unice.credirama.mea.entities.dto.AddTransactionRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,7 +25,7 @@ public class Account {
     private Contract contract;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Transaction> transactions;
+    private List<Long> transactionIDs;
 
     private double balance;
 
@@ -36,7 +37,7 @@ public class Account {
         this.owner = owner;
         this.contract = contract;
         this.balance = balance;
-        this.transactions = new ArrayList<>();
+        this.transactionIDs = new ArrayList<>();
     }
 
     public int getId() {
@@ -71,12 +72,8 @@ public class Account {
         this.balance = balance;
     }
 
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
+    public List<Long> getTransactions() {
+        return transactionIDs;
     }
 
     public Account updateForSave() {
@@ -89,15 +86,15 @@ public class Account {
         return this;
     }
 
-    public List<Transaction> addTransaction(Transaction transaction) {
-        this.transactions.add(transaction);
-        if (transaction.getToId() == this.id) {
-            this.balance += transaction.getAmount();
+    public List<Long> addTransaction(AddTransactionRequest transactionRequest) {
+        this.transactionIDs.add(transactionRequest.getTransactionId());
+        if (transactionRequest.getAccountTo() == this.id) {
+            this.balance += transactionRequest.getAmount();
         } else {
-            this.balance -= transaction.getAmount();
-            this.balance -= transaction.getFeeAmount();
+            this.balance -= transactionRequest.getAmount();
+            this.balance -= transactionRequest.getFeeAMount();
         }
-        return this.transactions;
+        return this.transactionIDs;
     }
 
     @Override
@@ -109,11 +106,11 @@ public class Account {
                 Double.compare(account.balance, balance) == 0 &&
                 Objects.equals(owner, account.owner) &&
                 contract == account.contract &&
-                Objects.equals(transactions, account.transactions);
+                Objects.equals(transactionIDs, account.transactionIDs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, owner, contract, transactions, balance);
+        return Objects.hash(id, owner, contract, transactionIDs, balance);
     }
 }

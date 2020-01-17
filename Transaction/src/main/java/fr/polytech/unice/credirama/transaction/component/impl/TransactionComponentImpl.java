@@ -5,6 +5,7 @@ import fr.polytech.unice.credirama.transaction.entities.Contract;
 import fr.polytech.unice.credirama.transaction.entities.Transaction;
 import fr.polytech.unice.credirama.transaction.entities.TransactionType;
 import fr.polytech.unice.credirama.transaction.repo.TransactionRepo;
+import fr.polytech.unice.credirama.transaction.service.EnterpriseAccountsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,9 @@ public class TransactionComponentImpl implements TransactionComponent {
 
     @Autowired
     private TransactionRepo transactionRepo;
+
+    @Autowired
+    private EnterpriseAccountsService enterpriseAccountsService;
 
     /**
      * Get all transactions by transaction ID
@@ -44,6 +48,7 @@ public class TransactionComponentImpl implements TransactionComponent {
             /*Account accountTo = accountRepo.findById(idTo).get();
             accountTo.addTransaction(transactionWithID);
             accountRepo.save(accountTo);*/
+            enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), 0, idTo, amount, 0.0);
         } else {
             //Récupérer le contrat de l'account from
             double amountFee = amount * contract.getFee() / 100;
@@ -56,6 +61,7 @@ public class TransactionComponentImpl implements TransactionComponent {
             accountRepo.save(accountFrom);
             accountTo.addTransaction(transactionWithID);
             accountRepo.save(accountTo);*/
+            enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), idFrom, idTo, amount, amountFee);
         }
         return transactionWithID;
     }

@@ -18,6 +18,7 @@ import java.util.*;
 @RestController
 @RequestMapping(path = "/access", produces = "application/json")
 public class TransactionController {
+
     @Autowired
     private TransactionComponent transactionComponent;
 
@@ -31,7 +32,6 @@ public class TransactionController {
     @PostMapping("/operations")
     public Transaction makeTransaction(@RequestBody TransactionRequest request) {
         Transaction t = this.transactionComponent.addTransaction(request.getFromId(), request.getToId(), request.getAmount(), request.getType(), request.getContract());
-        System.out.println("\n JE SUIS ICI <3 \n");
         return t;
     }
 
