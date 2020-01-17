@@ -34,8 +34,8 @@ public class AccountDTO {
         this.contract = account.getContract();
         this.balance = account.getBalance();
         this.transactions = new ArrayList<>();
-        for(Transaction transaction : account.getTransactions()){
-           transactions.add(transaction.getId());
+        for(Long transaction : account.getTransactions()){
+            transactions.add(transaction);
         }
     }
 }
