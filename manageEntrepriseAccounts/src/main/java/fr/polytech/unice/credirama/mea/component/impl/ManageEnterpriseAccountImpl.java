@@ -11,6 +11,7 @@ import fr.polytech.unice.credirama.mea.entities.dto.AddTransactionRequest;
 import fr.polytech.unice.credirama.mea.repo.AccountRepo;
 import fr.polytech.unice.credirama.mea.repo.ClientRepo;
 import fr.polytech.unice.credirama.mea.repo.TransactionRepo;
+import gherkin.deps.com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -129,7 +130,7 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
 
     public boolean addTransaction(AddTransactionRequest transactionRequest) {
         try {
-            if(transactionRequest.getAccountFrom() != 0) {
+            if (transactionRequest.getAccountFrom() != 0) {
                 Account accountFrom = accountRepo.findById(transactionRequest.getAccountTo()).get();
                 accountFrom.addTransaction(transactionRequest);
                 accountRepo.save(accountFrom);
@@ -137,13 +138,14 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
             Account accountTo = accountRepo.findById(transactionRequest.getAccountTo()).get();
             accountTo.addTransaction(transactionRequest);
             accountRepo.save(accountTo);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
         return true;
     }
 
 
+    @Override
     public String getPrettyDump() {
         List<Client> clients = getAllClients();
         List<AccountDTO> accounts = new ArrayList<>();
@@ -153,8 +155,10 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
                 accounts.add(new AccountDTO(account));
             }
         }
-        List<Transaction> transactions = new ArrayList<>();
-        String path = PrettyDumpWriter.writePrettyDump(clients, accounts, transactions);
-        return "You can find the current state of the system in this file: " + path;
+        String response = "";
+        Gson gson = new Gson();
+        response += gson.toJson(clients);
+        response += gson.toJson(accounts);
+        return response;
     }
 }

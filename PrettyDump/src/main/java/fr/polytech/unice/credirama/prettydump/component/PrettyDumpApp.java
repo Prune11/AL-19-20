@@ -1,4 +1,4 @@
-package fr.polytech.unice.credirama.transaction;
+package fr.polytech.unice.credirama.prettydump.component;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-public class TransactionApp {
+public class PrettyDumpApp {
 
     @Bean
     public RestTemplate restTemplate() {
@@ -14,7 +14,7 @@ public class TransactionApp {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(TransactionApp.class, args);
+        SpringApplication.run(PrettyDumpApp.class, args);
     }
 
 }

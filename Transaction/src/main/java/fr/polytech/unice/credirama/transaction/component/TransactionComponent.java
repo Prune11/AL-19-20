@@ -14,4 +14,6 @@ public interface TransactionComponent {
 
     double getTransactionsAndFees(List<Integer> ids);
 
+    List<Transaction> getAllTransactions();
+
 }

@@ -43,4 +43,6 @@ public interface ManageEnterpriseAccount {
     String deleteAllClients();
 
     boolean addTransaction(AddTransactionRequest transactionRequest);
+
+    String getPrettyDump();
 }

@@ -10,6 +10,7 @@
         <module>MerchantCLI</module>
         <module>BankCLI</module>
         <module>Transaction</module>
+        <module>PrettyDump</module>
     </modules>
 
     <groupId>fr.unice.polytech.credirama</groupId>

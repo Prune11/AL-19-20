@@ -77,6 +77,7 @@ public class TransactionComponentImpl implements TransactionComponent {
         return total;
     }
 
+    @Override
     public List<Transaction> getAllTransactions() {
         Iterator<Transaction> transactionIterator = transactionRepo.findAll().iterator();
         List<Transaction> transactions = new ArrayList<>();

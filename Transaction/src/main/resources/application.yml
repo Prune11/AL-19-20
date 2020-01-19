@@ -26,4 +26,4 @@ logging:
     root: INFO
 
 server:
-  port: 8082
+  port: 8084

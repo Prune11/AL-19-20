@@ -1,6 +1,0 @@
-Clients: [ 
-]
-Accounts: [ 
-]
-Transactions: [ 
-]
