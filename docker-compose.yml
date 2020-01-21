@@ -1,28 +1,40 @@
 version: '3'
 services:
 
-
   ############  MANAGE ENTERPRISE ACCOUNTS  #################
 
-  warehouse-server:
-    container_name: creadirama-manage-enterprise-accounts-server
+  mea-server:
+    container_name: credirama-manage-enterprise-accounts-server
     build:
-      context: warehouse
+      context: manageEntrepriseAccounts
       dockerfile: Dockerfile
       args:
-        JAR_FILE: target/warehouse-0.0.1-SNAPSHOT.jar
-    image: creadirama-manage-enterprise-accounts-server:latest
+        JAR_FILE: target/manageEntrepriseAccounts-1.0-SNAPSHOT.jar
+    image: credirama-manage-enterprise-accounts-server:latest
     expose:
       - 8081
     ports:
       - 8081:8080
-    networks:
-      - creadirama-network
     logging:
       driver: json-file
-    depends_on:
-      - kafka
-      - kafka-awaiter
+
+
+  ############ PRETTY DUMP  #################
+
+  prettydump-server:
+    container_name: credirama-pretty-dump-server
+    build:
+      context: PrettyDump
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: target/PrettyDump-1.0-SNAPSHOT.jar
+    image: credirama-pretty-dump-server:latest
+    expose:
+      - 8085
+    ports:
+      - 8085:8080
+    logging:
+      driver: json-file
 
     environment:
       NOTIFICATION_HOST: notification
