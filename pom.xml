@@ -11,6 +11,7 @@
         <module>BankCLI</module>
         <module>Transaction</module>
         <module>PrettyDump</module>
+        <module>AnalyseData</module>
     </modules>
 
     <groupId>fr.unice.polytech.credirama</groupId>
