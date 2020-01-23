@@ -1,8 +1,10 @@
 package fr.polytech.unice.creadirama.mea;
 
-import fr.polytech.unice.credirama.mea.controller.AccountAccessController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.polytech.unice.credirama.mea.entities.Account;
+import fr.polytech.unice.credirama.mea.entities.Client;
 import fr.polytech.unice.credirama.mea.entities.Contract;
+import fr.polytech.unice.credirama.mea.entities.dto.CreateAccountRequest;
 import gherkin.deps.com.google.gson.JsonElement;
 import gherkin.deps.com.google.gson.JsonObject;
 import gherkin.deps.com.google.gson.JsonParser;
@@ -13,6 +15,7 @@ import org.HdrHistogram.AtomicHistogram;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
@@ -25,6 +28,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import springfox.documentation.spring.web.json.Json;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -42,37 +48,27 @@ public class TestStepDefinition {
     private MvcResult lastQuery;
 
     private JsonElement jsonElement;
-
     @Given("{string} creates a new account with contract Wood")
     public void createsANewAccountWithContractWood(String owner) throws Exception {
-
-        JsonObject requestClient = new JsonObject();
-        requestClient.addProperty("owner", owner);
-        jsonElement = new JsonObject();
+        CreateAccountRequest createAccountRequest = new CreateAccountRequest(0, Contract.DIAMOND);
         try {
-            this.lastQuery = (MvcResult) this.mockMvc.perform(post("/create")
-                    .content(jsonElement.toString())
+            this.lastQuery = (MvcResult) this.mockMvc.perform(post("/accounts/create")
+                    .content(new ObjectMapper().writeValueAsString(createAccountRequest))
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
                     .accept(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isOk())
                     .andReturn();
-            assertTrue(true);
-            jsonElement.getAsJsonObject().add("owner", requestClient);
+            Account newAccount = new ObjectMapper().readValue(
+                    lastQuery.getResponse().getContentAsString(),
+                    Account.class);
+            assertEquals(newAccount.getContract(), Contract.DIAMOND);
         } catch (Error e) {
-            System.out.println(e);
             throw e;
         }
-
-
     }
 
-    @When("^(.+) verifies in the application his/her account$")
-    public void validating_recuperation(String owner) {
-        assertTrue(true);
-    }
-
-    @Then("^We receive the new account owned by (.+)$")
-    public void validating_persistence(String owner) {
-        assertTrue(true);
+    @When("{string} verifies in the application his\\/her account")
+    public void verifiesInTheApplicationHisHerAccount(String owner) {
     }
 }
 
@@ -108,4 +104,32 @@ public class TestStepDefinition {
         .andExpect(status().isOk());
         //String body = this.lastQuery.andReturn().getResponse().getContentAsString();
         */
+
+/*
+
+    @Given("{string} creates a new account with contract Wood")
+    public void createsANewAccountWithContractWood(String owner) throws Exception {
+
+        JsonObject requestClient = new JsonObject();
+        requestClient.addProperty("owner", owner);
+        jsonElement = new JsonObject();
+        try {
+            jsonElement.getAsJsonObject().add("owner", requestClient);
+            this.lastQuery = (MvcResult) this.mockMvc.perform(post("/clients")
+                    .content(jsonElement.toString())
+                    .contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .accept(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isOk())
+                    .andReturn();
+            Account newAccount = new ObjectMapper().readValue(
+                    lastQuery.getResponse().getContentAsString(),
+                    Account.class);
+            assertTrue(newAccount.getOwner().equals(owner));
+        } catch (Error e) {
+            throw e;
+        }
+
+
+    }
+ */
 

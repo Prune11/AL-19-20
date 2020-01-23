@@ -30,4 +30,12 @@ public class AddTransactionRequest {
         this.amount = amount;
         this.feeAMount = feeAmount;
     }
+
+    public AddTransactionRequest(long transactionId, int accountFrom, int accountTo, double amount) {
+        this.transactionId = transactionId;
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
+        this.amount = amount;
+        this.feeAMount = 0.0;
+    }
 }

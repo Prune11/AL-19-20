@@ -1,6 +1,7 @@
 package fr.polytech.unice.credirama.mea.entities;
 
 import fr.polytech.unice.credirama.mea.entities.dto.AddTransactionRequest;
+import fr.polytech.unice.credirama.mea.entities.dto.MEAAddTransactionRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,8 +25,8 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private Contract contract;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Long> transactionIDs;
+    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private ArrayList<Long> transactionIDs;
 
     private double balance;
 
@@ -86,15 +87,17 @@ public class Account {
         return this;
     }
 
-    public List<Long> addTransaction(AddTransactionRequest transactionRequest) {
+    public Double addTransaction(MEAAddTransactionRequest transactionRequest) {
         this.transactionIDs.add(transactionRequest.getTransactionId());
         if (transactionRequest.getAccountTo() == this.id) {
             this.balance += transactionRequest.getAmount();
+            return 0.0;
         } else {
             this.balance -= transactionRequest.getAmount();
-            this.balance -= transactionRequest.getFeeAMount();
+            double amountFee = transactionRequest.getAmount() * contract.getFee() / 100;
+            this.balance -= amountFee;
+            return amountFee;
         }
-        return this.transactionIDs;
     }
 
     @Override

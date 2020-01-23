@@ -45,4 +45,12 @@ public class Transaction {
         this.feeAmount = feeAmount;
         this.transactionType = transactionType;
     }
+
+    public Transaction(int accountFrom, int accountTo, double amount, TransactionType transactionType) {
+        this.fromId = accountFrom;
+        this.toId = accountTo;
+        this.amount = amount;
+        this.feeAmount = 0.0;
+        this.transactionType = transactionType;
+    }
 }

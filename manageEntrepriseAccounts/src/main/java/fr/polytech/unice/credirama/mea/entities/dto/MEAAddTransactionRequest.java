@@ -1,4 +1,4 @@
-package fr.polytech.unice.credirama.transaction.entities;
+package fr.polytech.unice.credirama.mea.entities.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

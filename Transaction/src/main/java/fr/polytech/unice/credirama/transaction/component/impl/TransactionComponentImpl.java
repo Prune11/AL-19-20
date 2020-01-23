@@ -39,20 +39,22 @@ public class TransactionComponentImpl implements TransactionComponent {
         return transactions;
     }
 
-    public Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType, Contract contract) {
+    public Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType){//, Contract contract) {
         Transaction transactionWithID;
         if (idFrom == 0) {
-            Transaction transaction = new Transaction(0, idTo, amount, 0, transactionType);
+            //Transaction transaction = new Transaction(0, idTo, amount, 0, transactionType);
+            Transaction transaction = new Transaction(0, idTo, amount, transactionType);
             transactionWithID = transactionRepo.save(transaction);
             //TODO save in other database <3
             /*Account accountTo = accountRepo.findById(idTo).get();
             accountTo.addTransaction(transactionWithID);
             accountRepo.save(accountTo);*/
-            enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), 0, idTo, amount, 0.0);
+            enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), 0, idTo, amount);//, 0.0);
         } else {
             //Récupérer le contrat de l'account from
-            double amountFee = amount * contract.getFee() / 100;
-            Transaction transaction = new Transaction(idFrom, idTo, amount, amountFee, transactionType);
+            //double amountFee = amount * contract.getFee() / 100;
+            //Transaction transaction = new Transaction(idFrom, idTo, amount, amountFee, transactionType);
+            Transaction transaction = new Transaction(idFrom, idTo, amount, transactionType);
             transactionWithID = transactionRepo.save(transaction);
             //TODO save in other db
             /*Account accountFrom = accountRepo.findById(idFrom).get();
@@ -61,7 +63,7 @@ public class TransactionComponentImpl implements TransactionComponent {
             accountRepo.save(accountFrom);
             accountTo.addTransaction(transactionWithID);
             accountRepo.save(accountTo);*/
-            enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), idFrom, idTo, amount, amountFee);
+            double feeAmount = (double) enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), idFrom, idTo, amount);
         }
         return transactionWithID;
     }

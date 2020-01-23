@@ -1,8 +1,7 @@
 package fr.polytech.unice.credirama.mea.controller;
 
 import fr.polytech.unice.credirama.mea.component.ManageEnterpriseAccount;
-import fr.polytech.unice.credirama.mea.entities.Contract;
-import fr.polytech.unice.credirama.mea.entities.dto.AddTransactionRequest;
+import fr.polytech.unice.credirama.mea.entities.dto.MEAAddTransactionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,8 @@ public class UpdateDataController {
 
 
     @PostMapping("/add")
-    public boolean addTransaction(AddTransactionRequest transactionRequest) {
+    public Double addTransaction(MEAAddTransactionRequest transactionRequest) {
+        System.out.println("\n" + transactionRequest.toString() + "\n");
         return this.manageEnterpriseAccount.addTransaction(transactionRequest);
     }
 
