@@ -17,17 +17,14 @@ public class MEAAddTransactionRequest {
 
     private double amount;
 
-    //private double feeAmount;
-
     public MEAAddTransactionRequest() {
 
     }
 
-    public MEAAddTransactionRequest(long transactionId, int accountFrom, int accountTo, double amount){// double feeAmount) {
+    public MEAAddTransactionRequest(long transactionId, int accountFrom, int accountTo, double amount){
         this.transactionId = transactionId;
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
         this.amount = amount;
-        //this.feeAmount = feeAmount;
     }
 }

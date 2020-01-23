@@ -22,7 +22,7 @@ public class TransactionController {
     @Autowired
     private TransactionComponent transactionComponent;
 
-
+    //TODO
     @GetMapping("/operations/{id}")
     public List<Transaction> getOperations(@PathVariable(name = "id") int id) {
         List<Integer> ids = new ArrayList<>();
@@ -31,7 +31,7 @@ public class TransactionController {
 
     @PostMapping("/operations")
     public Transaction makeTransaction(@RequestBody TransactionRequest request) {
-        Transaction t = this.transactionComponent.addTransaction(request.getFromId(), request.getToId(), request.getAmount(), request.getType()); //, request.getContract());
+        Transaction t = this.transactionComponent.addTransaction(request.getFromId(), request.getToId(), request.getAmount(), request.getType());
         return t;
     }
 

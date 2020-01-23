@@ -10,7 +10,7 @@ public interface TransactionComponent {
 
     List<Transaction> getOperationsById(List<Integer> ids);
 
-    Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType);//, Contract contract);
+    Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType);
 
     double getTransactionsAndFees(List<Integer> ids);
 

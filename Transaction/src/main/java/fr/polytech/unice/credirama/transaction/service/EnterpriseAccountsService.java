@@ -16,7 +16,6 @@ public class EnterpriseAccountsService {
 
     public Double addTransactionToAccount(long idTransaction, int accountFrom, int accountTo, double amount) {
         MEAAddTransactionRequest request = new MEAAddTransactionRequest(idTransaction, accountFrom, accountTo, amount);
-        //System.out.println("\n" + request.toString() + "\n");
         return this.restTemplate.postForObject(MEA_URL + "/transaction/add", request, Double.class);
     }
 }

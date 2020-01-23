@@ -1,7 +1,6 @@
 package fr.polytech.unice.credirama.transaction.component.impl;
 
 import fr.polytech.unice.credirama.transaction.component.TransactionComponent;
-import fr.polytech.unice.credirama.transaction.entities.Contract;
 import fr.polytech.unice.credirama.transaction.entities.Transaction;
 import fr.polytech.unice.credirama.transaction.entities.TransactionType;
 import fr.polytech.unice.credirama.transaction.repo.TransactionRepo;
@@ -39,32 +38,16 @@ public class TransactionComponentImpl implements TransactionComponent {
         return transactions;
     }
 
-    public Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType){//, Contract contract) {
+    public Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType){
         Transaction transactionWithID;
         if (idFrom == 0) {
-            //Transaction transaction = new Transaction(0, idTo, amount, 0, transactionType);
             Transaction transaction = new Transaction(0, idTo, amount, transactionType);
             transactionWithID = transactionRepo.save(transaction);
-            //TODO save in other database <3
-            /*Account accountTo = accountRepo.findById(idTo).get();
-            accountTo.addTransaction(transactionWithID);
-            accountRepo.save(accountTo);*/
-            enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), 0, idTo, amount);//, 0.0);
+            enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), 0, idTo, amount);
         } else {
-            //Récupérer le contrat de l'account from
-            //double amountFee = amount * contract.getFee() / 100;
-            //Transaction transaction = new Transaction(idFrom, idTo, amount, amountFee, transactionType);
             Transaction transaction = new Transaction(idFrom, idTo, amount, transactionType);
             transactionWithID = transactionRepo.save(transaction);
-            //TODO save in other db
-            /*Account accountFrom = accountRepo.findById(idFrom).get();
-            Account accountTo = accountRepo.findById(idTo).get();
-            accountFrom.addTransaction(transactionWithID);
-            accountRepo.save(accountFrom);
-            accountTo.addTransaction(transactionWithID);
-            accountRepo.save(accountTo);*/
-            double feeAmount = enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), idFrom, idTo, amount).doubleValue();
-            System.out.println("\n" + feeAmount + "\n");
+            double feeAmount = enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), idFrom, idTo, amount);
             transactionWithID.setFeeAmount(feeAmount);
             transactionRepo.save(transactionWithID);
         }

@@ -1,6 +1,5 @@
 package fr.polytech.unice.credirama.mea.entities;
 
-import fr.polytech.unice.credirama.mea.entities.dto.AddTransactionRequest;
 import fr.polytech.unice.credirama.mea.entities.dto.MEAAddTransactionRequest;
 import lombok.*;
 
@@ -89,16 +88,13 @@ public class Account {
 
     public Double addTransaction(MEAAddTransactionRequest transactionRequest) {
         this.transactionIDs.add(transactionRequest.getTransactionId());
-        System.out.println("\n" + transactionRequest + "\n");
-        System.out.println(this.id);
-        if (transactionRequest.getAccountTo() == this.id) {
-            this.balance += transactionRequest.getAmount();
+        if (transactionRequest.getAccountFrom() == this.id) {
+            this.balance -= transactionRequest.getAmount();
             return 0.0;
         } else {
-            this.balance -= transactionRequest.getAmount();
+            this.balance += transactionRequest.getAmount();
             double amountFee = transactionRequest.getAmount() * contract.getFee() / 100;
             this.balance -= amountFee;
-            System.out.println("\n" + amountFee + "\n");
             return amountFee;
         }
     }

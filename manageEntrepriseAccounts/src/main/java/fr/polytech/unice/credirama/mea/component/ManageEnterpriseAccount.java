@@ -3,11 +3,7 @@ package fr.polytech.unice.credirama.mea.component;
 import fr.polytech.unice.credirama.mea.entities.Account;
 import fr.polytech.unice.credirama.mea.entities.Client;
 import fr.polytech.unice.credirama.mea.entities.Contract;
-import fr.polytech.unice.credirama.mea.entities.Transaction;
-import fr.polytech.unice.credirama.mea.entities.TransactionType;
-import fr.polytech.unice.credirama.mea.entities.dto.AddTransactionRequest;
 import fr.polytech.unice.credirama.mea.entities.dto.MEAAddTransactionRequest;
-import fr.polytech.unice.credirama.mea.entities.dto.PrettyDumpResponse;
 
 import java.util.List;
 
