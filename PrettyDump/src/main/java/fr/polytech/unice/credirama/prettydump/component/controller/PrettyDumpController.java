@@ -15,7 +15,8 @@ public class PrettyDumpController {
 
     @GetMapping("")
     public String getPrettyDump() {
-        return this.prettyDump.getPrettyDump();
+        return "ok ca marche frerere";
+        //return this.prettyDump.getPrettyDump();
     }
 
 }
