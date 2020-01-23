@@ -40,3 +40,24 @@ services:
       NOTIFICATION_HOST: notification
       DRONE_HOST: http://drone-server:8080
       KAFKA_HOST: http://kafka:9092
+
+  ############ TRANSACTIONS  #################
+  transactions-server:
+    container-name: creadirama-transaction-server
+    build:
+      context: Transaction
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: target/Transaction-1.0-SNAPSHOT.jar
+    image: credirama-transaction-server:latest
+    expose:
+      - 8084
+    ports:
+      - 8084:8080
+    logging:
+      driver: json-file
+
+    #environment:
+     # NOTIFICATION_HOST: notification
+     # DRONE_HOST: http://drone-server:8080
+     # KAFKA_HOST: http://kafka:9092

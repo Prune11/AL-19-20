@@ -1,6 +1,6 @@
 Feature: Test Feature
 
-  Scenario: Test Scenario
-    Given A new Test
-    When Test is executed
-    Then Test is test
+  Scenario: Scenario 1
+    Given "Roger" creates a new account with contract Wood
+    When "Roger" verifies in the application his/her account
+    Then We receive the new account owned by "Roger"
