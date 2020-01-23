@@ -131,14 +131,14 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
 
     public Double addTransaction(MEAAddTransactionRequest transactionRequest) {
         try {
-            if (transactionRequest.getAccountFrom() != 0) {
-                Account accountFrom = accountRepo.findById(transactionRequest.getAccountTo()).get();
-                accountFrom.addTransaction(transactionRequest);
-                accountRepo.save(accountFrom);
-            }
             Account accountTo = accountRepo.findById(transactionRequest.getAccountTo()).get();
             Double feeAmount = accountTo.addTransaction(transactionRequest);
             accountRepo.save(accountTo);
+            if (transactionRequest.getAccountFrom() != 0) {
+                Account accountFrom = accountRepo.findById(transactionRequest.getAccountFrom()).get();
+                accountFrom.addTransaction(transactionRequest);
+                accountRepo.save(accountFrom);
+            }
             return feeAmount;
         } catch (Exception e) {
             return -1.0;

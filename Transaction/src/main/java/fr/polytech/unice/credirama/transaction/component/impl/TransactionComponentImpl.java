@@ -63,7 +63,10 @@ public class TransactionComponentImpl implements TransactionComponent {
             accountRepo.save(accountFrom);
             accountTo.addTransaction(transactionWithID);
             accountRepo.save(accountTo);*/
-            double feeAmount = (double) enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), idFrom, idTo, amount);
+            double feeAmount = enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), idFrom, idTo, amount).doubleValue();
+            System.out.println("\n" + feeAmount + "\n");
+            transactionWithID.setFeeAmount(feeAmount);
+            transactionRepo.save(transactionWithID);
         }
         return transactionWithID;
     }

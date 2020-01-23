@@ -16,8 +16,8 @@ public class UpdateDataController {
 
 
     @PostMapping("/add")
-    public Double addTransaction(MEAAddTransactionRequest transactionRequest) {
-        System.out.println("\n" + transactionRequest.toString() + "\n");
+    public Double addTransaction(@RequestBody MEAAddTransactionRequest transactionRequest) {
+        //System.out.println("\n" + transactionRequest.toString() + "\n");
         return this.manageEnterpriseAccount.addTransaction(transactionRequest);
     }
 
