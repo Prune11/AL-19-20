@@ -18,13 +18,13 @@ public class TransactionRequest {
 
     private int toId;
 
-    private double feeAmount;
+    private double fees;
 
     public TransactionRequest(double amount, TransactionType type, int fromId, int toId) {
         this.amount = amount;
         this.type = type;
         this.fromId = fromId;
         this.toId = toId;
-        this.feeAmount = 0;
+        this.fees = 0.0;
     }
 }

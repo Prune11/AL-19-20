@@ -14,8 +14,9 @@ public class EnterpriseAccountsService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public void addTransactionToAccount(long idTransaction, int accountFrom, int accountTo, double amount, double feeAmount) {
-        MEAAddTransactionRequest request = new MEAAddTransactionRequest(idTransaction, accountFrom, accountTo, amount, feeAmount);
-        this.restTemplate.postForObject(MEA_URL + "/access/operations", request, MEAAddTransactionRequest.class);
+    public Double addTransactionToAccount(long idTransaction, int accountFrom, int accountTo, double amount) {
+        MEAAddTransactionRequest request = new MEAAddTransactionRequest(idTransaction, accountFrom, accountTo, amount);
+        System.out.println("\n" + request.toString() + "\n");
+        return this.restTemplate.postForObject(MEA_URL + "/transaction/add", request, Double.class);
     }
 }

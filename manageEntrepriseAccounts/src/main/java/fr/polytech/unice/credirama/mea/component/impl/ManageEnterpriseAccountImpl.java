@@ -8,6 +8,7 @@ import fr.polytech.unice.credirama.mea.entities.Contract;
 import fr.polytech.unice.credirama.mea.entities.Transaction;
 import fr.polytech.unice.credirama.mea.entities.dto.AccountDTO;
 import fr.polytech.unice.credirama.mea.entities.dto.AddTransactionRequest;
+import fr.polytech.unice.credirama.mea.entities.dto.MEAAddTransactionRequest;
 import fr.polytech.unice.credirama.mea.repo.AccountRepo;
 import fr.polytech.unice.credirama.mea.repo.ClientRepo;
 import fr.polytech.unice.credirama.mea.repo.TransactionRepo;
@@ -128,7 +129,7 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return "All clients have been deleted.";
     }
 
-    public boolean addTransaction(AddTransactionRequest transactionRequest) {
+    public Double addTransaction(MEAAddTransactionRequest transactionRequest) {
         try {
             if (transactionRequest.getAccountFrom() != 0) {
                 Account accountFrom = accountRepo.findById(transactionRequest.getAccountTo()).get();
@@ -136,12 +137,12 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
                 accountRepo.save(accountFrom);
             }
             Account accountTo = accountRepo.findById(transactionRequest.getAccountTo()).get();
-            accountTo.addTransaction(transactionRequest);
+            Double feeAmount = accountTo.addTransaction(transactionRequest);
             accountRepo.save(accountTo);
+            return feeAmount;
         } catch (Exception e) {
-            return false;
+            return -1.0;
         }
-        return true;
     }
 
 

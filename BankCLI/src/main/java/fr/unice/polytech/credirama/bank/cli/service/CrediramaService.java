@@ -15,6 +15,7 @@ import java.util.List;
 public class CrediramaService {
 
     private static final String CREDIRAMA_URL = "http://localhost:8081";
+    private static final String TRANSACTION_URL = "http://localhost:8084";
 //    private static final String CREDIRAMA_URL = "https://credirama.free.beeceptor.com";
 
     @Autowired
@@ -33,7 +34,7 @@ public class CrediramaService {
 
     public Transaction makeTransaction(int originAccountKey, int destinationAccountKey, double amount, TransactionType transactionType) {
         TransactionRequest request = new TransactionRequest(amount, transactionType, originAccountKey, destinationAccountKey);
-        return this.restTemplate.postForObject(CREDIRAMA_URL + "/access/operations", request, Transaction.class);
+        return this.restTemplate.postForObject(TRANSACTION_URL + "/access/operations", request, Transaction.class);
     }
 
     /************ GET *************/
