@@ -16,4 +16,5 @@ public interface TransactionComponent {
 
     List<Transaction> getAllTransactions();
 
+    Double getTotalFees(int id);
 }

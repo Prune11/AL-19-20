@@ -68,7 +68,7 @@ public class CrediramaService {
     }
 
     public Double getTotalFees(int accountId) {
-        return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/fees/" + accountId, Double.class);
+        return this.restTemplate.getForObject(TRANSACTION_URL + "/access/fees/" + accountId, Double.class);
     }
 
     /************ DELETE *************/

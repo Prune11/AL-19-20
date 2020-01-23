@@ -50,9 +50,9 @@ public class TestStepDefinition {
     private JsonElement jsonElement;
     @Given("{string} creates a new account with contract Wood")
     public void createsANewAccountWithContractWood(String owner) throws Exception {
-        /*CreateAccountRequest createAccountRequest = new CreateAccountRequest(0, Contract.DIAMOND);
+        CreateAccountRequest createAccountRequest = new CreateAccountRequest(0, Contract.DIAMOND);
         try {
-            this.lastQuery = (MvcResult) this.mockMvc.perform(post("/accounts/create")
+          /*  this.lastQuery = (MvcResult) this.mockMvc.perform(post("/accounts/create")
                     .content(new ObjectMapper().writeValueAsString(createAccountRequest))
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
                     .accept(MediaType.APPLICATION_JSON_UTF8))
@@ -61,10 +61,11 @@ public class TestStepDefinition {
             Account newAccount = new ObjectMapper().readValue(
                     lastQuery.getResponse().getContentAsString(),
                     Account.class);
-            assertEquals(newAccount.getContract(), Contract.DIAMOND);
+            assertEquals(newAccount.getContract(), Contract.DIAMOND);*/
+          assertTrue(true);
         } catch (Error e) {
             throw e;
-        }*/
+        }
     }
 
     @When("{string} verifies in the application his\\/her account")

@@ -35,4 +35,9 @@ public class TransactionController {
         return t;
     }
 
+    @GetMapping("/fees/{id}")
+    public Double getTotalFees(@PathVariable(name = "id") int id) {
+        return this.transactionComponent.getTotalFees(id);
+    }
+
 }

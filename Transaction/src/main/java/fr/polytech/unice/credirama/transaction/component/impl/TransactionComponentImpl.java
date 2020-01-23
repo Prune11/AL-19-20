@@ -41,6 +41,7 @@ public class TransactionComponentImpl implements TransactionComponent {
     public Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType){
         Transaction transactionWithID;
         if (idFrom == 0) {
+            //Transaction transaction = new Transaction(0, idTo, amount, 0, transactionType);
             Transaction transaction = new Transaction(0, idTo, amount, transactionType);
             transactionWithID = transactionRepo.save(transaction);
             enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), 0, idTo, amount);
@@ -75,4 +76,16 @@ public class TransactionComponentImpl implements TransactionComponent {
         return transactions;
     }
 
+    @Override
+    public Double getTotalFees(int id) {
+        Iterator<Transaction> transactionIterator = transactionRepo.findAll().iterator();
+        double total = 0;
+        while (transactionIterator.hasNext()) {
+            Transaction t = transactionIterator.next();
+            if (t.getFromId() == id) {
+                total += t.getFeeAmount();
+            }
+        }
+        return total;
+    }
 }
