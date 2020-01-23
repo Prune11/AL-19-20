@@ -9,14 +9,20 @@ import gherkin.deps.com.google.gson.JsonParser;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.HdrHistogram.AtomicHistogram;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
+
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import springfox.documentation.spring.web.json.Json;
 
@@ -26,34 +32,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
+@SpringBootTest(classes = TestStepDefinition.class)
 public class TestStepDefinition {
 
     @Autowired
     private MockMvc mockMvc;
 
-    private ResultActions lastQuery;
+    //private ResultActions lastQuery;
+    private MvcResult lastQuery;
 
-    @Autowired
     private JsonElement jsonElement;
 
     @Given("{string} creates a new account with contract Wood")
     public void createsANewAccountWithContractWood(String owner) throws Exception {
 
-        /*JsonObject requestClient = new JsonObject();
+        JsonObject requestClient = new JsonObject();
         requestClient.addProperty("owner", owner);
-        jsonElement.getAsJsonObject().add("owner", requestClient);
+        jsonElement = new JsonObject();
         try {
-            this.lastQuery = (ResultActions) this.mockMvc.perform(post("/clients")
+            this.lastQuery = (MvcResult) this.mockMvc.perform(post("/create")
                     .content(jsonElement.toString())
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
                     .accept(MediaType.APPLICATION_JSON_UTF8))
-                    .andReturn();*/
-            assertTrue( true);
-        /*}
-        catch(Error e) {
+                    .andReturn();
+            assertTrue(true);
+            jsonElement.getAsJsonObject().add("owner", requestClient);
+        } catch (Error e) {
             System.out.println(e);
             throw e;
-        }*/
+        }
 
 
     }
