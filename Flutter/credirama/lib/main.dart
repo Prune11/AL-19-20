@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:credirama/pages/homepage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -21,9 +22,10 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
       ),
-      home: MyHomePage(title: 'Credirama'),
+     // home: MyHomePage(title: 'Credirama'),
+      home : HomePage(),
     );
   }
 }
