@@ -1,3 +1,9 @@
+# Week 04
+- Externalize Transaction Service
+- Externalize PrettyDump Service
+- Starting Dockerisation
+- Orange Flag
+
 # Week 03
 - Update diagrams, Scope and architecture according to the new specifications given
 - Add Drone CI pipeline
