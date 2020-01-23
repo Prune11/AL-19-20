@@ -42,13 +42,13 @@ services:
       KAFKA_HOST: http://kafka:9092
 
   ############ TRANSACTIONS  #################
-  transactions-server:
-    container-name: creadirama-transaction-server
+  transaction-server:
+    container_name: credirama-transaction-server
     build:
       context: Transaction
       dockerfile: Dockerfile
       args:
-        JAR_FILE: target/Transaction-1.0-SNAPSHOT.jar
+        JAR_FILE: target/transaction-1.0-SNAPSHOT.jar
     image: credirama-transaction-server:latest
     expose:
       - 8084
