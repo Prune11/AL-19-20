@@ -2,7 +2,7 @@ package fr.unice.polytech.credirama.merchant.cli.entity;
 
 import lombok.*;
 
-import java.util.Date;
+import java.util.Calendar;
 
 @Data
 @NoArgsConstructor
@@ -23,6 +23,6 @@ public class Transaction {
 
     private TransactionType transactionType;
 
-    private Date date;
+    private Calendar date;
 
 }

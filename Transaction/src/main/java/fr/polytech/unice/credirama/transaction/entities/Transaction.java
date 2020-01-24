@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Calendar;
 import java.util.Date;
 
 @ToString
@@ -30,7 +31,7 @@ public class Transaction {
 
     private double feeAmount;
 
-    private Date date;
+    private Calendar date;
 
 
     public Transaction() {
@@ -43,7 +44,8 @@ public class Transaction {
         this.amount = amount;
         this.feeAmount = feeAmount;
         this.transactionType = transactionType;
-        this.date = new Date();
+        this.date = Calendar.getInstance();
+        this.date.setTime(new Date());
     }
 
     public Transaction(int accountFrom, int accountTo, double amount, TransactionType transactionType) {
@@ -52,6 +54,7 @@ public class Transaction {
         this.amount = amount;
         this.feeAmount = 0.0;
         this.transactionType = transactionType;
-        this.date = new Date();
+        this.date = Calendar.getInstance();
+        this.date.setTime(new Date());
     }
 }
