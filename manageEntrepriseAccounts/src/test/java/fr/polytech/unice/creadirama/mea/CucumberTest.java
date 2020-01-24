@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 
 
 @RunWith(Cucumber.class)
-@AutoConfigureMockMvc
 @CucumberOptions(features = "src/test/resources/features", plugin = {"pretty", "json:target/cucumber-report.json"})
 public class CucumberTest {
 
