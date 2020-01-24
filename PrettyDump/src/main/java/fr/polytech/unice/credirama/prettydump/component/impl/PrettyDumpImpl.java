@@ -14,7 +14,7 @@ public class PrettyDumpImpl implements PrettyDump {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String TRANSACTION_URL = "http://localhost:8085";
+    private static final String TRANSACTION_URL = "http://localhost:8084";
     private static final String MEA_URL = "http://localhost:8081";
 
     @Override
@@ -22,8 +22,8 @@ public class PrettyDumpImpl implements PrettyDump {
         String globalresponse = "";
         String responseTransaction = "";
         String responseMea = "";
-        responseTransaction = this.restTemplate.getForObject(TRANSACTION_URL + "/prettydump", String.class);
-        responseMea = this.restTemplate.getForObject(MEA_URL + "/prettydump", String.class);
+        responseTransaction = this.restTemplate.getForObject(TRANSACTION_URL + "/prettyDump", String.class);
+        responseMea = this.restTemplate.getForObject(MEA_URL + "/prettyDump", String.class);
 
         Calendar date = Calendar.getInstance();
         int year = date.get(Calendar.YEAR);
@@ -35,8 +35,7 @@ public class PrettyDumpImpl implements PrettyDump {
         int millisecond = date.get(Calendar.MILLISECOND);
 
         String timestamp = year + "-" + month + "-" + day + "-" + hour + "-" + minute + "-" + second + "-" + millisecond;
-
-
+        globalresponse = responseTransaction + "\n" + responseMea + "\n" + timestamp + "\n";
         return globalresponse;
     }
 

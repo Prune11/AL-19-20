@@ -18,7 +18,7 @@ public class Account {
 
     private Contract contract;
 
-    private List<Transaction> transactions;
+    private List<Long> transactions;
 
     private double balance;
 

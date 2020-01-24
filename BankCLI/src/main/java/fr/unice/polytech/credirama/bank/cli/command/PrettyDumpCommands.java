@@ -15,24 +15,24 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 
 @ShellComponent
 public class PrettyDumpCommands {
 
     @Autowired
     private CrediramaService crediramaService;
-
+    
     @ShellMethod(value = "Get a pretty dump of the whole system", key = "dump")
     public String prettyDump(@ShellOption(value = {"-p", "--pretty-print"}, help = "Pretty print Json") boolean beautify,
                              @ShellOption(value = {"-s", "--save"}, help = "Save pretty dump in a json file") boolean save) throws JsonProcessingException {
-        PrettyDumpResponse dump = crediramaService.prettyDump();
+        String dump = crediramaService.prettyDump();
         String result = new ObjectMapper().writeValueAsString(dump);
         if (beautify) {
             result = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(dump);
         }
-
         if (save) {
-            try (PrintWriter writer = new PrintWriter(new FileWriter(dump.getTimestamp() + ".json", true))) {
+            try (PrintWriter writer = new PrintWriter(new FileWriter(Calendar.getInstance().getTime().toString() + ".json", true))) {
                 writer.print(result);
                 return "The pretty dump json file is created : \n" + result;
             } catch (IOException e) {

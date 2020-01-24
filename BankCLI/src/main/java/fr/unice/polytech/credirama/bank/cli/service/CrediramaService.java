@@ -16,7 +16,7 @@ public class CrediramaService {
 
     private static final String CREDIRAMA_URL = "http://localhost:8081";
     private static final String TRANSACTION_URL = "http://localhost:8084";
-//    private static final String CREDIRAMA_URL = "https://credirama.free.beeceptor.com";
+    private static final String PRETTY_DUMP_URL = "http://localhost:8085";
 
     @Autowired
     private RestTemplate restTemplate;
@@ -102,7 +102,8 @@ public class CrediramaService {
 
     /************ PRETTY DUMP *************/
 
-    public PrettyDumpResponse prettyDump() {
-        return this.restTemplate.getForObject(CREDIRAMA_URL + "/prettyDump", PrettyDumpResponse.class);
+
+    public String prettyDump() {
+        return this.restTemplate.getForObject(PRETTY_DUMP_URL + "/prettyDump", String.class);
     }
 }
