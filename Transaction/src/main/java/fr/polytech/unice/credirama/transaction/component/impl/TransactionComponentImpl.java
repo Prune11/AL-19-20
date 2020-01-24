@@ -8,9 +8,8 @@ import fr.polytech.unice.credirama.transaction.service.EnterpriseAccountsService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.time.Instant;
+import java.util.*;
 
 @Component
 public class TransactionComponentImpl implements TransactionComponent {
@@ -86,5 +85,17 @@ public class TransactionComponentImpl implements TransactionComponent {
             }
         }
         return total;
+    }
+
+    //TODO check if tomorrow for dateTo
+    public List<Transaction> getAllReceivedTransactionsByUserIdBetweenToDates(Integer id, Calendar dateFrom, Calendar dateTo) {
+        List<Transaction> userTransactions = this.transactionRepo.getTransactionsByToId(id);
+        List<Transaction> result = new ArrayList<>();
+        for(Transaction transaction : userTransactions) {
+            if (transaction.getDate().after(dateFrom) && transaction.getDate().before(dateTo)){
+                result.add(transaction);
+            }
+        }
+        return result;
     }
 }

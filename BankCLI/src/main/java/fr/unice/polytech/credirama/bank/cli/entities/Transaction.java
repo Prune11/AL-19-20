@@ -2,6 +2,8 @@ package fr.unice.polytech.credirama.bank.cli.entities;
 
 import lombok.*;
 
+import java.util.Calendar;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,5 +22,7 @@ public class Transaction {
     private double feeAmount;
 
     private TransactionType transactionType;
+
+    private Calendar date;
 
 }

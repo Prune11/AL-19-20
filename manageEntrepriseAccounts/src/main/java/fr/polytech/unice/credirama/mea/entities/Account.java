@@ -11,6 +11,7 @@ import java.util.Objects;
 @ToString
 @EqualsAndHashCode
 @Entity
+@Data
 public class Account {
 
     @Id

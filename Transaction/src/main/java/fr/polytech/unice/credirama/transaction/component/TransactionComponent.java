@@ -1,9 +1,10 @@
 package fr.polytech.unice.credirama.transaction.component;
 
-import fr.polytech.unice.credirama.transaction.entities.Contract;
 import fr.polytech.unice.credirama.transaction.entities.Transaction;
 import fr.polytech.unice.credirama.transaction.entities.TransactionType;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public interface TransactionComponent {
@@ -17,4 +18,6 @@ public interface TransactionComponent {
     List<Transaction> getAllTransactions();
 
     Double getTotalFees(int id);
+
+    List<Transaction> getAllReceivedTransactionsByUserIdBetweenToDates(Integer id, Calendar dateFrom, Calendar dateTo);
 }
