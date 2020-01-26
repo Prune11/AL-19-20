@@ -78,8 +78,8 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
         return account.resultToSend();
     }
 
-    public Account updateClient(Integer id, String newOwner) {
-        Client client = clientRepo.findById(id).get();
+    public Account updateClient(Integer id, Integer newOwner) {
+        Client client = clientRepo.findById(newOwner).get();
         Account account = accountRepo.findById(id).get();
         account.setOwner(client);
         accountRepo.save(account);

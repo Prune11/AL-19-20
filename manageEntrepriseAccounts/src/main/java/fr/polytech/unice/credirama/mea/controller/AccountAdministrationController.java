@@ -44,7 +44,7 @@ public class AccountAdministrationController {
     }
 
     @PostMapping("/update/{id}/owner")
-    public Account updateClient(@PathVariable(name = "id") Integer id, @RequestBody String newOwner){
+    public Account updateClient(@PathVariable(name = "id") Integer id, @RequestBody Integer newOwner){
         return this.manageEnterpriseAccount.updateClient(id, newOwner);
     }
 

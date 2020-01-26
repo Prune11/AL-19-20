@@ -23,7 +23,7 @@ public interface ManageEnterpriseAccount {
 
     Account updateContract(Integer id, Contract contract);
 
-    Account updateClient(Integer id, String newOwner);
+    Account updateClient(Integer id, Integer newOwner);
 
     String deleteAccount(Integer id);
 
