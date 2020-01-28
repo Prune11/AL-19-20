@@ -1,10 +1,10 @@
-package fr.polytech.unice.creadirama.mea;
+package fr.polytech.unice.creadirama.transaction;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.polytech.unice.credirama.mea.MeaApp;
+import fr.polytech.unice.credirama.transaction.TransactionApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.io.IOException;
 
 @WebAppConfiguration
-@ContextConfiguration(classes = MeaApp.class)
+@ContextConfiguration(classes = TransactionApp.class)
 @AutoConfigureMockMvc
 public abstract class AbstractStep {
 

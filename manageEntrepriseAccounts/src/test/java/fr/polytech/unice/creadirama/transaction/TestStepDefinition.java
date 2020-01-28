@@ -1,4 +1,4 @@
-package fr.polytech.unice.creadirama.mea;
+package fr.polytech.unice.creadirama.transaction;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.polytech.unice.credirama.mea.entities.Account;
