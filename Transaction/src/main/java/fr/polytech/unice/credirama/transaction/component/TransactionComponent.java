@@ -2,9 +2,9 @@ package fr.polytech.unice.credirama.transaction.component;
 
 import fr.polytech.unice.credirama.transaction.entities.Transaction;
 import fr.polytech.unice.credirama.transaction.entities.TransactionType;
+import fr.polytech.unice.credirama.transaction.entities.dto.TransactionsBtw2DatesResponse;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public interface TransactionComponent {
@@ -19,5 +19,5 @@ public interface TransactionComponent {
 
     Double getTotalFees(int id);
 
-    List<Transaction> getAllReceivedTransactionsByUserIdBetweenToDates(Integer id, Calendar dateFrom, Calendar dateTo);
+    TransactionsBtw2DatesResponse getAllReceivedTransactionsByUserIdBetweenToDates(Integer id, GregorianCalendar dateFrom, GregorianCalendar dateTo);
 }

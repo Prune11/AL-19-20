@@ -3,6 +3,7 @@ package fr.polytech.unice.credirama.transaction.component.impl;
 import fr.polytech.unice.credirama.transaction.component.TransactionComponent;
 import fr.polytech.unice.credirama.transaction.entities.Transaction;
 import fr.polytech.unice.credirama.transaction.entities.TransactionType;
+import fr.polytech.unice.credirama.transaction.entities.dto.TransactionsBtw2DatesResponse;
 import fr.polytech.unice.credirama.transaction.repo.TransactionRepo;
 import fr.polytech.unice.credirama.transaction.service.EnterpriseAccountsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,14 +89,24 @@ public class TransactionComponentImpl implements TransactionComponent {
     }
 
     //TODO check if tomorrow for dateTo
-    public List<Transaction> getAllReceivedTransactionsByUserIdBetweenToDates(Integer id, Calendar dateFrom, Calendar dateTo) {
+    public TransactionsBtw2DatesResponse getAllReceivedTransactionsByUserIdBetweenToDates(Integer id, GregorianCalendar dateFrom, GregorianCalendar dateTo) {
         List<Transaction> userTransactions = this.transactionRepo.getTransactionsByToId(id);
-        List<Transaction> result = new ArrayList<>();
+        Map<GregorianCalendar, List<Transaction>> result = new HashMap<>();
+        GregorianCalendar calendar = new GregorianCalendar(dateFrom.get(Calendar.YEAR), dateFrom.get(Calendar.MONTH), dateFrom.get(Calendar.DAY_OF_MONTH));
+        result.put(calendar, new ArrayList<>());
+        while(!calendar.after(dateTo)) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            result.put(calendar, new ArrayList<>());
+        }
         for(Transaction transaction : userTransactions) {
-            if (transaction.getDate().after(dateFrom) && transaction.getDate().before(dateTo)){
-                result.add(transaction);
+            Calendar date = transaction.getDate();
+            if (date.after(dateFrom) && date.before(dateTo)){
+                GregorianCalendar g = new GregorianCalendar(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
+                List<Transaction> transactions = result.get(g);
+                transactions.add(transaction);
+                result.put(g, transactions);
             }
         }
-        return result;
+        return new TransactionsBtw2DatesResponse(result);
     }
 }
