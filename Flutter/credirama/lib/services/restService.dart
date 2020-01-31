@@ -6,8 +6,8 @@ class RestService {
   String _mea = "192.168.43.190:8081";
   String _prettyDump = "192.168.43.190:8085";
 
-  Future<double> getBalance() async {
-    var url = new Uri.http(_mea, '/access/balance/1');
+  Future<double> getBalance(int account) async {
+    var url = new Uri.http(_mea, '/access/balance/' + account.toString());
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -21,7 +21,10 @@ class RestService {
   }
 
   void getPrettyDump() async {
-    final response = await http.get('http://10.0.2.2.:8081/access/balance/1');
-    print("ok" + response.toString());
+    print("requete envoyée");
+    var url = new Uri.http(_prettyDump, '/prettyDump');
+    var response = await http.get(url);
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
   }
 }

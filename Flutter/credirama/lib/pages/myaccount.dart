@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:credirama/common/MyAppBar.dart';
 import 'package:credirama/data/User.dart';
 import 'package:credirama/model/transactionObject.dart';
+import 'package:credirama/services/restService.dart';
 import 'package:credirama/widget/transaction.dart';
 import 'package:credirama/pages/analytics.dart';
 import 'package:credirama/common/myDrawer.dart';
@@ -23,6 +24,12 @@ class _MyAccountState extends State<MyAccount> {
 
   @override
   Widget build(BuildContext context) {
+    RestService restService = new RestService();
+    //récupère la balance de l'account 1
+    double balance;
+    restService.getBalance(1).then((value) {
+      balance = value;
+    });
     return Scaffold(
         appBar: MyAppBar(),
         drawer: MyDrawer(),
