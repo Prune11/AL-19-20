@@ -1,3 +1,9 @@
+# Week 05
+- Improving contract impact 
+- Implementation AnalyzeData service
+- UI Client minimal navigation 
+- Orange flag
+
 # Week 04
 - Externalize Transaction Service
 - Externalize PrettyDump Service
