@@ -1,12 +1,21 @@
 package fr.polytech.unice.creadirama.analyse.controller;
 
 import fr.polytech.unice.creadirama.analyse.component.AnalyseData;
+import fr.polytech.unice.creadirama.analyse.dto.FeeBtw2DateRequestDTO;
+import fr.polytech.unice.creadirama.analyse.dto.FeeBtw2DateResponseDTO;
+import fr.polytech.unice.creadirama.analyse.dto.FeeRequestDTO;
+import fr.polytech.unice.creadirama.analyse.dto.FeeResponseDTO;
+import fr.polytech.unice.creadirama.analyse.entity.FeeBtw2Day;
+import fr.polytech.unice.creadirama.analyse.entity.Transaction;
+import fr.polytech.unice.creadirama.analyse.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/analyse")
@@ -15,9 +24,31 @@ public class AnalyseDataController {
     @Autowired
     private AnalyseData analyseData;
 
-    @GetMapping("/hello")
-    public String helloWorld() {
-        double res = analyseData.getAverageFromTransaction(new ArrayList<>());
-        return "World!" + res;
+    @Autowired
+    private TransactionService transactionService;
+
+    @PostMapping("/fees/day")
+    public FeeResponseDTO sumFeePerDat(@Valid @RequestBody FeeRequestDTO request) {
+        List<Transaction> transactions = transactionService.getTransactionsFor1Day(request.getDate());
+        double sum = analyseData.sumFeesPerDay(transactions);
+        double avg = analyseData.avgFeePerDay(transactions);
+        FeeResponseDTO response = new FeeResponseDTO(request.getDate(), request.getAccountId(), sum, avg, transactions.size());
+        return response;
+    }
+
+    @PostMapping("/fees/btw/day")
+    public FeeBtw2DateResponseDTO sumFeeBtw2Date(@Valid @RequestBody FeeBtw2DateRequestDTO request) {
+        Map<Calendar, List<Transaction>> transactionPerDay = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo());
+        FeeBtw2Day feeBtw2Day = analyseData.sumBetweenTwoDate(transactionPerDay);
+        FeeBtw2DateResponseDTO response = new FeeBtw2DateResponseDTO(request.getFrom(),
+                request.getTo(),
+                request.getAccountId(),
+                feeBtw2Day.getSumFeeBtwDay(),
+                feeBtw2Day.getAvgFeeBtw(),
+                0,
+                0,
+                new HashMap<>(),
+                0);
+        return response;
     }
 }
