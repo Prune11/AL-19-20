@@ -10,11 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.GregorianCalendar;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,18 +21,18 @@ public class AnalyseDataTest {
     @Autowired
     private AnalyseData analyseData;
 
-    private List<Transaction> transactions;
+    private ArrayList<Transaction> transactions;
 
     @Before
     public void setup() {
-        List<Transaction> transactions = new ArrayList<>();
-        transactions.add(new Transaction(0, 0, 0, 50, TransactionType.TRANSFER, 0.5, Calendar.getInstance()));
-        transactions.add(new Transaction(0, 0, 0, 50, TransactionType.TRANSFER, 1.2, Calendar.getInstance()));
-        transactions.add(new Transaction(0, 0, 0, 50, TransactionType.TRANSFER, 0.2, Calendar.getInstance()));
-        transactions.add(new Transaction(0, 0, 0, 50, TransactionType.TRANSFER, 0.9, Calendar.getInstance()));
-        transactions.add(new Transaction(0, 0, 0, 50, TransactionType.TRANSFER, 2.5, Calendar.getInstance()));
-        transactions.add(new Transaction(0, 0, 0, 50, TransactionType.TRANSFER, 0.4, Calendar.getInstance()));
-        transactions.add(new Transaction(0, 0, 0, 50, TransactionType.TRANSFER, 0.8, Calendar.getInstance()));
+        transactions = new ArrayList<>();
+        transactions.add(new Transaction(0, 0, 50, 0.5, TransactionType.TRANSFER, new GregorianCalendar()));
+        transactions.add(new Transaction(0, 0, 50, 1.2, TransactionType.TRANSFER, new GregorianCalendar()));
+        transactions.add(new Transaction(0, 0, 50, 0.2, TransactionType.TRANSFER, new GregorianCalendar()));
+        transactions.add(new Transaction(0, 0, 50,  0.9, TransactionType.TRANSFER, new GregorianCalendar()));
+        transactions.add(new Transaction(0, 0, 50,  2.5, TransactionType.TRANSFER, new GregorianCalendar()));
+        transactions.add(new Transaction(0, 0, 50, 0.4, TransactionType.TRANSFER, new GregorianCalendar()));
+        transactions.add(new Transaction(0, 0, 50, 0.8, TransactionType.TRANSFER, new GregorianCalendar()));
     }
 
     @Test

@@ -54,6 +54,12 @@ public class TransactionComponentImpl implements TransactionComponent {
             transactionWithID.setFeeAmount(feeAmount);
             transactionRepo.save(transactionWithID);
         }
+
+
+        //TODO c'est un peu sale ca
+        transactionWithID.getDate().setTransaction(null); //to avoid stackOverFlow
+
+
         return transactionWithID;
     }
 
