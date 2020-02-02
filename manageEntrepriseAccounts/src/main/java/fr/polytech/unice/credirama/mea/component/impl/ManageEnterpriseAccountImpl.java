@@ -3,7 +3,7 @@ package fr.polytech.unice.credirama.mea.component.impl;
 import fr.polytech.unice.credirama.mea.component.ManageEnterpriseAccount;
 import fr.polytech.unice.credirama.mea.entities.Account;
 import fr.polytech.unice.credirama.mea.entities.Client;
-import fr.polytech.unice.credirama.mea.entities.Contract;
+import fr.polytech.unice.credirama.mea.entities.contract.Contract;
 import fr.polytech.unice.credirama.mea.entities.dto.AccountDTO;
 import fr.polytech.unice.credirama.mea.entities.dto.MEAAddTransactionRequest;
 import fr.polytech.unice.credirama.mea.repo.AccountRepo;

@@ -1,5 +1,6 @@
 package fr.polytech.unice.credirama.mea.entities;
 
+import fr.polytech.unice.credirama.mea.entities.contract.Contract;
 import fr.polytech.unice.credirama.mea.entities.dto.MEAAddTransactionRequest;
 import lombok.*;
 
@@ -94,7 +95,7 @@ public class Account {
             return 0.0;
         } else {
             this.balance += transactionRequest.getAmount();
-            double amountFee = transactionRequest.getAmount() * contract.getFee() / 100;
+            double amountFee = contract.getFee(transactionRequest.getAmount());
             this.balance -= amountFee;
             return amountFee;
         }

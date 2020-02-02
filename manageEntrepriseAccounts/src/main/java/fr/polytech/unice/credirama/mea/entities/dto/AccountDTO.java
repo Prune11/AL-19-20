@@ -1,15 +1,11 @@
 package fr.polytech.unice.credirama.mea.entities.dto;
 
 import fr.polytech.unice.credirama.mea.entities.Account;
-import fr.polytech.unice.credirama.mea.entities.Client;
-import fr.polytech.unice.credirama.mea.entities.Contract;
-import fr.polytech.unice.credirama.mea.entities.Transaction;
+import fr.polytech.unice.credirama.mea.entities.contract.Contract;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @ToString
 @EqualsAndHashCode

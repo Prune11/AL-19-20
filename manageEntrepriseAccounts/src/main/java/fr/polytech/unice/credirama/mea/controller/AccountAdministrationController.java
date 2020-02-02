@@ -2,7 +2,7 @@ package fr.polytech.unice.credirama.mea.controller;
 
 import fr.polytech.unice.credirama.mea.component.ManageEnterpriseAccount;
 import fr.polytech.unice.credirama.mea.entities.Account;
-import fr.polytech.unice.credirama.mea.entities.Contract;
+import fr.polytech.unice.credirama.mea.entities.contract.Contract;
 import fr.polytech.unice.credirama.mea.entities.dto.CreateAccountRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

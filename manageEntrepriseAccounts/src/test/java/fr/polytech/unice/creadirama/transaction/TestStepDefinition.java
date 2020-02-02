@@ -3,7 +3,7 @@ package fr.polytech.unice.creadirama.transaction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.polytech.unice.credirama.mea.entities.Account;
 import fr.polytech.unice.credirama.mea.entities.Client;
-import fr.polytech.unice.credirama.mea.entities.Contract;
+import fr.polytech.unice.credirama.mea.entities.contract.Contract;
 import fr.polytech.unice.credirama.mea.entities.dto.CreateAccountRequest;
 
 import io.cucumber.java.en.Given;

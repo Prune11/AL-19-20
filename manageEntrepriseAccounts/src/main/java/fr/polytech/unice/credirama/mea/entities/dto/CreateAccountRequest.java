@@ -1,6 +1,6 @@
 package fr.polytech.unice.credirama.mea.entities.dto;
 
-import fr.polytech.unice.credirama.mea.entities.Contract;
+import fr.polytech.unice.credirama.mea.entities.contract.Contract;
 
 import java.util.Objects;
 
