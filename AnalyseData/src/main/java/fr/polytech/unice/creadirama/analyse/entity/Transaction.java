@@ -1,20 +1,22 @@
 package fr.polytech.unice.creadirama.analyse.entity;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
-@Data
-@EqualsAndHashCode
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode
+@Entity
+@Data
 public class Transaction {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private int fromId;
@@ -27,6 +29,47 @@ public class Transaction {
 
     private double feeAmount;
 
-    private Calendar date;
+    @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CrediramaDate date;
 
+
+    public Transaction() {
+
+    }
+
+    public Transaction(int accountFrom, int accountTo, double amount, double feeAmount, TransactionType transactionType) {
+        this.fromId = accountFrom;
+        this.toId = accountTo;
+        this.amount = amount;
+        this.feeAmount = feeAmount;
+        this.transactionType = transactionType;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        this.date = new CrediramaDate(cal);
+        this.date.setTransaction(this);
+    }
+
+    public Transaction(int accountFrom, int accountTo, double amount, TransactionType transactionType) {
+        this.fromId = accountFrom;
+        this.toId = accountTo;
+        this.amount = amount;
+        this.feeAmount = 0.0;
+        this.transactionType = transactionType;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        this.date = new CrediramaDate(cal);
+        this.date.setTransaction(this);
+    }
+
+    //Only use for testing
+    public Transaction(int accountFrom, int accountTo, double amount, double feeAmount, TransactionType transactionType, GregorianCalendar calendar) {
+        this.fromId = accountFrom;
+        this.toId = accountTo;
+        this.amount = amount;
+        this.feeAmount = feeAmount;
+        this.transactionType = transactionType;
+        this.date = new CrediramaDate(calendar);
+        this.date.setTransaction(this);
+    }
 }
+

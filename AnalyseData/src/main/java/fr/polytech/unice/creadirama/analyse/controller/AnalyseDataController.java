@@ -5,6 +5,7 @@ import fr.polytech.unice.creadirama.analyse.dto.FeeBtw2DateRequestDTO;
 import fr.polytech.unice.creadirama.analyse.dto.FeeBtw2DateResponseDTO;
 import fr.polytech.unice.creadirama.analyse.dto.FeeRequestDTO;
 import fr.polytech.unice.creadirama.analyse.dto.FeeResponseDTO;
+import fr.polytech.unice.creadirama.analyse.entity.CrediramaDate;
 import fr.polytech.unice.creadirama.analyse.entity.FeeBtw2Day;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import fr.polytech.unice.creadirama.analyse.service.TransactionService;
@@ -12,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/analyse")
@@ -29,7 +27,7 @@ public class AnalyseDataController {
 
     @PostMapping("/fees/day")
     public FeeResponseDTO sumFeePerDat(@Valid @RequestBody FeeRequestDTO request) {
-        List<Transaction> transactions = transactionService.getTransactionsFor1Day(request.getDate());
+        ArrayList<Transaction> transactions = transactionService.getTransactionsFor1Day(request.getDate());
         double sum = analyseData.sumFeesPerDay(transactions);
         double avg = analyseData.avgFeePerDay(transactions);
         FeeResponseDTO response = new FeeResponseDTO(request.getDate(), request.getAccountId(), sum, avg, transactions.size());
@@ -38,7 +36,7 @@ public class AnalyseDataController {
 
     @PostMapping("/fees/btw/day")
     public FeeBtw2DateResponseDTO sumFeeBtw2Date(@Valid @RequestBody FeeBtw2DateRequestDTO request) {
-        Map<Calendar, List<Transaction>> transactionPerDay = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo());
+        Map<CrediramaDate, ArrayList<Transaction>> transactionPerDay = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo());
         FeeBtw2Day feeBtw2Day = analyseData.sumBetweenTwoDate(transactionPerDay);
         FeeBtw2DateResponseDTO response = new FeeBtw2DateResponseDTO(request.getFrom(),
                 request.getTo(),

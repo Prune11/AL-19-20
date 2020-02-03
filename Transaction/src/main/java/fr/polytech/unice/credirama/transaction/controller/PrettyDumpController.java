@@ -5,6 +5,7 @@ import fr.polytech.unice.credirama.transaction.entities.Transaction;
 import fr.polytech.unice.credirama.transaction.repo.TransactionRepo;
 import gherkin.deps.com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +20,9 @@ public class PrettyDumpController {
     @Autowired
     TransactionRepo repo;
 
+    @Qualifier("transactionComponent")
     @Autowired
-    TransactionComponent component;
+    private TransactionComponent component;
 
     @GetMapping("")
     public String getTransaction() {

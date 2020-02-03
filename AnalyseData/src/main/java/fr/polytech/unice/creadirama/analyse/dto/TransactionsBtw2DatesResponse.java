@@ -1,11 +1,11 @@
 package fr.polytech.unice.creadirama.analyse.dto;
 
+import fr.polytech.unice.creadirama.analyse.entity.CrediramaDate;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import lombok.*;
 
-import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 @Data
 @AllArgsConstructor
@@ -14,6 +14,6 @@ import java.util.Map;
 @EqualsAndHashCode
 public class TransactionsBtw2DatesResponse {
 
-    private Map<Calendar, List<Transaction>> transactionPerDay;
+    private Map<CrediramaDate, ArrayList<Transaction>> transactionPerDay;
 
 }
