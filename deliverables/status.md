@@ -1,3 +1,11 @@
+# Week 06
+- Finished to improve contract impact, now free to  add everything
+- Add transactionDate but not perfect (yet)
+- Small progress on UI (fix http bug)
+- Tests are currently made everywhere
+- Orange Flag
+
+
 # Week 05
 - Improving contract impact 
 - Implementation AnalyzeData service
