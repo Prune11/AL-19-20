@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,13 +25,13 @@ public class AnalyseDataTest {
     @Before
     public void setup() {
         transactions = new ArrayList<>();
-        transactions.add(new Transaction(0, 0, 50, 0.5, TransactionType.TRANSFER, new GregorianCalendar()));
-        transactions.add(new Transaction(0, 0, 50, 1.2, TransactionType.TRANSFER, new GregorianCalendar()));
-        transactions.add(new Transaction(0, 0, 50, 0.2, TransactionType.TRANSFER, new GregorianCalendar()));
-        transactions.add(new Transaction(0, 0, 50,  0.9, TransactionType.TRANSFER, new GregorianCalendar()));
-        transactions.add(new Transaction(0, 0, 50,  2.5, TransactionType.TRANSFER, new GregorianCalendar()));
-        transactions.add(new Transaction(0, 0, 50, 0.4, TransactionType.TRANSFER, new GregorianCalendar()));
-        transactions.add(new Transaction(0, 0, 50, 0.8, TransactionType.TRANSFER, new GregorianCalendar()));
+        transactions.add(new Transaction(0, 0, 50, 0.5, TransactionType.TRANSFER));
+        transactions.add(new Transaction(0, 0, 50, 1.2, TransactionType.TRANSFER));
+        transactions.add(new Transaction(0, 0, 50, 0.2, TransactionType.TRANSFER));
+        transactions.add(new Transaction(0, 0, 50,  0.9, TransactionType.TRANSFER));
+        transactions.add(new Transaction(0, 0, 50,  2.5, TransactionType.TRANSFER));
+        transactions.add(new Transaction(0, 0, 50, 0.4, TransactionType.TRANSFER));
+        transactions.add(new Transaction(0, 0, 50, 0.8, TransactionType.TRANSFER));
     }
 
     @Test

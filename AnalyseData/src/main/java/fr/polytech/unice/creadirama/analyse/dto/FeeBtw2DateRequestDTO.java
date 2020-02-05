@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.joda.time.DateTime;
 
 import javax.validation.constraints.PastOrPresent;
 import java.util.Calendar;
@@ -15,10 +16,10 @@ import java.util.Calendar;
 public class FeeBtw2DateRequestDTO {
 
     @PastOrPresent
-    private Calendar from;
+    private DateTime from;
 
     @PastOrPresent
-    private Calendar to;
+    private DateTime to;
 
     private int accountId;
 

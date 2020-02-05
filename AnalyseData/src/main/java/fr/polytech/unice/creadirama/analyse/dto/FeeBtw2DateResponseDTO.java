@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.joda.time.DateTime;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -14,21 +15,21 @@ import java.util.Map;
 @AllArgsConstructor
 public class FeeBtw2DateResponseDTO {
 
-    private Calendar from;
+    private DateTime from;
 
-    private Calendar to;
+    private DateTime to;
 
     private int accountId;
 
-    private Map<Calendar, Double> sum;
+    private Map<DateTime, Double> sum;
 
-    private Map<Calendar, Double> avg;
+    private Map<DateTime, Double> avg;
 
     private double totalSum;
 
     private double totalAvg;
 
-    private Map<Calendar, Integer> nbTransactionPerDay;
+    private Map<DateTime, Integer> nbTransactionPerDay;
 
     private int totalNbTransaction;
 

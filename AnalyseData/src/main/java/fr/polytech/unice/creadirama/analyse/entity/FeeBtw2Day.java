@@ -1,8 +1,8 @@
 package fr.polytech.unice.creadirama.analyse.entity;
 
 import lombok.*;
+import org.joda.time.DateTime;
 
-import java.util.Calendar;
 import java.util.Map;
 
 @Data
@@ -12,8 +12,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class FeeBtw2Day {
 
-    private Map<Calendar, Double> sumFeeBtwDay;
+    private Map<DateTime, Double> sumFeeBtwDay;
 
-    private Map<Calendar, Double> avgFeeBtw;
+    private Map<DateTime, Double> avgFeeBtw;
 
 }

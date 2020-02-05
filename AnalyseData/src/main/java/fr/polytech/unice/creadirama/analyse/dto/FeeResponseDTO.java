@@ -1,6 +1,7 @@
 package fr.polytech.unice.creadirama.analyse.dto;
 
 import lombok.*;
+import org.joda.time.DateTime;
 
 import java.util.Calendar;
 
@@ -10,7 +11,7 @@ import java.util.Calendar;
 @AllArgsConstructor
 public class FeeResponseDTO {
 
-    private Calendar date;
+    private DateTime date;
 
     private int accountId;
 
