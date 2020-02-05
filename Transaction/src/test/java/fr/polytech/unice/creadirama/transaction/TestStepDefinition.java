@@ -16,12 +16,12 @@ public class TestStepDefinition extends AbstractStep {
     @When("Client {int} pays {double} to merchant {int} with contract {string} by {string}")
     public void clientPaysToMerchant(int clientID, double amount, int merchantID,
                                      String contractName, String transactionTypeName) throws Exception {
-        TransactionRequest transactionRequest = new TransactionRequest(amount,
-                TransactionType.valueOf(transactionTypeName),
+        TransactionRequest transactionRequest = new TransactionRequest(
                 clientID,
                 merchantID,
-                Contract.valueOf(contractName).getFee(),
-                Contract.valueOf(contractName));
+                amount,
+                TransactionType.valueOf(transactionTypeName)
+        );
         post("/access/operations",
                 new ObjectMapper().writeValueAsString(transactionRequest));
         this.transaction = new ObjectMapper().readValue(
@@ -34,9 +34,9 @@ public class TestStepDefinition extends AbstractStep {
     @Then("Merchant {int} has fees")
     public void merchantHasFees(int merchantID) throws Exception {
         get("/access/fees/" + merchantID);
-        double totalFees = new ObjectMapper().readValue(
+        Double totalFees = new ObjectMapper().readValue(
             getLastGetResponse().getContentAsString(),
-            double.class);
+            Double.class);
 
         assertEquals(this.transaction.getFeeAmount(), totalFees);
     }

@@ -1,10 +1,10 @@
 package fr.polytech.unice.credirama.transaction.entities.dto;
 
-import fr.polytech.unice.credirama.transaction.entities.CrediramaDate;
 import fr.polytech.unice.credirama.transaction.entities.Transaction;
 import lombok.*;
+import org.joda.time.DateTime;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -14,6 +14,6 @@ import java.util.Map;
 @EqualsAndHashCode
 public class TransactionsBtw2DatesResponse {
 
-    private Map<CrediramaDate, ArrayList<Transaction>> transactionPerDay;
+    private Map<DateTime, List<Transaction>> transactionPerDay;
 
 }

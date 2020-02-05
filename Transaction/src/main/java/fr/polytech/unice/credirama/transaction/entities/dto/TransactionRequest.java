@@ -11,16 +11,12 @@ import lombok.*;
 @EqualsAndHashCode
 public class TransactionRequest {
 
-    private double amount;
-
-    private TransactionType type;
-
     private int fromId;
 
     private int toId;
 
-    private double fees;
+    private double amount;
 
-    private Contract contract;
+    private TransactionType type;
 
 }
