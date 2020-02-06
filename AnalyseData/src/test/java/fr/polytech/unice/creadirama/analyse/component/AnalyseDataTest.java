@@ -1,7 +1,9 @@
 package fr.polytech.unice.creadirama.analyse.component;
 
+import fr.polytech.unice.creadirama.analyse.entity.FeeBtw2Day;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import fr.polytech.unice.creadirama.analyse.entity.TransactionType;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,18 +22,29 @@ public class AnalyseDataTest {
     @Autowired
     private AnalyseData analyseData;
 
-    private ArrayList<Transaction> transactions;
+    private List<Transaction> transactions;
+
+    private Map<Calendar, List<Transaction>> transactionPerDay;
+
+    private FeeBtw2Day feeBtw2Day;
 
     @Before
     public void setup() {
         transactions = new ArrayList<>();
-        transactions.add(new Transaction(0, 0, 50, 0.5, TransactionType.TRANSFER));
-        transactions.add(new Transaction(0, 0, 50, 1.2, TransactionType.TRANSFER));
-        transactions.add(new Transaction(0, 0, 50, 0.2, TransactionType.TRANSFER));
-        transactions.add(new Transaction(0, 0, 50,  0.9, TransactionType.TRANSFER));
-        transactions.add(new Transaction(0, 0, 50,  2.5, TransactionType.TRANSFER));
-        transactions.add(new Transaction(0, 0, 50, 0.4, TransactionType.TRANSFER));
-        transactions.add(new Transaction(0, 0, 50, 0.8, TransactionType.TRANSFER));
+
+        transactions.add(new Transaction(0, 0, 50, 0.5, TransactionType.TRANSFER, new DateTime()));
+        transactions.add(new Transaction(0, 0, 50, 1.2, TransactionType.TRANSFER, new DateTime()));
+        transactions.add(new Transaction(0, 0, 50, 0.2, TransactionType.TRANSFER, new DateTime()));
+        transactions.add(new Transaction(0, 0, 50, 0.9, TransactionType.TRANSFER, new DateTime()));
+        transactions.add(new Transaction(0, 0, 50, 2.5, TransactionType.TRANSFER, new DateTime()));
+        transactions.add(new Transaction(0, 0, 50, 0.4, TransactionType.TRANSFER, new DateTime()));
+        transactions.add(new Transaction(0, 0, 50, 0.8, TransactionType.TRANSFER, new DateTime()));
+
+        feeBtw2Day = new FeeBtw2Day();
+        transactionPerDay = new HashMap<>();
+        List<Transaction> list = new ArrayList<>();
+
+        Calendar calendar = GregorianCalendar.getInstance();
     }
 
     @Test

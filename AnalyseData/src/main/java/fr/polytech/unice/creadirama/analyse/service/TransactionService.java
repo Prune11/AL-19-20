@@ -20,13 +20,14 @@ public class TransactionService {
     private RestTemplate restTemplate;
 
 
-    public ArrayList<Transaction> getTransactionsFor1Day(DateTime date) {
-        return Lists.newArrayList(this.restTemplate.getForEntity(TRANSACTION_URL + "/date", Transaction[].class).getBody());
+    public List<Transaction> getTransactionsFor1Day(DateTime date, int idFrom) {
+        TransactionsBtw2DatesRequest request = new TransactionsBtw2DatesRequest(date, date);
+        return Lists.newArrayList(this.restTemplate.postForEntity(TRANSACTION_URL + "/access/operations/" + idFrom + "/dates", request, Transaction[].class).getBody());
     }
 
-    public Map<DateTime, ArrayList<Transaction>> getTransactionBtw2Day(DateTime from, DateTime to) {
+    public Map<DateTime, List<Transaction>> getTransactionBtw2Day(DateTime from, DateTime to, int idFrom) {
         TransactionsBtw2DatesRequest request = new TransactionsBtw2DatesRequest(from, to);
-        TransactionsBtw2DatesResponse response = this.restTemplate.postForEntity(TRANSACTION_URL + "/btw/date", request, TransactionsBtw2DatesResponse.class).getBody();
+        TransactionsBtw2DatesResponse response = this.restTemplate.postForEntity(TRANSACTION_URL + "/access/operations/" + idFrom + "/dates", request, TransactionsBtw2DatesResponse.class).getBody();
         return response.getTransactionPerDay();
     }
 

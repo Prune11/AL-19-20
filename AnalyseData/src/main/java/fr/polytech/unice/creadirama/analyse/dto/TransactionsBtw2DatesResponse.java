@@ -4,8 +4,8 @@ import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import lombok.*;
 import org.joda.time.DateTime;
 
+import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 
 @Data
 @AllArgsConstructor
@@ -14,6 +14,6 @@ import java.util.ArrayList;
 @EqualsAndHashCode
 public class TransactionsBtw2DatesResponse {
 
-    private Map<DateTime, ArrayList<Transaction>> transactionPerDay;
+    private Map<DateTime, List<Transaction>> transactionPerDay;
 
 }
