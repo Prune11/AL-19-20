@@ -10,7 +10,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  RestService restService = new RestService();
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +90,7 @@ class HomePage extends StatelessWidget {
             ),
             FlatButton(
               onPressed: () {
+                RestService restService = new RestService();
                 restService.getPrettyDump();
               },
               textColor: Colors.white,
@@ -109,6 +109,30 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 child: Text('Pretty Dump', style: TextStyle(fontSize: 20)),
+              ),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Parameter())
+                );
+              },
+              textColor: Colors.white,
+              child: Container(
+                alignment: Alignment(0.0, 0.0),
+                width: 200.0,
+                height: 50.0,
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25.0),
+                  gradient: LinearGradient(
+                    colors: <Color>[
+                      Color(0xff0F707E),
+                      Color(0xff23c7ad),
+                    ],
+                  ),
+                ),
+                child: Text('Parameters', style: TextStyle(fontSize: 20)),
               ),
             ),
           ],

@@ -1,5 +1,6 @@
 import 'package:credirama/common/MyAppBar.dart';
 import 'package:credirama/model/transactionRequest.dart';
+import 'package:credirama/pages/homepage.dart';
 import 'package:credirama/services/restService.dart';
 import 'package:credirama/common/myDrawer.dart';
 import 'package:flutter/cupertino.dart';
@@ -96,6 +97,9 @@ class _TransactionForm extends State<TransactionForm> {
                   print(transactionRequest.toString());
                   RestService restService = new RestService();
                   restService.postTransaction(transactionRequest);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage())
+                  );
                 },
                 textColor: Colors.white,
                 child: Container(

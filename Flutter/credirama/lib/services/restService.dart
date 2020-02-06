@@ -1,15 +1,15 @@
-import 'dart:io';
-
 import 'package:credirama/model/transactionRequest.dart';
 import 'package:http/http.dart' as http;
+import 'package:credirama/shared.dart';
 
 class RestService {
-  String _mea = "192.168.43.190:8081";
-  String _transaction = "192.168.1.4:8084";
-  String _prettyDump = "192.168.43.190:8085";
+  String _ipAddress = currentIpAddress ?? prefs.getString('ipAddress') ?? ipAddressMap['HugoC'];
+  String _mea = ":8081";
+  String _transaction = ":8084";
+  String _prettyDump = ":8085";
 
   Future<double> getBalance(int account) async {
-    var url = new Uri.http(_mea, '/access/balance/' + account.toString());
+    var url = new Uri.http( _ipAddress + _mea, '/access/balance/' + account.toString());
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -23,8 +23,9 @@ class RestService {
   }
 
   Future<http.Response> postTransaction(TransactionRequest request) async {
-    var url = new Uri.http(_transaction, "/access/operations/flutter");
+    var url = new Uri.http(_ipAddress + _transaction, "/access/operations/flutter");
     print("sendRequest");
+    print(url);
     var response = await http.post(url, body: request.toSend());
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -32,7 +33,7 @@ class RestService {
 
   void getPrettyDump() async {
     print("requete envoyée");
-    var url = new Uri.http(_prettyDump, '/prettyDump');
+    var url = new Uri.http(_ipAddress + _prettyDump, '/prettyDump');
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
