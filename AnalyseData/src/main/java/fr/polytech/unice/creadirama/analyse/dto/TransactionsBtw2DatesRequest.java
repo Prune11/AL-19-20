@@ -1,6 +1,7 @@
 package fr.polytech.unice.creadirama.analyse.dto;
 
 import lombok.*;
+import org.joda.time.DateTime;
 
 import javax.validation.constraints.PastOrPresent;
 import java.util.Calendar;
@@ -12,8 +13,8 @@ import java.util.Calendar;
 @EqualsAndHashCode
 public class TransactionsBtw2DatesRequest {
 
-    private Calendar dateFrom;
+    private DateTime dateFrom;
 
-    private Calendar dateTo;
+    private DateTime dateTo;
 
 }

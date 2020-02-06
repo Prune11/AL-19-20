@@ -5,10 +5,10 @@ import fr.polytech.unice.creadirama.analyse.dto.FeeBtw2DateRequestDTO;
 import fr.polytech.unice.creadirama.analyse.dto.FeeBtw2DateResponseDTO;
 import fr.polytech.unice.creadirama.analyse.dto.FeeRequestDTO;
 import fr.polytech.unice.creadirama.analyse.dto.FeeResponseDTO;
-import fr.polytech.unice.creadirama.analyse.entity.CrediramaDate;
 import fr.polytech.unice.creadirama.analyse.entity.FeeBtw2Day;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import fr.polytech.unice.creadirama.analyse.service.TransactionService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +36,7 @@ public class AnalyseDataController {
 
     @PostMapping("/fees/btw/day")
     public FeeBtw2DateResponseDTO sumFeeBtw2Date(@Valid @RequestBody FeeBtw2DateRequestDTO request) {
-        Map<CrediramaDate, ArrayList<Transaction>> transactionPerDay = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo());
+        Map<DateTime, ArrayList<Transaction>> transactionPerDay = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo());
         FeeBtw2Day feeBtw2Day = analyseData.sumBetweenTwoDate(transactionPerDay);
         FeeBtw2DateResponseDTO response = new FeeBtw2DateResponseDTO(request.getFrom(),
                 request.getTo(),

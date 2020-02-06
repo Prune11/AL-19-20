@@ -1,16 +1,15 @@
 package fr.polytech.unice.credirama.transaction.component.impl;
 
 import fr.polytech.unice.credirama.transaction.component.TransactionComponent;
-import fr.polytech.unice.credirama.transaction.entities.CrediramaDate;
 import fr.polytech.unice.credirama.transaction.entities.Transaction;
 import fr.polytech.unice.credirama.transaction.entities.TransactionType;
 import fr.polytech.unice.credirama.transaction.entities.dto.TransactionsBtw2DatesResponse;
 import fr.polytech.unice.credirama.transaction.repo.TransactionRepo;
 import fr.polytech.unice.credirama.transaction.service.EnterpriseAccountsService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.util.*;
 
 @Component
@@ -54,12 +53,6 @@ public class TransactionComponentImpl implements TransactionComponent {
             transactionWithID.setFeeAmount(feeAmount);
             transactionRepo.save(transactionWithID);
         }
-
-
-        //TODO c'est un peu sale ca
-        transactionWithID.getDate().setTransaction(null); //to avoid stackOverFlow
-
-
         return transactionWithID;
     }
 
@@ -99,26 +92,23 @@ public class TransactionComponentImpl implements TransactionComponent {
 
     //TODO check if tomorrow for dateTo
     @Override
-    public TransactionsBtw2DatesResponse getAllReceivedTransactionsByUserIdBetweenToDates(Integer id, GregorianCalendar dateFrom, GregorianCalendar dateTo) {
+    public TransactionsBtw2DatesResponse getAllReceivedTransactionsByUserIdBetweenToDates(Integer id, DateTime dateFrom, DateTime dateTo) {
         List<Transaction> userTransactions = this.transactionRepo.getTransactionsByToId(id);
-        Map<CrediramaDate, ArrayList<Transaction>> result = new HashMap<>();
-        GregorianCalendar calendar = new GregorianCalendar(dateFrom.get(Calendar.YEAR), dateFrom.get(Calendar.MONTH), dateFrom.get(Calendar.DAY_OF_MONTH));
-        while(!calendar.after(dateTo)) {
-            result.put(new CrediramaDate(calendar), new ArrayList<>());
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-            calendar = new GregorianCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        Map<DateTime, List<Transaction>> result = new HashMap<>();
+        DateTime date = new DateTime(dateFrom.getYear(), dateFrom.getMonthOfYear(), dateFrom.getDayOfMonth(), 0, 0);
+        while(!date.isAfter(dateTo)) {
+            result.put(date, new ArrayList<>());
+            date = date.plusDays(1);
         }
         for(Transaction transaction : userTransactions) {
-            GregorianCalendar date = transaction.getDate().toGregorian();
-            if (date.after(dateFrom) && date.before(dateTo)){
-                for (CrediramaDate crediramaDate : result.keySet()) {
-                    GregorianCalendar g = crediramaDate.toGregorian();
-                    if(g.get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH)
-                            && (g.get(Calendar.MONTH) == date.get(Calendar.MONTH)
-                            && (g.get(Calendar.YEAR) == date.get(Calendar.YEAR)))){
-                                ArrayList<Transaction> transactions = result.get(crediramaDate);
+            DateTime transactionDate = transaction.toDateTime();
+            if (transactionDate.isAfter(dateFrom) && transactionDate.isBefore(dateTo)){
+                for (DateTime dateTime : result.keySet()) {
+                    if(dateTime.getYear() == transactionDate.getYear()
+                            && (dateTime.getDayOfYear() == transactionDate.getDayOfYear())){
+                                List<Transaction> transactions = result.get(dateTime);
                                 transactions.add(transaction);
-                                result.put(crediramaDate, transactions);
+                                result.put(dateTime, transactions);
                     }
                 }
             }

@@ -1,10 +1,9 @@
 package fr.polytech.unice.creadirama.analyse.dto;
 
 import lombok.*;
+import org.joda.time.DateTime;
 
-import javax.validation.constraints.Past;
 import javax.validation.constraints.PastOrPresent;
-import java.util.Calendar;
 
 @Getter
 @EqualsAndHashCode
@@ -15,6 +14,6 @@ public class FeeRequestDTO {
     private int accountId;
 
     @PastOrPresent
-    private Calendar date;
+    private DateTime date;
 
 }

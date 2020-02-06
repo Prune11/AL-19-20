@@ -3,11 +3,10 @@ package fr.polytech.unice.credirama.transaction.entities;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 @ToString
 @EqualsAndHashCode
@@ -29,8 +28,7 @@ public class Transaction {
 
     private double feeAmount;
 
-    @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private CrediramaDate date;
+    private String timeStamp;
 
 
     public Transaction() {
@@ -43,10 +41,7 @@ public class Transaction {
         this.amount = amount;
         this.feeAmount = feeAmount;
         this.transactionType = transactionType;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        this.date = new CrediramaDate(cal);
-        this.date.setTransaction(this);
+        this.timeStamp = DateTime.now().toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
     }
 
     public Transaction(int accountFrom, int accountTo, double amount, TransactionType transactionType) {
@@ -55,20 +50,24 @@ public class Transaction {
         this.amount = amount;
         this.feeAmount = 0.0;
         this.transactionType = transactionType;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        this.date = new CrediramaDate(cal);
-        this.date.setTransaction(this);
+        this.timeStamp = DateTime.now().toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
     }
 
     //Only use for testing
-    public Transaction(int accountFrom, int accountTo, double amount, double feeAmount, TransactionType transactionType, GregorianCalendar calendar) {
+    public Transaction(int accountFrom, int accountTo, double amount, double feeAmount, TransactionType transactionType, DateTime date) {
         this.fromId = accountFrom;
         this.toId = accountTo;
         this.amount = amount;
         this.feeAmount = feeAmount;
         this.transactionType = transactionType;
-        this.date = new CrediramaDate(calendar);
-        this.date.setTransaction(this);
+        this.timeStamp = date.toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
+    }
+
+    public DateTime toDateTime() {
+        return DateTime.parse(this.timeStamp, DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
+    }
+
+    public void registerDateTime(DateTime dateTime){
+        this.timeStamp = dateTime.toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
     }
 }

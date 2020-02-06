@@ -6,6 +6,7 @@ import fr.polytech.unice.credirama.transaction.entities.dto.TransactionRequest;
 import fr.polytech.unice.credirama.transaction.entities.dto.TransactionsBtw2DatesRequest;
 import fr.polytech.unice.credirama.transaction.entities.dto.TransactionsBtw2DatesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,13 @@ public class TransactionController {
 
     @PostMapping("/operations")
     public Transaction makeTransaction(@RequestBody TransactionRequest request) {
+        Transaction t = this.transactionComponent.addTransaction(request.getFromId(), request.getToId(), request.getAmount(), request.getType());
+        return t;
+    }
+
+    @PostMapping(value = "/operations/flutter", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Transaction makeTransactionFromFlutter(TransactionRequest request) {
+        System.out.println(request.toString());
         Transaction t = this.transactionComponent.addTransaction(request.getFromId(), request.getToId(), request.getAmount(), request.getType());
         return t;
     }

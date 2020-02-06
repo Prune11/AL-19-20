@@ -1,9 +1,7 @@
 package fr.polytech.unice.credirama.transaction.entities.dto;
 
 import lombok.*;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import org.joda.time.DateTime;
 
 @Data
 @AllArgsConstructor
@@ -12,8 +10,8 @@ import java.util.GregorianCalendar;
 @EqualsAndHashCode
 public class TransactionsBtw2DatesRequest {
 
-    private GregorianCalendar dateFrom;
+    private DateTime dateFrom;
 
-    private GregorianCalendar dateTo;
+    private DateTime dateTo;
 
 }
