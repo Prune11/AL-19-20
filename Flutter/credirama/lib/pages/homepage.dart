@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:credirama/common/MyAppBar.dart';
 import 'package:credirama/main.dart';
 import 'package:credirama/pages/myaccount.dart';
+import 'package:credirama/pages/parameters.dart';
 import 'package:credirama/pages/profileDetail.dart';
 import 'package:credirama/pages/transactionForm.dart';
 import 'package:credirama/services/restService.dart';
