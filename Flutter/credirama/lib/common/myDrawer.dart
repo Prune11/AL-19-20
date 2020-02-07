@@ -1,5 +1,6 @@
 import 'package:credirama/data/User.dart';
 import 'package:credirama/pages/homepage.dart';
+import 'package:credirama/pages/parameters.dart';
 import 'package:credirama/pages/transactionForm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,13 @@ class MyDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => MyAnalytics()));
+              },
+            ),
+            ListTile(
+              title: Text('Parametres'),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Parameter()));
               },
             ),
             ListTile(

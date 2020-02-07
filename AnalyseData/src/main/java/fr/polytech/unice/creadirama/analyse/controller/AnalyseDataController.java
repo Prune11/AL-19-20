@@ -27,7 +27,7 @@ public class AnalyseDataController {
 
     @PostMapping("/fees/day")
     public FeeResponseDTO sumFeePerDat(@Valid @RequestBody FeeRequestDTO request) {
-        ArrayList<Transaction> transactions = transactionService.getTransactionsFor1Day(request.getDate());
+        List<Transaction> transactions = transactionService.getTransactionsFor1Day(request.getDate(), request.getAccountId());
         double sum = analyseData.sumFeesPerDay(transactions);
         double avg = analyseData.avgFeePerDay(transactions);
         FeeResponseDTO response = new FeeResponseDTO(request.getDate(), request.getAccountId(), sum, avg, transactions.size());
@@ -36,17 +36,21 @@ public class AnalyseDataController {
 
     @PostMapping("/fees/btw/day")
     public FeeBtw2DateResponseDTO sumFeeBtw2Date(@Valid @RequestBody FeeBtw2DateRequestDTO request) {
-        Map<DateTime, ArrayList<Transaction>> transactionPerDay = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo());
-        FeeBtw2Day feeBtw2Day = analyseData.sumBetweenTwoDate(transactionPerDay);
+        Map<DateTime, List<Transaction>> transactionPerDay = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo(), request.getAccountId());
+        FeeBtw2Day feeBtw2Day = new FeeBtw2Day();
+        analyseData.avgBetweenTwoDate(transactionPerDay, feeBtw2Day);
+        analyseData.sumBetweenTwoDate(transactionPerDay, feeBtw2Day);
+        analyseData.minBetweenTwoDate(transactionPerDay, feeBtw2Day);
+        analyseData.maxBetweenTwoDate(transactionPerDay, feeBtw2Day);
         FeeBtw2DateResponseDTO response = new FeeBtw2DateResponseDTO(request.getFrom(),
                 request.getTo(),
                 request.getAccountId(),
                 feeBtw2Day.getSumFeeBtwDay(),
                 feeBtw2Day.getAvgFeeBtw(),
-                0,
-                0,
-                new HashMap<>(),
-                0);
+                feeBtw2Day.getTotalSum(),
+                feeBtw2Day.getTotalAvg(),
+                feeBtw2Day.getNbTransactionPerDay(),
+                feeBtw2Day.getTotalNbTransaction());
         return response;
     }
 }

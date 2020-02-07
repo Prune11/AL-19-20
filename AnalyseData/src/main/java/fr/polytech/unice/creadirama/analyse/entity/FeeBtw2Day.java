@@ -16,4 +16,20 @@ public class FeeBtw2Day {
 
     private Map<DateTime, Double> avgFeeBtw;
 
+    private Map<DateTime, Transaction> minTransactionBtw;
+
+    private Map<DateTime, Transaction> maxTransactionFeeBtw;
+
+    private double totalSum;
+
+    private double totalAvg;
+
+    private Transaction globalMinTransaction;
+
+    private Transaction globalMaxTransaction;
+
+    private Map<DateTime, Integer> nbTransactionPerDay;
+
+    private int totalNbTransaction;
+
 }

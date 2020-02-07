@@ -4,18 +4,24 @@ import fr.polytech.unice.creadirama.analyse.entity.FeeBtw2Day;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface AnalyseData {
 
-    double sumFeesPerDay(ArrayList<Transaction> transactions);
+    double sumFeesPerDay(List<Transaction> transactions);
 
-    double avgFeePerDay(ArrayList<Transaction> transactions);
+    double avgFeePerDay(List<Transaction> transactions);
 
-    Transaction minTransactionFee(ArrayList<Transaction> transactions);
+    Transaction minTransactionFee(List<Transaction> transactions);
 
-    Transaction maxTransactionFee(ArrayList<Transaction> transactions);
+    Transaction maxTransactionFee(List<Transaction> transactions);
 
-    FeeBtw2Day sumBetweenTwoDate(Map<DateTime, ArrayList<Transaction>> transactionPerDay);
+    FeeBtw2Day sumBetweenTwoDate(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2Day feeBtw2Day);
+
+    FeeBtw2Day avgBetweenTwoDate(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2Day feeBtw2Day);
+
+    FeeBtw2Day minBetweenTwoDate(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2Day feeBtw2Day);
+
+    FeeBtw2Day maxBetweenTwoDate(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2Day feeBtw2Day);
 }

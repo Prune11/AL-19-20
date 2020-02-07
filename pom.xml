@@ -12,6 +12,7 @@
         <module>Transaction</module>
         <module>PrettyDump</module>
         <module>AnalyseData</module>
+        <module>IntegrationTest</module>
     </modules>
 
     <groupId>fr.unice.polytech.credirama</groupId>
