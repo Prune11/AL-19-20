@@ -5,6 +5,7 @@ import fr.polytech.unice.credirama.transaction.entities.Transaction;
 import fr.polytech.unice.credirama.transaction.entities.dto.TransactionRequest;
 import fr.polytech.unice.credirama.transaction.entities.dto.TransactionsBtw2DatesRequest;
 import fr.polytech.unice.credirama.transaction.entities.dto.TransactionsBtw2DatesResponse;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,12 @@ public class TransactionController {
     @GetMapping("/fees/{id}")
     public Double getTotalFees(@PathVariable(name = "id") int id) {
         return this.transactionComponent.getTotalFees(id);
+    }
+
+    @GetMapping("/operations/{id}/today")
+    public int getNumberOfTransactionsToday(@PathVariable(name = "id") int userId) {
+        DateTime today = DateTime.now();
+        return this.transactionComponent.getAllReceivedTransactionsByUserIdBetweenToDates(userId, today, today).getTransactionPerDay().get(today).size();
     }
 
     @PostMapping("/operations/{id}/dates/")

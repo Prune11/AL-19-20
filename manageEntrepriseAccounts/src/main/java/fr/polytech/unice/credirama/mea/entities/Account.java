@@ -3,6 +3,8 @@ package fr.polytech.unice.credirama.mea.entities;
 import fr.polytech.unice.credirama.mea.entities.contract.Contract;
 import fr.polytech.unice.credirama.mea.entities.dto.MEAAddTransactionRequest;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import java.util.Objects;
 @Entity
 @Data
 public class Account {
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,11 +99,17 @@ public class Account {
             return 0.0;
         } else {
             this.balance += transactionRequest.getAmount();
-            double amountFee = contract.getFee(transactionRequest.getAmount());
+            double amountFee = contract.getFee(transactionRequest.getAmount(), this);
             this.balance -= amountFee;
             return amountFee;
         }
     }
+
+    public Double payBankFees() {
+        this.balance -= this.contract.getPricePerMonth();
+        return this.balance;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -117,4 +127,6 @@ public class Account {
     public int hashCode() {
         return Objects.hash(id, owner, contract, transactionIDs, balance);
     }
+
+
 }
