@@ -29,7 +29,7 @@ class _MyAccountState extends State<MyAccount> {
           transactions = value;
           transactionsLoaded = true;
           if(this.transactions.length == 0) {
-            print("on a pas trouver de transaction du coup tien en voila une par default");
+            print("On n'a pas trouvé de transaction du coup tiens en voila une par défault");
             TransactionObject transactionObject1 = new TransactionObject(toId:"Trevello App", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
             this.transactions.add(transactionObject1);
           }
