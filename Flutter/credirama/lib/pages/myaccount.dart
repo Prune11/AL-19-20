@@ -5,12 +5,11 @@ import 'package:credirama/data/User.dart';
 import 'package:credirama/model/transactionObject.dart';
 import 'package:credirama/services/restService.dart';
 import 'package:credirama/widget/transaction.dart';
-import 'package:credirama/pages/analytics.dart';
 import 'package:credirama/common/myDrawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:credirama/widget/transaction.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -18,18 +17,35 @@ class MyAccount extends StatefulWidget {
 }
 
 class _MyAccountState extends State<MyAccount> {
-  TransactionWidget transactionWidget = new TransactionWidget();
-  TransactionObject transactionObject1 = new TransactionObject(
-      "Trevello App", r"+ $ 4,946.00", "28-04-16", "credit");
+  List<TransactionObject> transactions = [];
+  bool transactionsLoaded = false;
 
   @override
+  void initState() {
+    super.initState();
+    RestService restService = RestService();
+    restService.getAllTransactions().then((value) =>
+        this.setState(() {
+          transactions = value;
+          transactionsLoaded = true;
+          if(this.transactions.length == 0) {
+            print("on a pas trouver de transaction du coup tien en voila une par default");
+            TransactionObject transactionObject1 = new TransactionObject(toId:"Trevello App", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
+            this.transactions.add(transactionObject1);
+          }
+        })
+
+    );
+  }
+  
+  @override
   Widget build(BuildContext context) {
-    RestService restService = new RestService();
+    /*RestService restService = new RestService();
     //récupère la balance de l'account 1
     double balance;
     restService.getBalance(1).then((value) {
       balance = value;
-    });
+    });*/
     return Scaffold(
         appBar: MyAppBar(),
         drawer: MyDrawer(),
@@ -59,20 +75,29 @@ class _MyAccountState extends State<MyAccount> {
                             ),
                           )
                         ],
-                      ))),
-              displayAccountList()
+                      )
+                  )
+              ),
+              transactionsLoaded ?
+                displayTransactionList() :
+                Column(
+                  children: <Widget>[
+                    CircularProgressIndicator()
+                  ],
+
+                )
             ],
           ),
         ));
   }
 
-  displayAccountList() {
+  displayTransactionList() {
+    var transactionsWidget = transactions.map(
+          (transaction) => TransactionWidget().transaction(transaction),
+    );
     return Container(
       child: Column(
-        children: <Widget>[
-          transactionWidget.transaction(transactionObject1),
-          transactionWidget.transaction(transactionObject1)
-        ],
+        children: <Widget>[]..addAll(transactionsWidget),
       ),
     );
   }

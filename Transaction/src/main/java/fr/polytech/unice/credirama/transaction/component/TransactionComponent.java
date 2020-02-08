@@ -17,6 +17,12 @@ public interface TransactionComponent {
 
     List<Transaction> getAllTransactions();
 
+    List<Transaction> getAllTransactionsByUserId(int id);
+
+    List<Transaction> getAllTransactionsByUserIdFrom(int userFrom);
+
+    List<Transaction> getAllTransactionsByUserIdTo(int userTo);
+
     Double getTotalFees(int id);
 
     TransactionsBtw2DatesResponse getAllReceivedTransactionsByUserIdBetweenToDates(Integer id, DateTime dateFrom, DateTime dateTo);

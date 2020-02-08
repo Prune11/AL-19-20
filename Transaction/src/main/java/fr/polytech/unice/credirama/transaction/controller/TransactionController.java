@@ -17,8 +17,6 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-
 @RestController
 @RequestMapping(path = "/access", produces = "application/json")
 public class TransactionController {
@@ -27,10 +25,24 @@ public class TransactionController {
     private TransactionComponent transactionComponent;
 
     //TODO
+    @GetMapping("/operations")
+    public List<Transaction> getAllOperations() {
+        return this.transactionComponent.getAllTransactions();
+    }
+
     @GetMapping("/operations/{id}")
-    public List<Transaction> getOperations(@PathVariable(name = "id") int id) {
-        List<Integer> ids = new ArrayList<>();
-        return this.transactionComponent.getOperationsById(ids);
+    public List<Transaction> getAllOperations(@PathVariable(name = "id") int id) {
+        return this.transactionComponent.getAllTransactionsByUserId(id);
+    }
+
+    @GetMapping("/operations/from/{id}")
+    public List<Transaction> getAllOperationsFrom(@PathVariable(name = "id") int userIdFrom) {
+        return this.transactionComponent.getAllTransactionsByUserIdFrom(userIdFrom);
+    }
+
+    @GetMapping("/operations/to/{id}")
+    public List<Transaction> getAllOperationsTo(@PathVariable(name = "id") int userIdTo) {
+        return this.transactionComponent.getAllTransactionsByUserIdTo(userIdTo);
     }
 
     @PostMapping("/operations")

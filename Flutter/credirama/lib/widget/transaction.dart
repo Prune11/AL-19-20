@@ -11,8 +11,8 @@ class TransactionWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(transactionObject.objet, style: TextStyle(fontSize: 16.0)),
-              Text(transactionObject.somme, style: TextStyle(fontSize: 16.0))
+              Text(transactionObject.toId, style: TextStyle(fontSize: 16.0)),
+              Text(transactionObject.amount, style: TextStyle(fontSize: 16.0))
             ],
           ),
           SizedBox(
@@ -21,9 +21,9 @@ class TransactionWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(transactionObject.dateString,
+              Text(transactionObject.timeStamp,
                   style: TextStyle(color: Colors.grey, fontSize: 14.0)),
-              Text(transactionObject.type,
+              Text(transactionObject.transactionType,
                   style: TextStyle(color: Colors.grey, fontSize: 14.0))
             ],
           ),

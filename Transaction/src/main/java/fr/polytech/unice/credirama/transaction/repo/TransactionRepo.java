@@ -7,5 +7,10 @@ import java.util.List;
 
 public interface TransactionRepo extends CrudRepository<Transaction, Integer> {
 
+    List<Transaction> getTransactionsByFromId(Integer fromId);
+
     List<Transaction> getTransactionsByToId(Integer toId);
+
+    List<Transaction> getTransactionsByFromIdOrToId(Integer fromId, Integer toId);
+
 }

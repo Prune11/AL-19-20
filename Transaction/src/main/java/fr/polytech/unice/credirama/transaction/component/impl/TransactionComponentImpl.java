@@ -78,6 +78,21 @@ public class TransactionComponentImpl implements TransactionComponent {
     }
 
     @Override
+    public List<Transaction> getAllTransactionsByUserId(int userId) {
+        return this.transactionRepo.getTransactionsByFromIdOrToId(userId, userId);
+    }
+
+    @Override
+    public List<Transaction> getAllTransactionsByUserIdFrom(int idFrom) {
+        return this.transactionRepo.getTransactionsByFromId(idFrom);
+    }
+
+    @Override
+    public List<Transaction> getAllTransactionsByUserIdTo(int idTo) {
+        return this.transactionRepo.getTransactionsByFromId(idTo);
+    }
+
+    @Override
     public Double getTotalFees(int id) {
         Iterator<Transaction> transactionIterator = transactionRepo.findAll().iterator();
         double total = 0;
