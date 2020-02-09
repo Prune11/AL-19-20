@@ -133,7 +133,7 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                child: Text('Parameters', style: TextStyle(fontSize: 20)),
+                child: Text('Parametres', style: TextStyle(fontSize: 20)),
               ),
             ),
           ],
