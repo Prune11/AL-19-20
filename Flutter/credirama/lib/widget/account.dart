@@ -21,7 +21,7 @@ class AccountWidget {
               children: <Widget>[
                 Text("Account " + numAccount.toString() + "", style: TextStyle(fontSize: 16.0)),
                 //ATTENTION: € change in order to accept more types of money?
-                Text(accountObject.amount.toString() + " €", style: TextStyle(fontSize: 16.0))
+                Text(accountObject.balance.toString() + " €", style: TextStyle(fontSize: 16.0))
               ],
             ),
             SizedBox(

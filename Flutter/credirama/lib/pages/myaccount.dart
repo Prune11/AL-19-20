@@ -17,25 +17,24 @@ class MyAccount extends StatefulWidget {
 }
 
 class _MyAccountState extends State<MyAccount> {
-  List<TransactionObject> transactions = [];
-  bool transactionsLoaded = false;
+  Future<List<TransactionObject>> transactions;
 
   @override
   void initState() {
     super.initState();
     RestService restService = RestService();
-    restService.getAllTransactions().then((value) =>
+    transactions = restService.getAllTransactions();
+    /*restService.getAllTransactions().then((value) =>
         this.setState(() {
           transactions = value;
-          transactionsLoaded = true;
-          if(this.transactions.length == 0) {
+          /*if(this.transactions.length == 0) {
             print("On n'a pas trouvé de transaction du coup tiens en voila une par défault");
             TransactionObject transactionObject1 = new TransactionObject(toId:"Trevello App", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
             this.transactions.add(transactionObject1);
-          }
+          }*/
         })
 
-    );
+    );*/
   }
   
   @override
@@ -78,20 +77,55 @@ class _MyAccountState extends State<MyAccount> {
                       )
                   )
               ),
-              transactionsLoaded ?
+              /*transactionsLoaded ?
                 displayTransactionList() :
                 Column(
                   children: <Widget>[
                     CircularProgressIndicator()
                   ],
 
-                )
+                )*/
+              FutureBuilder<List<TransactionObject>>(
+                future: transactions,
+                builder: (context, snapshot) {
+                  TransactionObject transaction = new TransactionObject(toId:"Default Transaction", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
+                  if (snapshot.hasData) {
+                    var transactionsWidget = snapshot.data.map(
+                          (transaction) => TransactionWidget().transaction(transaction),
+                    );
+                    if(transactionsWidget.length == 0) {
+                      return Container(
+                        child: Column(
+                          children: <Widget>[
+                            TransactionWidget().transaction(transaction)
+                          ],
+                        ),
+                      );
+                    }
+                    return Container(
+                      child: Column(
+                        children: <Widget>[]..addAll(transactionsWidget),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Column(children: <Widget>[
+                      Text("${snapshot.error}"),
+                      Divider(),
+                      Text("Tiens une transaction par default"),
+                      Divider(),
+                      TransactionWidget().transaction(transaction)
+                    ]);
+                  }
+                  return Center(child: CircularProgressIndicator());
+                },
+              )
             ],
           ),
-        ));
+        )
+    );
   }
 
-  displayTransactionList() {
+  /*displayTransactionList() {
     var transactionsWidget = transactions.map(
           (transaction) => TransactionWidget().transaction(transaction),
     );
@@ -100,5 +134,5 @@ class _MyAccountState extends State<MyAccount> {
         children: <Widget>[]..addAll(transactionsWidget),
       ),
     );
-  }
+  }*/
 }
