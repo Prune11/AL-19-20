@@ -53,4 +53,10 @@ public class AnalyseDataController {
                 feeBtw2Day.getTotalNbTransaction());
         return response;
     }
+
+    @GetMapping("/simulation")
+    public List<FeeBtw2Day> feesWithOtherContracts(@Valid @RequestBody FeeBtw2DateRequestDTO request) {
+        Map<DateTime, List<Transaction>> transactions = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo(), request.getAccountId());
+        return analyseData.simulationWithAnotherContract(transactions);
+    }
 }

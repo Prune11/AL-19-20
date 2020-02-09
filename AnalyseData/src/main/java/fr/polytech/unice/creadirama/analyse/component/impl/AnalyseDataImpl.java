@@ -3,6 +3,7 @@ package fr.polytech.unice.creadirama.analyse.component.impl;
 import fr.polytech.unice.creadirama.analyse.component.AnalyseData;
 import fr.polytech.unice.creadirama.analyse.entity.FeeBtw2Day;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
+import fr.polytech.unice.creadirama.analyse.entity.contract.Contract;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
@@ -79,7 +80,50 @@ public class AnalyseDataImpl implements AnalyseData {
         List<Transaction> transactionsList = new ArrayList<>();
         for (List<Transaction> transactions : transactionPerDay.values())
             transactionsList.add(maxTransactionFee(transactions));
-        feeBtw2Day.setGlobalMinTransaction(maxTransactionFee(transactionsList));
+        feeBtw2Day.setGlobalMaxTransaction(maxTransactionFee(transactionsList));
         return feeBtw2Day;
+    }
+
+    @Override
+    public List<FeeBtw2Day> simulationWithAnotherContract(Map<DateTime, List<Transaction>> transactionPerDay) {
+        List<FeeBtw2Day> simulatedList = new ArrayList<>();
+        FeeBtw2Day feeBtw2DayWOOD = new FeeBtw2Day();
+        FeeBtw2Day feeBtw2DaySTONE = new FeeBtw2Day();
+        FeeBtw2Day feeBtw2DayIRON = new FeeBtw2Day();
+        FeeBtw2Day feeBtw2DayDIAMOND = new FeeBtw2Day();
+        Contract wood = Contract.WOOD;
+        Contract stone = Contract.STONE;
+        Contract iron = Contract.IRON;
+        Contract diamond = Contract.DIAMOND;
+
+
+        /*Wood making*/
+        runSimulation(transactionPerDay, simulatedList, feeBtw2DayWOOD, wood);
+
+        /*Stone making*/
+        runSimulation(transactionPerDay, simulatedList, feeBtw2DaySTONE, stone);
+
+        /*Iron making*/
+        runSimulation(transactionPerDay, simulatedList, feeBtw2DayIRON, iron);
+
+        /*Diamond making*/
+        runSimulation(transactionPerDay, simulatedList, feeBtw2DayDIAMOND, diamond);
+
+        return simulatedList;
+    }
+
+    private void runSimulation(Map<DateTime, List<Transaction>> transactionPerDay, List<FeeBtw2Day> simulatedList, FeeBtw2Day feeBtw2DayType, Contract contract) {
+        for (DateTime dateTime : transactionPerDay.keySet()) {
+            List<Transaction> transactionList = transactionPerDay.get(dateTime);
+            for (Transaction t : transactionList) {
+                t.setFeeAmount(contract.getFee(t, transactionList));
+            }
+        }
+        feeBtw2DayType.setTotalNbTransaction(transactionPerDay.size());
+        avgBetweenTwoDate(transactionPerDay, feeBtw2DayType);
+        sumBetweenTwoDate(transactionPerDay, feeBtw2DayType);
+        minBetweenTwoDate(transactionPerDay, feeBtw2DayType);
+        maxBetweenTwoDate(transactionPerDay, feeBtw2DayType);
+        simulatedList.add(feeBtw2DayType);
     }
 }
