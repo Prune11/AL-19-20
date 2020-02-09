@@ -20,7 +20,7 @@ class MyProfile extends StatefulWidget {
 class _MyProfileState extends State<MyProfile> {
   static AccountObject mockAccount = new AccountObject(id: 1, ownerId: 1, contract: "Wood", transactions: [1, 2], balance: 2.3);
   //Mockup client
-  ClientObject clientObject = new ClientObject(id: 1, name: "Michel", accountList: [1, 2]);
+  ClientObject clientObject = new ClientObject(id: 1, name: "Michel", accountList: [mockAccount]);
 
   //TODO: Get Client
   //TODO: Get Contract

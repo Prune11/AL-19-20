@@ -6,6 +6,7 @@ import fr.polytech.unice.credirama.mea.entities.contract.Contract;
 import fr.polytech.unice.credirama.mea.entities.dto.CreateAccountRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -35,6 +36,11 @@ public class AccountAdministrationController {
 
     @PostMapping("/create")
     public Account createAccount(@RequestBody CreateAccountRequest request) {
+        return this.manageEnterpriseAccount.createAccount(request.getOwner(), request.getContract());
+    }
+
+    @PostMapping(value = "", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Account createNewAccount(CreateAccountRequest request) {
         return this.manageEnterpriseAccount.createAccount(request.getOwner(), request.getContract());
     }
 

@@ -92,7 +92,7 @@ class HomePage extends StatelessWidget {
             FlatButton(
               onPressed: () {
                 RestService restService = new RestService();
-                restService.getAllTransactions();
+                restService.getClient(1).then((onValue) => print(onValue.toString()));
               },
               textColor: Colors.white,
               child: Container(
