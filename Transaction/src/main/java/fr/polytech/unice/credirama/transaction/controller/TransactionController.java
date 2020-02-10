@@ -71,7 +71,14 @@ public class TransactionController {
     }
 
     @PostMapping("/operations/{id}/dates")
-    public TransactionsBtw2DatesResponse getTransactionsBetweenToDates(@PathVariable(name = "id") String userId, @RequestBody TransactionsBtw2DatesRequest transactionsBtw2DatesRequest) {
+    public TransactionsBtw2DatesResponse getTransactionsBetweenTwoDates(@PathVariable(name = "id") String userId, @RequestBody TransactionsBtw2DatesRequest transactionsBtw2DatesRequest) {
+        DateTime dateFrom = DateTime.parse(transactionsBtw2DatesRequest.getDateFrom(), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
+        DateTime dateTo = DateTime.parse(transactionsBtw2DatesRequest.getDateTo(), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
+        return this.transactionComponent.getAllReceivedTransactionsByUserIdBetweenToDates(Integer.parseInt(userId), dateFrom, dateTo);
+    }
+
+    @PostMapping(value = "/operations/{id}/dates/flutter", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public TransactionsBtw2DatesResponse getTransactionsBetweenTwoDatesFlutter(@PathVariable(name = "id") String userId, TransactionsBtw2DatesRequest transactionsBtw2DatesRequest) {
         DateTime dateFrom = DateTime.parse(transactionsBtw2DatesRequest.getDateFrom(), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
         DateTime dateTo = DateTime.parse(transactionsBtw2DatesRequest.getDateTo(), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
         return this.transactionComponent.getAllReceivedTransactionsByUserIdBetweenToDates(Integer.parseInt(userId), dateFrom, dateTo);

@@ -1,10 +1,13 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:credirama/model/accountObject.dart';
 import 'package:credirama/model/clientObject.dart';
 import 'package:credirama/model/transactionObject.dart';
 import 'package:credirama/request/createAccountRequest.dart';
+import 'package:credirama/request/transactionsBtwTwoDatesRequest.dart';
 import 'package:credirama/request/transactionRequest.dart';
+import 'package:credirama/response/TransactionsBtwToDatesResponse.dart';
 import 'package:http/http.dart' as http;
 import 'package:credirama/shared.dart';
 
@@ -107,6 +110,28 @@ class RestService {
     } else {
       print(("Catch Error"));
       throw Exception('Failed to load transactions');
+    }
+  }
+
+  Future<TransactionsBtwTwoDatesResponse> getTransactionsBetweenToDates(int userId, TransactionBtwTwoDatesRequest request) async {
+    var url = new Uri.http(_ipAddress + _transaction, "/access/operations/" + userId.toString() + "/dates/flutter");
+    print(url);
+    var response = await http.post(url, body: request.toSend());
+    return toTransactionsBtwTwoDatesResponse(response);
+  }
+
+  TransactionsBtwTwoDatesResponse toTransactionsBtwTwoDatesResponse(http.Response response) {
+    if (response.statusCode == 200) {
+      final decoded = jsonDecode(response.body)["transactionPerDay"] as Map<String, dynamic>;
+      Map<String, List<TransactionObject>> map = new HashMap();
+      for(String s in decoded.keys.toList()) {
+        Iterable list = json.decode(response.body)["transactionPerDay"][s];
+        List<TransactionObject> transactionList = list.map((model) => TransactionObject.fromJson(model)).toList();
+        map.putIfAbsent(s, () => transactionList);
+      }
+      return TransactionsBtwTwoDatesResponse.fromStringMap(map);
+    } else {
+      throw Exception('Failed to load Response');
     }
   }
 

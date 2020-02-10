@@ -6,6 +6,7 @@ import 'package:credirama/pages/myaccount.dart';
 import 'package:credirama/pages/parameters.dart';
 import 'package:credirama/pages/profileDetail.dart';
 import 'package:credirama/pages/transactionForm.dart';
+import 'package:credirama/request/transactionsBtwTwoDatesRequest.dart';
 import 'package:credirama/services/restService.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,9 @@ class HomePage extends StatelessWidget {
             FlatButton(
               onPressed: () {
                 RestService restService = new RestService();
-                restService.getClient(1).then((onValue) => print(onValue.toString()));
+                TransactionBtwTwoDatesRequest request = TransactionBtwTwoDatesRequest(DateTime(2020, 2,7,0,0), DateTime.now());
+                print(request.toString());
+                restService.getTransactionsBetweenToDates(1, request).then((onValue) => onValue.transactionPerDay.forEach((f,d) => print(f.toString() + " " + d.toString())));
               },
               textColor: Colors.white,
               child: Container(
