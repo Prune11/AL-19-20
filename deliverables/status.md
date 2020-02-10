@@ -1,3 +1,10 @@
+# Week 07
+- Contract impact over
+- Big improvments on UI
+- Simulation of new analytics
+- Test improvements
+- Orange Flag
+
 # Week 06
 - Finished to improve contract impact, now free to  add everything
 - Add transactionDate but not perfect (yet)
