@@ -14,6 +14,6 @@ import java.util.Map;
 @EqualsAndHashCode
 public class TransactionsBtw2DatesResponse {
 
-    private Map<DateTime, List<Transaction>> transactionPerDay;
+    private Map<String, List<Transaction>> transactionPerDay;
 
 }

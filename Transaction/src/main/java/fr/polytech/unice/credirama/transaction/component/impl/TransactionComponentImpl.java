@@ -7,6 +7,7 @@ import fr.polytech.unice.credirama.transaction.entities.dto.TransactionsBtw2Date
 import fr.polytech.unice.credirama.transaction.repo.TransactionRepo;
 import fr.polytech.unice.credirama.transaction.service.EnterpriseAccountsService;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -109,21 +110,23 @@ public class TransactionComponentImpl implements TransactionComponent {
     @Override
     public TransactionsBtw2DatesResponse getAllReceivedTransactionsByUserIdBetweenToDates(Integer id, DateTime dateFrom, DateTime dateTo) {
         List<Transaction> userTransactions = this.transactionRepo.getTransactionsByToId(id);
-        Map<DateTime, List<Transaction>> result = new HashMap<>();
+        Map<String, List<Transaction>> result = new HashMap<>();
         DateTime date = new DateTime(dateFrom.getYear(), dateFrom.getMonthOfYear(), dateFrom.getDayOfMonth(), 0, 0);
+        dateFrom = date;
         while(!date.isAfter(dateTo)) {
-            result.put(date, new ArrayList<>());
+            result.put(date.toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss")), new ArrayList<>());
             date = date.plusDays(1);
         }
         for(Transaction transaction : userTransactions) {
             DateTime transactionDate = transaction.toDateTime();
             if (transactionDate.isAfter(dateFrom) && transactionDate.isBefore(dateTo)){
-                for (DateTime dateTime : result.keySet()) {
+                for (String timeStamp : result.keySet()) {
+                    DateTime dateTime = DateTime.parse(timeStamp, DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
                     if(dateTime.getYear() == transactionDate.getYear()
                             && (dateTime.getDayOfYear() == transactionDate.getDayOfYear())){
-                                List<Transaction> transactions = result.get(dateTime);
+                                List<Transaction> transactions = result.get(timeStamp);
                                 transactions.add(transaction);
-                                result.put(dateTime, transactions);
+                                result.put(timeStamp, transactions);
                     }
                 }
             }

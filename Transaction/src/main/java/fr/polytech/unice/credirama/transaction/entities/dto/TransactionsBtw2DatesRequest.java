@@ -3,6 +3,9 @@ package fr.polytech.unice.credirama.transaction.entities.dto;
 import lombok.*;
 import org.joda.time.DateTime;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -10,8 +13,8 @@ import org.joda.time.DateTime;
 @EqualsAndHashCode
 public class TransactionsBtw2DatesRequest {
 
-    private DateTime dateFrom;
+    private String dateFrom;
 
-    private DateTime dateTo;
+    private String dateTo;
 
 }

@@ -6,6 +6,7 @@ import fr.polytech.unice.credirama.transaction.entities.dto.TransactionRequest;
 import fr.polytech.unice.credirama.transaction.entities.dto.TransactionsBtw2DatesRequest;
 import fr.polytech.unice.credirama.transaction.entities.dto.TransactionsBtw2DatesResponse;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,9 +70,11 @@ public class TransactionController {
         return this.transactionComponent.getAllReceivedTransactionsByUserIdBetweenToDates(userId, today, today).getTransactionPerDay().get(today).size();
     }
 
-    @PostMapping("/operations/{id}/dates/")
+    @PostMapping("/operations/{id}/dates")
     public TransactionsBtw2DatesResponse getTransactionsBetweenToDates(@PathVariable(name = "id") String userId, @RequestBody TransactionsBtw2DatesRequest transactionsBtw2DatesRequest) {
-        return this.transactionComponent.getAllReceivedTransactionsByUserIdBetweenToDates(Integer.getInteger(userId), transactionsBtw2DatesRequest.getDateFrom(), transactionsBtw2DatesRequest.getDateTo());
+        DateTime dateFrom = DateTime.parse(transactionsBtw2DatesRequest.getDateFrom(), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
+        DateTime dateTo = DateTime.parse(transactionsBtw2DatesRequest.getDateTo(), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
+        return this.transactionComponent.getAllReceivedTransactionsByUserIdBetweenToDates(Integer.parseInt(userId), dateFrom, dateTo);
     }
 
 }

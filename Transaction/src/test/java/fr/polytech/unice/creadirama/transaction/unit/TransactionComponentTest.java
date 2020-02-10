@@ -7,6 +7,7 @@ import fr.polytech.unice.credirama.transaction.entities.TransactionType;
 import fr.polytech.unice.credirama.transaction.entities.dto.TransactionsBtw2DatesResponse;
 import fr.polytech.unice.credirama.transaction.repo.TransactionRepo;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,16 +54,17 @@ public class TransactionComponentTest extends AbstractStep {
         DateTime dateTo = new DateTime(2020, 2 , 2, 12, 0); //2/2/2020 midi
         TransactionsBtw2DatesResponse response = this.transactionComponent.getAllReceivedTransactionsByUserIdBetweenToDates(2, dateFrom, dateTo);
         assertEquals(6, response.getTransactionPerDay().keySet().size());
-        for (DateTime dateTime : response.getTransactionPerDay().keySet()) {
+        for (String timeStamp : response.getTransactionPerDay().keySet()) {
+            DateTime dateTime = DateTime.parse(timeStamp, DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
             if (dateTime.getDayOfMonth() == 31){
-                assertEquals(2, response.getTransactionPerDay().get(dateTime).size());
-                assertTrue(response.getTransactionPerDay().get(dateTime).contains(transaction));
-                assertTrue(response.getTransactionPerDay().get(dateTime).contains(transaction2));
+                assertEquals(2, response.getTransactionPerDay().get(timeStamp).size());
+                assertTrue(response.getTransactionPerDay().get(timeStamp).contains(transaction));
+                assertTrue(response.getTransactionPerDay().get(timeStamp).contains(transaction2));
             } else if (dateTime.getDayOfMonth() == 1){
-                assertEquals(1, response.getTransactionPerDay().get(dateTime).size());
-                assertTrue(response.getTransactionPerDay().get(dateTime).contains(transaction3));
+                assertEquals(1, response.getTransactionPerDay().get(timeStamp).size());
+                assertTrue(response.getTransactionPerDay().get(timeStamp).contains(transaction3));
             } else {
-                assertEquals(0, response.getTransactionPerDay().get(dateTime).size());
+                assertEquals(0, response.getTransactionPerDay().get(timeStamp).size());
             }
         }
     }

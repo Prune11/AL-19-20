@@ -1,10 +1,7 @@
 package fr.polytech.unice.creadirama.analyse.controller;
 
 import fr.polytech.unice.creadirama.analyse.component.AnalyseData;
-import fr.polytech.unice.creadirama.analyse.dto.FeeBtw2DateRequestDTO;
-import fr.polytech.unice.creadirama.analyse.dto.FeeBtw2DateResponseDTO;
-import fr.polytech.unice.creadirama.analyse.dto.FeeRequestDTO;
-import fr.polytech.unice.creadirama.analyse.dto.FeeResponseDTO;
+import fr.polytech.unice.creadirama.analyse.dto.*;
 import fr.polytech.unice.creadirama.analyse.entity.FeeBtw2Day;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import fr.polytech.unice.creadirama.analyse.service.TransactionService;
@@ -36,13 +33,14 @@ public class AnalyseDataController {
 
     @PostMapping("/fees/btw/day")
     public FeeBtw2DateResponseDTO sumFeeBtw2Date(@Valid @RequestBody FeeBtw2DateRequestDTO request) {
-        Map<DateTime, List<Transaction>> transactionPerDay = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo(), request.getAccountId());
+        Map<String, List<Transaction>> response = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo(), request.getAccountId());
+        Map<DateTime, List<Transaction>> transactionPerDay = new TransactionsBtw2DatesResponse(response).toDateTime();
         FeeBtw2Day feeBtw2Day = new FeeBtw2Day();
         analyseData.avgBetweenTwoDate(transactionPerDay, feeBtw2Day);
         analyseData.sumBetweenTwoDate(transactionPerDay, feeBtw2Day);
         analyseData.minBetweenTwoDate(transactionPerDay, feeBtw2Day);
         analyseData.maxBetweenTwoDate(transactionPerDay, feeBtw2Day);
-        FeeBtw2DateResponseDTO response = new FeeBtw2DateResponseDTO(request.getFrom(),
+        FeeBtw2DateResponseDTO result = new FeeBtw2DateResponseDTO(request.getFrom(),
                 request.getTo(),
                 request.getAccountId(),
                 feeBtw2Day.getSumFeeBtwDay(),
@@ -51,12 +49,20 @@ public class AnalyseDataController {
                 feeBtw2Day.getTotalAvg(),
                 feeBtw2Day.getNbTransactionPerDay(),
                 feeBtw2Day.getTotalNbTransaction());
-        return response;
+        return result;
     }
 
     @GetMapping("/simulation")
     public List<FeeBtw2Day> feesWithOtherContracts(@Valid @RequestBody FeeBtw2DateRequestDTO request) {
-        Map<DateTime, List<Transaction>> transactions = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo(), request.getAccountId());
+        Map<String, List<Transaction>> response = transactionService.getTransactionBtw2Day(request.getFrom(), request.getTo(), request.getAccountId());
+        Map<DateTime, List<Transaction>> transactions = new TransactionsBtw2DatesResponse(response).toDateTime();
         return analyseData.simulationWithAnotherContract(transactions);
     }
+
+    @GetMapping("/test")
+    public void test() {
+        DateTime dateTime = DateTime.now();
+        System.out.println(transactionService.getTransactionBtw2Day(dateTime, dateTime, 1));
+    }
+
 }
