@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:credirama/common/MyAppBar.dart';
 import 'package:credirama/main.dart';
+import 'package:credirama/pages/analytics.dart';
 import 'package:credirama/pages/myaccount.dart';
 import 'package:credirama/pages/parameters.dart';
 import 'package:credirama/pages/profileDetail.dart';
@@ -24,7 +25,7 @@ class HomePage extends StatelessWidget {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyAccount()));
+                    MaterialPageRoute(builder: (context) => MyProfile()));
               },
               textColor: Colors.white,
               child: Container(
@@ -41,7 +42,7 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                child: Text('Voir mon compte', style: TextStyle(fontSize: 20)),
+                child: Text('Voir mes comptes', style: TextStyle(fontSize: 20)),
               ),
             ),
             FlatButton(
@@ -70,7 +71,7 @@ class HomePage extends StatelessWidget {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyProfile()));
+                    MaterialPageRoute(builder: (context) => MyAnalytics()));
               },
               textColor: Colors.white,
               child: Container(
@@ -87,9 +88,10 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                child: Text('Mon profil', style: TextStyle(fontSize: 20)),
+                child: Text('Analytics', style: TextStyle(fontSize: 20)),
               ),
             ),
+
             FlatButton(
               onPressed: () {
                 RestService restService = new RestService();
