@@ -7,12 +7,9 @@
     <name>Credirama</name>
     <modules>
         <module>manageEntrepriseAccounts</module>
-        <module>MerchantCLI</module>
-        <module>BankCLI</module>
         <module>Transaction</module>
         <module>PrettyDump</module>
         <module>AnalyseData</module>
-        <module>IntegrationTest</module>
     </modules>
 
     <groupId>fr.unice.polytech.credirama</groupId>
@@ -70,6 +67,7 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
@@ -90,19 +88,17 @@
             <version>4.7.2</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mock-server</groupId>
             <artifactId>mockserver-netty</artifactId>
-            <version>5.6.1</version>
+            <version>5.9.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.mock-server</groupId>
             <artifactId>mockserver-client-java</artifactId>
-            <version>5.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
+            <version>5.9.0</version>
         </dependency>
     </dependencies>
 

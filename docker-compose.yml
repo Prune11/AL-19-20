@@ -36,10 +36,6 @@ services:
     logging:
       driver: json-file
 
-    environment:
-      NOTIFICATION_HOST: notification
-      DRONE_HOST: http://drone-server:8080
-      KAFKA_HOST: http://kafka:9092
 
   ############ TRANSACTIONS  #################
   transaction-server:
