@@ -7,6 +7,8 @@ import 'package:credirama/pages/myaccount.dart';
 import 'package:credirama/pages/parameters.dart';
 import 'package:credirama/pages/profileDetail.dart';
 import 'package:credirama/pages/transactionForm.dart';
+import 'package:credirama/request/feeBtw2DatesRequest.dart';
+import 'package:credirama/request/feeRequest.dart';
 import 'package:credirama/request/transactionsBtwTwoDatesRequest.dart';
 import 'package:credirama/services/restService.dart';
 import 'package:flutter/foundation.dart';
@@ -95,9 +97,15 @@ class HomePage extends StatelessWidget {
             FlatButton(
               onPressed: () {
                 RestService restService = new RestService();
-                TransactionBtwTwoDatesRequest request = TransactionBtwTwoDatesRequest(DateTime(2020, 2,7,0,0), DateTime.now());
-                print(request.toString());
-                restService.getTransactionsBetweenToDates(1, request).then((onValue) => onValue.transactionPerDay.forEach((f,d) => print(f.toString() + " " + d.toString())));
+                DateTime dateFrom = DateTime(2020, 2, 14, 0, 0);
+                DateTime now = DateTime.now();
+                DateTime today = DateTime(now.year, now.month, now.day, 0, 0);
+                FeeRequest request = FeeRequest(now, 1);
+                FeeBtwTwoDatesRequest request1 = FeeBtwTwoDatesRequest(dateFrom, now, 1);
+                FeeBtwTwoDatesRequest request2 = FeeBtwTwoDatesRequest(today, now, 1);
+                restService.getFeesWithOtherContracts(request1);
+                //restService.getFeeBtw2Dates(request1); //TODO Cette requete ne marche pas merci de le fix Hugo =)
+                restService.getFee(request);
               },
               textColor: Colors.white,
               child: Container(

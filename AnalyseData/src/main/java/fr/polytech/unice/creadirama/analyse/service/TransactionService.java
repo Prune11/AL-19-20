@@ -5,8 +5,8 @@ import fr.polytech.unice.creadirama.analyse.dto.TransactionsBtw2DatesRequest;
 import fr.polytech.unice.creadirama.analyse.dto.TransactionsBtw2DatesResponse;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,7 +23,11 @@ public class TransactionService {
 
     public List<Transaction> getTransactionsFor1Day(DateTime date, int idFrom) {
         TransactionsBtw2DatesRequest request = new TransactionsBtw2DatesRequest(date, date);
-        return Lists.newArrayList(this.restTemplate.postForEntity(TRANSACTION_URL + "/access/operations/" + idFrom + "/dates", request, Transaction[].class).getBody());
+        TransactionsBtw2DatesResponse result = this.restTemplate.postForObject(TRANSACTION_URL + "/access/operations/" + idFrom + "/dates", request.toSend(), TransactionsBtw2DatesResponse.class);
+        assert result != null;
+        DateTime dateTime = new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 0, 0);
+        String timeStamp = dateTime.toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
+        return result.getTransactionPerDay().get(timeStamp);
     }
 
     public Map<String, List<Transaction>> getTransactionBtw2Day(DateTime from, DateTime to, int idFrom) {
