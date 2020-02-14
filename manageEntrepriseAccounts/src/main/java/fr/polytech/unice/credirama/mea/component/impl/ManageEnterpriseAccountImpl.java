@@ -8,7 +8,6 @@ import fr.polytech.unice.credirama.mea.entities.dto.AccountDTO;
 import fr.polytech.unice.credirama.mea.entities.dto.MEAAddTransactionRequest;
 import fr.polytech.unice.credirama.mea.repo.AccountRepo;
 import fr.polytech.unice.credirama.mea.repo.ClientRepo;
-import fr.polytech.unice.credirama.mea.repo.TransactionRepo;
 import gherkin.deps.com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,8 +20,6 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
     @Autowired
     private AccountRepo accountRepo;
 
-    @Autowired
-    private TransactionRepo transactionRepo;
 
     @Autowired
     private ClientRepo clientRepo;

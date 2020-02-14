@@ -3,8 +3,6 @@ package fr.unice.polytech.credirama.merchant.cli.service;
 import fr.unice.polytech.credirama.merchant.cli.entity.Contract;
 import fr.unice.polytech.credirama.merchant.cli.entity.Transaction;
 import fr.unice.polytech.credirama.merchant.cli.entity.TransactionType;
-import fr.unice.polytech.credirama.merchant.cli.entity.dto.PrettyDumpResponse;
-import fr.unice.polytech.credirama.merchant.cli.entity.dto.TotalFeeResponse;
 import fr.unice.polytech.credirama.merchant.cli.entity.dto.TransactionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

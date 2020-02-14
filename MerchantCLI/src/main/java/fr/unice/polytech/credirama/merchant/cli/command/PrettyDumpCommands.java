@@ -2,7 +2,6 @@ package fr.unice.polytech.credirama.merchant.cli.command;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.unice.polytech.credirama.merchant.cli.entity.dto.PrettyDumpResponse;
 import fr.unice.polytech.credirama.merchant.cli.service.CrediramaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -13,7 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
-import java.util.Date;
 
 @ShellComponent
 public class PrettyDumpCommands {
