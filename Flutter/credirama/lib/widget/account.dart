@@ -30,7 +30,7 @@ class AccountWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text("Contrat",
+                Text(accountObject.contract,
                     style: TextStyle(color: Colors.grey, fontSize: 14.0)),
               ],
             ),
