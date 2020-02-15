@@ -2,6 +2,7 @@ package fr.polytech.unice.creadirama.analyse.dto;
 
 import lombok.*;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import java.util.Calendar;
 
@@ -11,7 +12,7 @@ import java.util.Calendar;
 @AllArgsConstructor
 public class FeeResponseDTO {
 
-    private DateTime date;
+    private String date;
 
     private int accountId;
 
@@ -20,5 +21,13 @@ public class FeeResponseDTO {
     private double avg;
 
     private int nbTransaction;
+
+    public FeeResponseDTO(DateTime date, int accountId, double sum, double avg, int nbTransaction){
+        this.date = date.toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
+        this.accountId = accountId;
+        this.sum = sum;
+        this.avg = avg;
+        this.nbTransaction = nbTransaction;
+    }
 
 }

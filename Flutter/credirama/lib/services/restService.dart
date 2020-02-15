@@ -5,6 +5,8 @@ import 'package:credirama/model/accountObject.dart';
 import 'package:credirama/model/clientObject.dart';
 import 'package:credirama/model/transactionObject.dart';
 import 'package:credirama/request/createAccountRequest.dart';
+import 'package:credirama/request/feeBtw2DatesRequest.dart';
+import 'package:credirama/request/feeRequest.dart';
 import 'package:credirama/request/transactionsBtwTwoDatesRequest.dart';
 import 'package:credirama/request/transactionRequest.dart';
 import 'package:credirama/response/TransactionsBtwToDatesResponse.dart';
@@ -15,6 +17,7 @@ class RestService {
   String _ipAddress = currentIpAddress ?? prefs.getString('ipAddress') ?? ipAddressMap['HugoC'];
   String _mea = ":8081";
   String _transaction = ":8084";
+  String _analyze = ":8088";
   String _prettyDump = ":8085";
 
   Future<double> getBalance(int account) async {
@@ -133,6 +136,34 @@ class RestService {
     } else {
       throw Exception('Failed to load Response');
     }
+  }
+
+  Future getFee(FeeRequest request) async {
+    var url = new Uri.http(_ipAddress + _analyze, "/analyse/fees/day");
+    //print("sendRequest");
+    print(url);
+    var response = await http.post(url, body: request.toSend());
+    //print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+  Future getFeeBtw2Dates(FeeBtwTwoDatesRequest request) async {
+    var url = new Uri.http(_ipAddress + _analyze, "/analyse/fees/btw/day");
+    //print("sendRequest");
+    print(url);
+    print(request.toSend().toString());
+    var response = await http.post(url, body: request.toSend());
+    //print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+  Future getFeesWithOtherContracts(FeeBtwTwoDatesRequest request) async {
+    var url = new Uri.http(_ipAddress + _analyze, "/analyse/simulation");
+    //print("sendRequest");
+    print(url);
+    var response = await http.post(url, body: request.toSend());
+    //print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
   }
 
   void getPrettyDump() async {
