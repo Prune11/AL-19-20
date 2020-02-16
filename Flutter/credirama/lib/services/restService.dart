@@ -10,6 +10,7 @@ import 'package:credirama/request/feeRequest.dart';
 import 'package:credirama/request/transactionsBtwTwoDatesRequest.dart';
 import 'package:credirama/request/transactionRequest.dart';
 import 'package:credirama/response/TransactionsBtwToDatesResponse.dart';
+import 'package:credirama/response/feeResponse.dart';
 import 'package:http/http.dart' as http;
 import 'package:credirama/shared.dart';
 
@@ -138,13 +139,14 @@ class RestService {
     }
   }
 
-  Future getFee(FeeRequest request) async {
+  Future<FeeResponse> getFee(FeeRequest request) async {
     var url = new Uri.http(_ipAddress + _analyze, "/analyse/fees/day");
     //print("sendRequest");
     print(url);
     var response = await http.post(url, body: request.toSend());
     //print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
+    return FeeResponse.fromJson(jsonDecode(response.body));
   }
 
   Future getFeeBtw2Dates(FeeBtwTwoDatesRequest request) async {
