@@ -1,12 +1,15 @@
+import 'dart:ui';
+
 import 'package:credirama/common/MyAppBar.dart';
 import 'package:credirama/common/myDrawer.dart';
 import 'package:credirama/model/transactionObject.dart';
+import 'package:credirama/charts/verticalLabel.dart';
+import 'package:credirama/widget/transaction.dart';
+import 'package:credirama/widget/dateSearch.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:credirama/charts/verticalLabel.dart';
-import 'package:credirama/model/transactionObject.dart';
-import 'package:credirama/widget/transaction.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_datetime_formfield/flutter_datetime_formfield.dart';
 
 class MyAnalytics extends StatefulWidget {
   @override
@@ -21,6 +24,8 @@ class _MyAnalyticsState extends State<MyAnalytics> {
   TransactionObject tMin = new TransactionObject(toId:"Default Transaction", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
   TransactionObject tMax = new TransactionObject(toId:"Default Transaction", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
 
+  DateTime _dateTime;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,9 +33,11 @@ class _MyAnalyticsState extends State<MyAnalytics> {
         drawer: MyDrawer(),
         body: ListView (
           children: <Widget>[
+            DateSearchWidget().dateSearch(context),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
                     "Total number of transactions: ",
@@ -47,31 +54,35 @@ class _MyAnalyticsState extends State<MyAnalytics> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text ("Total fees: ",
-                        style: formatTitleStats,
-                      ),
-                      Text(
-                        "value",
-                        style: formatValueStats,
-                      ),
-                    ],
+                  Expanded(
+                    child: Row(
+                      children: <Widget>[
+                        Text ("Total fees: ",
+                          style: formatTitleStats,
+                        ),
+                        Text(
+                          "value",
+                          style: formatValueStats,
+                        ),
+                      ],
+                    ),
                   ),
-                  Column (
-                    children: <Widget>[
-                      Text(
-                        "Total average: ",
-                        textAlign: TextAlign.left,
-                        style: formatTitleStats,
-                      ),
-                      Text(
-                        "value",
-                        style: formatValueStats,
-                      ),
-                    ],
+                  Expanded(
+                    child: Row (
+                      children: <Widget>[
+                        Text(
+                          "Total average: ",
+                          textAlign: TextAlign.left,
+                          style: formatTitleStats,
+                        ),
+                        Text(
+                          "value",
+                          style: formatValueStats,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -79,6 +90,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(8.0),

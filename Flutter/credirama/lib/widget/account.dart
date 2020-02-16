@@ -1,6 +1,5 @@
 import 'package:credirama/model/accountObject.dart';
 import 'package:credirama/pages/myaccount.dart';
-import 'package:credirama/model/clientObject.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../model/accountObject.dart';
