@@ -145,7 +145,7 @@ class RestService {
     print(url);
     var response = await http.post(url, body: request.toSend());
     //print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response body: ${response.body}');
     return FeeResponse.fromJson(jsonDecode(response.body));
   }
 

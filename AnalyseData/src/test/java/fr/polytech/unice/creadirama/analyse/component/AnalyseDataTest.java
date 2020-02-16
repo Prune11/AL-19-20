@@ -1,8 +1,10 @@
 package fr.polytech.unice.creadirama.analyse.component;
 
+import fr.polytech.unice.creadirama.analyse.dto.SimulationDTO;
 import fr.polytech.unice.creadirama.analyse.entity.FeeBtw2Day;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import fr.polytech.unice.creadirama.analyse.entity.TransactionType;
+import fr.polytech.unice.creadirama.analyse.entity.contract.Contract;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -95,11 +97,11 @@ public class AnalyseDataTest {
 
         }
         transactionData.put(DateTime.now(), transactions);
-        List<FeeBtw2Day> feeBtw2Days = analyseData.simulationWithAnotherContract(transactionData);
-        FeeBtw2Day wood = feeBtw2Days.get(0);
-        FeeBtw2Day stone = feeBtw2Days.get(1);
-        FeeBtw2Day iron = feeBtw2Days.get(2);
-        FeeBtw2Day diamond = feeBtw2Days.get(3);
+        Map<String, SimulationDTO> simulation = analyseData.simulationWithAnotherContract(transactionData);
+        SimulationDTO wood = simulation.get(Contract.WOOD.name());
+        SimulationDTO stone = simulation.get(Contract.STONE.name());
+        SimulationDTO iron = simulation.get(Contract.IRON.name());
+        SimulationDTO diamond = simulation.get(Contract.DIAMOND.name());
         //TODO test sur toutes les valeurs mais ça marche a priori vu que la moyenne change et que le reste des méthodes est fonctionnel
         //WOOD
         assertEquals(2.5, wood.getTotalAvg(), 0);
