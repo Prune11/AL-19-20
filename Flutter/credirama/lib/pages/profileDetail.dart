@@ -103,7 +103,7 @@ class _MyProfileState extends State<MyProfile> {
                 return Column(children: <Widget>[
                   Text("${snapshot.error}"),
                   Divider(),
-                  Text("Tiens une transaction par default"),
+                  Text("Tiens une compte par default"),
                   Divider(),
                   AccountWidget().account(accountObject, 1, context),
                   ]

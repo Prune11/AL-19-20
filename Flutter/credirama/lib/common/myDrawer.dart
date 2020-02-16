@@ -3,11 +3,9 @@ import 'package:credirama/pages/homepage.dart';
 import 'package:credirama/pages/parameters.dart';
 import 'package:credirama/pages/transactionForm.dart';
 import 'package:credirama/pages/profileDetail.dart';
+import 'package:credirama/pages/analyticsMenu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../pages/analytics.dart';
-import '../pages/myaccount.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -70,7 +68,7 @@ class MyDrawer extends StatelessWidget {
               title: Text('Statistiques'),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyAnalytics()));
+                    MaterialPageRoute(builder: (context) => MyAnalyticsMenu()));
               },
             ),
             ListTile(
