@@ -53,7 +53,7 @@ public class AnalyseDataController {
     }
 
     @PostMapping(value = "/simulation", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public List<FeeBtw2Day> feesWithOtherContracts(/*@Valid @RequestBody*/ FeeBtw2DateRequestDTO request) {
+    public Map<String, SimulationDTO> feesWithOtherContracts(/*@Valid @RequestBody*/ FeeBtw2DateRequestDTO request) {
         Map<String, List<Transaction>> response = transactionService.getTransactionBtw2Day(request.getDateTimeFrom(), request.getDateTimeTo(), request.getAccountId());
         Map<DateTime, List<Transaction>> transactions = new TransactionsBtw2DatesResponse(response).toDateTime();
         return analyseData.simulationWithAnotherContract(transactions);
