@@ -1,4 +1,5 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:credirama/model/simulation.dart';
 import 'package:flutter/material.dart';
 
 class VerticalGroupBarLabelChart extends StatelessWidget {
@@ -18,16 +19,16 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
 
   VerticalGroupBarLabelChart(this.seriesList, {this.animate});
 
-  factory VerticalGroupBarLabelChart.feesPerDay(/*Map<DateTime, double> data*/) {
+  factory VerticalGroupBarLabelChart.feesPerDay(Map<String, SimulationObject> data) {
     return new VerticalGroupBarLabelChart(
-      _createFeesPerDay(/*data*/),
+      _createFeesPerDay(data),
       animate: true,
     );
   }
 
-  factory VerticalGroupBarLabelChart.avgPerDay(/*Map<DateTime, double> data*/) {
+  factory VerticalGroupBarLabelChart.avgPerDay(Map<String, SimulationObject> data) {
     return new VerticalGroupBarLabelChart(
-      _createAvgPerDay(/*data*/),
+      _createAvgPerDay(data),
       animate: true,
     );
   }
@@ -63,83 +64,87 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<CumulativeFees, String>> _createFeesPerDay(/*Map<DateTime, double> data*/) {
-    final dataWood = [
-      new CumulativeFees('Janvier', 5.0),
-      new CumulativeFees('Fevrier', 25.3),
-      new CumulativeFees('Mars', 100.8),
-      new CumulativeFees('Avril', 75.7),
-    ];
+  static List<charts.Series<CumulativeData, String>> _createFeesPerDay(Map<String, SimulationObject> data) {
+    final dataWood = [];
+    final dataStone = [];
+    final dataIron = [];
+    final dataDiamond = [];
+    data.forEach((contract, simulation) {
+      if (contract == "wood") {
+        simulation.dailyResult.forEach( (day, value)
+            {
+              dataWood.add(CumulativeData(day, value.sum));
+            });
+      }
+      else if (contract == "stone") {
+        simulation.dailyResult.forEach( (day, value)
+        {
+          dataStone.add(CumulativeData(day, value.sum));
+        });
+      }
+      else if (contract == "iron") {
+        simulation.dailyResult.forEach( (day, value)
+        {
+          dataIron.add(CumulativeData(day, value.sum));
+        });
+      }
+      else {
+        simulation.dailyResult.forEach( (day, value)
+        {
+          dataDiamond.add(CumulativeData(day, value.sum));
+        });
+      }
+    });
 
-    final dataStone = [
-      new CumulativeFees('Janvier', 7.0),
-      new CumulativeFees('Fevrier', 21.3),
-      new CumulativeFees('Mars', 10.8),
-      new CumulativeFees('Avril', 83.7),
-    ];
-
-    final dataIron = [
-      new CumulativeFees('Janvier', 100.0),
-      new CumulativeFees('Fevrier', 2.3),
-      new CumulativeFees('Mars', 18.5),
-      new CumulativeFees('Avril', 27.8),
-    ];
-
-    final dataDiamond = [
-      new CumulativeFees('Janvier', 8.3),
-      new CumulativeFees('Fevrier', 23.5),
-      new CumulativeFees('Mars', 10.9),
-      new CumulativeFees('Avril', 57.9),
-    ];
 
     return [
-      new charts.Series<CumulativeFees, String>(
+      new charts.Series<CumulativeData, String>(
         id: FEES_WOOD,
-        domainFn: (CumulativeFees cF, _) => cF.month,
-        measureFn: (CumulativeFees cF, _) => cF.fees,
+        domainFn: (CumulativeData cD, _) => cD.date,
+        measureFn: (CumulativeData cD, _) => cD.data,
         data: dataWood,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeFees cF, _) =>
-        '${cF.fees.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) =>
+        '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) =>
         charts.MaterialPalette.teal.shadeDefault,
       ),
-      new charts.Series<CumulativeFees, String>(
+      new charts.Series<CumulativeData, String>(
         id: FEES_STONE,
-        domainFn: (CumulativeFees cF, _) => cF.month,
-        measureFn: (CumulativeFees cF, _) => cF.fees,
+        domainFn: (CumulativeData cD, _) => cD.date,
+        measureFn: (CumulativeData cD, _) => cD.data,
         data: dataStone,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeFees cF, _) =>
-        '${cF.fees.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) =>
+        '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) =>
         charts.MaterialPalette.teal.shadeDefault.lighter.lighter,
       ),
-      new charts.Series<CumulativeFees, String>(
+      new charts.Series<CumulativeData, String>(
         id: FEES_IRON,
-        domainFn: (CumulativeFees cF, _) => cF.month,
-        measureFn: (CumulativeFees cF, _) => cF.fees,
+        domainFn: (CumulativeData cD, _) => cD.date,
+        measureFn: (CumulativeData cD, _) => cD.data,
         data: dataIron,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeFees cF, _) =>
-        '${cF.fees.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) =>
+        '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) =>
         charts.MaterialPalette.teal.shadeDefault.darker,
       ),
-      new charts.Series<CumulativeFees, String>(
+      new charts.Series<CumulativeData, String>(
         id: FEES_DIAMOND,
-        domainFn: (CumulativeFees cF, _) => cF.month,
-        measureFn: (CumulativeFees cF, _) => cF.fees,
+        domainFn: (CumulativeData cD, _) => cD.date,
+        measureFn: (CumulativeData cD, _) => cD.data,
         data: dataDiamond,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeFees cF, _) =>
-        '${cF.fees.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) =>
+        '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) =>
@@ -148,83 +153,86 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
     ];
   }
 
-  static List<charts.Series<CumulativeFees, String>> _createAvgPerDay(/*Map<DateTime, double> data*/) {
-    final dataWood = [
-      new CumulativeFees('13-02-2020', 5.0),
-      new CumulativeFees('14-02-2020', 25.3),
-      new CumulativeFees('15-02-2020', 22.2),
-      new CumulativeFees('16-02-2020', 37.5),
-    ];
-
-    final dataStone = [
-      new CumulativeFees('13-02-2020', 5.8),
-      new CumulativeFees('14-02-2020', 26.0),
-      new CumulativeFees('15-02-2020', 18.2),
-      new CumulativeFees('16-02-2020', 26.3),
-    ];
-
-    final dataIron = [
-      new CumulativeFees('13-02-2020', 4.6),
-      new CumulativeFees('14-02-2020', 25.9),
-      new CumulativeFees('15-02-2020', 23.2),
-      new CumulativeFees('16-02-2020', 32.5),
-    ];
-
-    final dataDiamond = [
-      new CumulativeFees('13-02-2020', 5.1),
-      new CumulativeFees('14-02-2020', 26.3),
-      new CumulativeFees('15-02-2020', 22.4),
-      new CumulativeFees('16-02-2020', 36.5),
-    ];
+  static List<charts.Series<CumulativeData, String>> _createAvgPerDay(Map<String, SimulationObject> data) {
+    final dataWood = [];
+    final dataStone = [];
+    final dataIron = [];
+    final dataDiamond = [];
+    data.forEach((contract, simulation) {
+      if (contract == "wood") {
+        simulation.dailyResult.forEach( (day, value)
+        {
+          dataWood.add(CumulativeData(day, value.avg));
+        });
+      }
+      else if (contract == "stone") {
+        simulation.dailyResult.forEach( (day, value)
+        {
+          dataStone.add(CumulativeData(day, value.avg));
+        });
+      }
+      else if (contract == "iron") {
+        simulation.dailyResult.forEach( (day, value)
+        {
+          dataIron.add(CumulativeData(day, value.avg));
+        });
+      }
+      else {
+        simulation.dailyResult.forEach( (day, value)
+        {
+          dataDiamond.add(CumulativeData(day, value.avg));
+        });
+      }
+    });
 
     return [
-      new charts.Series<CumulativeFees, String>(
+      new charts.Series<CumulativeData, String>(
         id: AVG_WOOD,
-        domainFn: (CumulativeFees cF, _) => cF.month,
-        measureFn: (CumulativeFees cF, _) => cF.fees,
+        domainFn: (CumulativeData cD, _) => cD.date,
+        measureFn: (CumulativeData cD, _) => cD.data,
         data: dataWood,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeFees cF, _) =>
-        '${cF.fees.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) =>
+        '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) =>
         charts.MaterialPalette.teal.shadeDefault,
       ),
-      new charts.Series<CumulativeFees, String>(
+      new charts.Series<CumulativeData, String>(
         id: AVG_STONE,
-        domainFn: (CumulativeFees cF, _) => cF.month,
-        measureFn: (CumulativeFees cF, _) => cF.fees,
+        domainFn: (CumulativeData cD, _) => cD.date,
+        measureFn: (CumulativeData cD, _) => cD.data,
         data: dataStone,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeFees cF, _) =>
-        '${cF.fees.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) =>
+        '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) =>
         charts.MaterialPalette.teal.shadeDefault.lighter.lighter,
       ),
-      new charts.Series<CumulativeFees, String>(
+      new charts.Series<CumulativeData, String>(
         id: AVG_IRON,
-        domainFn: (CumulativeFees cF, _) => cF.month,
-        measureFn: (CumulativeFees cF, _) => cF.fees,
+        domainFn: (CumulativeData cD, _) => cD.date,
+        measureFn: (CumulativeData cD, _) => cD.data,
         data: dataIron,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeFees cF, _) =>
-        '${cF.fees.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) =>
+        '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) =>
         charts.MaterialPalette.teal.shadeDefault.darker,
       ),
-      new charts.Series<CumulativeFees, String>(
+      new charts.Series<CumulativeData, String>(
         id: AVG_DIAMOND,
-        domainFn: (CumulativeFees cF, _) => cF.month,
-        measureFn: (CumulativeFees cF, _) => cF.fees,
+        domainFn: (CumulativeData cD, _) => cD.date,
+        measureFn: (CumulativeData cD, _) => cD.data,
         data: dataDiamond,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeFees cF, _) =>
-        '${cF.fees.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) =>
+        '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) =>
@@ -234,7 +242,7 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
     ];
   }
 
-  static String getTitle(List<charts.Series<CumulativeFees, String>> chartList){
+  static String getTitle(List<charts.Series<CumulativeData, String>> chartList){
     String title = "";
     String chartID = chartList[0].id;
     if (chartID.contains(FEES)) {
@@ -247,10 +255,10 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
   }
 }
 
-/// Sample ordinal data type.
-class CumulativeFees {
-  final String month;
-  final double fees;
+/// Class to show data in charts
+class CumulativeData {
+  final String date;
+  final double data;
 
-  CumulativeFees(this.month, this.fees);
+  CumulativeData(this.date, this.data);
 }
