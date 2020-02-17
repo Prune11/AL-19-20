@@ -11,7 +11,7 @@ class AccountWidget {
       child: MaterialButton(
         onPressed: () {
           Navigator.push( context,
-              MaterialPageRoute(builder: (context) => AccountMenu("Account " + numAccount.toString() + "", accountObject.balance)));
+              MaterialPageRoute(builder: (context) => AccountMenu(accountObject.id, "Account " + numAccount.toString() + "", accountObject.contract, accountObject.balance)));
         } ,
         child: Column(
           children: <Widget>[
