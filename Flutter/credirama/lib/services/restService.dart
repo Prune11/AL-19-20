@@ -30,6 +30,13 @@ class RestService {
     print('Response body: ${response.body}');
   }
 
+  Future<AccountObject> updateContract(int accountId, String contract) async {
+    var url = new Uri.http(_ipAddress + _mea, "/accounts/update/" + accountId.toString() + "/contract/flutter");
+    print(url);
+    var response = await http.post(url, body: { "contract" : contract});
+    return toAccount(response);
+  }
+
   Future<http.Response> fetchPost() async {
     var response =
         await http.get('https://jsonplaceholder.typicode.com/posts/1');

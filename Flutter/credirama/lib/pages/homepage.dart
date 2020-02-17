@@ -103,12 +103,13 @@ class HomePage extends StatelessWidget {
                 FeeRequest request = FeeRequest(now, 1);
                 FeeBtwTwoDatesRequest request1 = FeeBtwTwoDatesRequest(dateFrom, now, 1);
                 FeeBtwTwoDatesRequest request2 = FeeBtwTwoDatesRequest(today, now, 1);
-                restService.getFeesWithOtherContracts(request2).then((value) => print("WOOD: "+ value["WOOD"].toString()
+                /*restService.getFeesWithOtherContracts(request2).then((value) => print("WOOD: "+ value["WOOD"].toString()
                                                                               + "\nSTONE: "+ value["STONE"].toString()
                                                                               + "\nIRON: "+ value["IRON"].toString()
-                                                                              + "\nDIAMOND: "+ value["DIAMOND"].toString()));
+                                                                              + "\nDIAMOND: "+ value["DIAMOND"].toString()));*/
                 //restService.getFeeBtw2Dates(request2); //TODO Cette requete ne marche pas merci de le fix Hugo =)
                 //restService.getFee(request).then((value) => print("Fee : " + value.toString()));
+                restService.updateContract(1, "IRON").then((value) => print(value));
               },
               textColor: Colors.white,
               child: Container(

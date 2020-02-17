@@ -3,6 +3,7 @@ package fr.polytech.unice.credirama.mea.controller;
 import fr.polytech.unice.credirama.mea.component.ManageEnterpriseAccount;
 import fr.polytech.unice.credirama.mea.entities.Account;
 import fr.polytech.unice.credirama.mea.entities.contract.Contract;
+import fr.polytech.unice.credirama.mea.entities.dto.ContractUpdateRequest;
 import fr.polytech.unice.credirama.mea.entities.dto.CreateAccountRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,6 +48,11 @@ public class AccountAdministrationController {
     @PostMapping("/update/{id}/contract")
     public Account updateContract(@PathVariable(name = "id") Integer id, @RequestBody Contract contract) {
         return this.manageEnterpriseAccount.updateContract(id, contract);
+    }
+
+    @PostMapping(value = "/update/{id}/contract/flutter", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Account updateContractFlutter(@PathVariable(name = "id") Integer id, ContractUpdateRequest newContractRequest){
+        return this.manageEnterpriseAccount.updateContract(id, newContractRequest.getContract());
     }
 
     @PostMapping("/update/{id}/owner")
