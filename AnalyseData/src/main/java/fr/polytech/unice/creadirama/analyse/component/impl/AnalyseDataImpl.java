@@ -25,12 +25,12 @@ public class AnalyseDataImpl implements AnalyseData {
 
     @Override
     public Transaction minTransactionFee(List<Transaction> transactions) {
-        return transactions.stream().min(Comparator.comparingDouble(Transaction::getFeeAmount)).get();
+        return transactions.stream().min(Comparator.comparingDouble(Transaction::getFeeAmount)).orElse(new Transaction());
     }
 
     @Override
     public Transaction maxTransactionFee(List<Transaction> transactions) {
-        return transactions.stream().max(Comparator.comparingDouble(Transaction::getFeeAmount)).get();
+        return transactions.stream().max(Comparator.comparingDouble(Transaction::getFeeAmount)).orElse(new Transaction());
     }
 
     @Override
