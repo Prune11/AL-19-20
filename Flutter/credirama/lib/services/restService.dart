@@ -168,7 +168,7 @@ class RestService {
     print('Response body: ${response.body}');
   }
 
-  Future getFeesWithOtherContracts(FeeBtwTwoDatesRequest request) async {
+  Future<Map<String, SimulationObject>> getFeesWithOtherContracts(FeeBtwTwoDatesRequest request) async {
     var url = new Uri.http(_ipAddress + _analyze, "/analyse/simulation");
     //print("sendRequest");
     print(url);
@@ -178,17 +178,17 @@ class RestService {
     return toSimulationMap(response);
   }
 
-  Map<String, Simulation> toSimulationMap(http.Response response) {
+  Map<String, SimulationObject> toSimulationMap(http.Response response) {
     if (response.statusCode == 200) {
       final decoded = jsonDecode(response.body);
-      Map<String, Simulation> map = new HashMap();
+      Map<String, SimulationObject> map = new HashMap();
       for(String contract in decoded.keys.toList()) {
         final dailyResult = decoded[contract]["dailyResult"];
         Map<String, SimulationPerDay> simulationPerDay = new HashMap();
         for(String date in dailyResult.keys.toList()){
           simulationPerDay.putIfAbsent(date, () => SimulationPerDay.fromJson(dailyResult[date]));
         }
-        map.putIfAbsent(contract, () => Simulation(dailyResult: simulationPerDay,
+        map.putIfAbsent(contract, () => SimulationObject(dailyResult: simulationPerDay,
                                                    totalSum: decoded[contract]["totalSum"],
                                                    totalAvg: decoded[contract]["totalAvg"],
                                                    totalNbTransaction: decoded[contract]["totalNbTransaction"]));

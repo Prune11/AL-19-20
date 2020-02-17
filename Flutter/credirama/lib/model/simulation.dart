@@ -1,14 +1,14 @@
 
 import 'package:credirama/model/simulationPerDay.dart';
 
-class Simulation {
+class SimulationObject {
 
   Map<String, SimulationPerDay> dailyResult;
   double totalSum;
   double totalAvg;
   int totalNbTransaction;
 
-  Simulation({Map<String, SimulationPerDay> dailyResult, double totalSum, double totalAvg, int totalNbTransaction}) {
+  SimulationObject({Map<String, SimulationPerDay> dailyResult, double totalSum, double totalAvg, int totalNbTransaction}) {
     this.dailyResult = dailyResult;
     this.totalSum = totalSum;
     this.totalAvg = totalAvg;
