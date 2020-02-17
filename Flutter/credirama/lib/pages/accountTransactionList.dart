@@ -1,5 +1,4 @@
 import 'package:credirama/common/MyAppBar.dart';
-import 'package:credirama/data/User.dart';
 import 'package:credirama/model/transactionObject.dart';
 import 'package:credirama/services/restService.dart';
 import 'package:credirama/widget/transaction.dart';
@@ -9,29 +8,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-class MyAccount extends StatefulWidget {
+class AccountTransactionList extends StatefulWidget {
+
+  final String _filter;
+  final String _accountName;
+  final double _balance;
+
+  AccountTransactionList(this._filter, this._accountName, this._balance);
+
   @override
-  _MyAccountState createState() => _MyAccountState();
+  _AccountTransactionListState createState() => _AccountTransactionListState(_filter, _accountName, _balance);
+
 }
 
-class _MyAccountState extends State<MyAccount> {
+class _AccountTransactionListState extends State<AccountTransactionList> {
   Future<List<TransactionObject>> transactions;
+  String _filter;
+  String _accountName;
+  double _balance;
+
+  _AccountTransactionListState(this._filter, this._accountName, this._balance);
 
   @override
   void initState() {
     super.initState();
     RestService restService = RestService();
-    transactions = restService.getAllTransactions();
+    if(_filter == "IN") {
+      transactions = restService.getAllTransactionsToUser(1);
+    } else if (_filter == "OUT") {
+      transactions = restService.getAllTransactionsFromUser(1);
+    } else {
+      transactions = restService.getAllTransactions();
+    }
   }
   
   @override
   Widget build(BuildContext context) {
-    /*RestService restService = new RestService();
-    //récupère la balance de l'account 1
-    double balance;
-    restService.getBalance(1).then((value) {
-      balance = value;
-    });*/
     return Scaffold(
         appBar: MyAppBar(),
         drawer: MyDrawer(),
@@ -47,7 +59,7 @@ class _MyAccountState extends State<MyAccount> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text("Solde",
+                              Text(_accountName,
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 20.0)),
                             ],
@@ -55,7 +67,7 @@ class _MyAccountState extends State<MyAccount> {
                           Center(
                             child: Padding(
                               padding: EdgeInsets.all(5.0),
-                              child: Text(r"DKK " + User.balance.toString(),
+                              child: Text(r"DKK " + _balance.toString(),
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 24.0)),
                             ),

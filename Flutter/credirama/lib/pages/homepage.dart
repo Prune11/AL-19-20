@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:credirama/common/MyAppBar.dart';
 import 'package:credirama/main.dart';
 import 'package:credirama/pages/analyticsMenu.dart';
-import 'package:credirama/pages/myaccount.dart';
+import 'package:credirama/pages/accountTransactionList.dart';
 import 'package:credirama/pages/parameters.dart';
 import 'package:credirama/pages/profileDetail.dart';
 import 'package:credirama/pages/transactionForm.dart';
@@ -109,7 +109,7 @@ class HomePage extends StatelessWidget {
                                                                               + "\nDIAMOND: "+ value["DIAMOND"].toString()));*/
                 //restService.getFeeBtw2Dates(request2); //TODO Cette requete ne marche pas merci de le fix Hugo =)
                 //restService.getFee(request).then((value) => print("Fee : " + value.toString()));
-                restService.updateContract(1, "IRON").then((value) => print(value));
+                //restService.updateContract(1, "IRON").then((value) => print(value));
               },
               textColor: Colors.white,
               child: Container(

@@ -102,14 +102,14 @@ class RestService {
     return toListTransaction(response);
   }
 
-  Future getAllTransactionsFromUser(int userId) async {
+  Future<List<TransactionObject>> getAllTransactionsFromUser(int userId) async {
     var url = new Uri.http(_ipAddress + _transaction, "/access/operations/from/" + userId.toString());
     var response = await http.get(url);
     return toListTransaction(response);
   }
 
-  Future getAllTransactionsToUser(int userId) async {
-    var url = new Uri.http(_ipAddress + _transaction, "/access/operations/to" + userId.toString());
+  Future<List<TransactionObject>> getAllTransactionsToUser(int userId) async {
+    var url = new Uri.http(_ipAddress + _transaction, "/access/operations/to/" + userId.toString());
     var response = await http.get(url);
     return toListTransaction(response);
   }
