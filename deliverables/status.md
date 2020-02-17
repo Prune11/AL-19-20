@@ -1,3 +1,11 @@
+# Week 08
+- INTEGRATION TEST
+- FLUTTER FULLY INTEGRATED
+- DOCKER 
+- MORE GRAPHS
+- Trying de fix some pb with mock server
+- Yellow Flag
+
 # Week 07
 - Contract impact over
 - Big improvments on UI
