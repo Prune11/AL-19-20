@@ -1,5 +1,6 @@
 import 'package:credirama/common/MyAppBar.dart';
 import 'package:credirama/common/myDrawer.dart';
+import 'package:credirama/pages/simulation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:credirama/pages/analytics.dart';
@@ -45,7 +46,7 @@ class _MyAnalyticsMenuState extends State<MyAnalyticsMenu> {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyAnalytics()));
+                    MaterialPageRoute(builder: (context) => MySimulation()));
               },
               textColor: Colors.white,
               child: Container(

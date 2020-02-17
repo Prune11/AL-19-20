@@ -9,7 +9,6 @@ import 'package:credirama/widget/dateSearch.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_formfield/flutter_datetime_formfield.dart';
 
 class MyAnalytics extends StatefulWidget {
   @override
@@ -23,8 +22,6 @@ class _MyAnalyticsState extends State<MyAnalytics> {
 
   TransactionObject tMin = new TransactionObject(toId:"Default Transaction", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
   TransactionObject tMax = new TransactionObject(toId:"Default Transaction", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
-
-  DateTime _dateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -123,18 +120,9 @@ class _MyAnalyticsState extends State<MyAnalytics> {
             Container(
               height: 200.0,
               child: VerticalBarLabelChart.nbTransactionsPerDay(),
-            )
+            ),
           ],
         ),
     );
   }
 }
-
-/*Container(
-    height: 200.0,
-    child: EndPointsAxisTimeSeriesChart.withSampleData(),
-  ),
-  Container(
-      height: 200.0,
-      child: StackedAreaLineChart.withSampleData(),
-  ),*/
