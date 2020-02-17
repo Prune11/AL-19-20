@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:credirama/common/MyAppBar.dart';
 import 'package:credirama/data/User.dart';
 import 'package:credirama/model/transactionObject.dart';
@@ -24,17 +22,6 @@ class _MyAccountState extends State<MyAccount> {
     super.initState();
     RestService restService = RestService();
     transactions = restService.getAllTransactions();
-    /*restService.getAllTransactions().then((value) =>
-        this.setState(() {
-          transactions = value;
-          /*if(this.transactions.length == 0) {
-            print("On n'a pas trouvé de transaction du coup tiens en voila une par défault");
-            TransactionObject transactionObject1 = new TransactionObject(toId:"Trevello App", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
-            this.transactions.add(transactionObject1);
-          }*/
-        })
-
-    );*/
   }
   
   @override
@@ -77,31 +64,13 @@ class _MyAccountState extends State<MyAccount> {
                       )
                   )
               ),
-              /*transactionsLoaded ?
-                displayTransactionList() :
-                Column(
-                  children: <Widget>[
-                    CircularProgressIndicator()
-                  ],
-
-                )*/
               FutureBuilder<List<TransactionObject>>(
                 future: transactions,
                 builder: (context, snapshot) {
-                  TransactionObject transaction = new TransactionObject(toId:"Default Transaction", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
                   if (snapshot.hasData) {
                     var transactionsWidget = snapshot.data.map(
                           (transaction) => TransactionWidget().transaction(transaction),
                     );
-                    if(transactionsWidget.length == 0) {
-                      return Container(
-                        child: Column(
-                          children: <Widget>[
-                            TransactionWidget().transaction(transaction)
-                          ],
-                        ),
-                      );
-                    }
                     return Container(
                       child: Column(
                         children: <Widget>[]..addAll(transactionsWidget),
@@ -111,9 +80,6 @@ class _MyAccountState extends State<MyAccount> {
                     return Column(children: <Widget>[
                       Text("${snapshot.error}"),
                       Divider(),
-                      Text("Tiens une transaction par default"),
-                      Divider(),
-                      TransactionWidget().transaction(transaction)
                     ]);
                   }
                   return Center(child: CircularProgressIndicator());
@@ -125,14 +91,4 @@ class _MyAccountState extends State<MyAccount> {
     );
   }
 
-  /*displayTransactionList() {
-    var transactionsWidget = transactions.map(
-          (transaction) => TransactionWidget().transaction(transaction),
-    );
-    return Container(
-      child: Column(
-        children: <Widget>[]..addAll(transactionsWidget),
-      ),
-    );
-  }*/
 }

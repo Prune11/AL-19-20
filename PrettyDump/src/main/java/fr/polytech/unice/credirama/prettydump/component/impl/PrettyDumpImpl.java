@@ -2,6 +2,7 @@ package fr.polytech.unice.credirama.prettydump.component.impl;
 
 import fr.polytech.unice.credirama.prettydump.component.PrettyDump;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,16 +15,26 @@ public class PrettyDumpImpl implements PrettyDump {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private Environment env;
+
     private static final String TRANSACTION_URL = "http://localhost:8084";
     private static final String MEA_URL = "http://localhost:8081";
 
     @Override
     public String getPrettyDump() {
+        String transactionURL = env.getProperty("TRANSACTION");
+        System.out.println(transactionURL);
+//        if (transactionURL == null || transactionURL.equals("")) transactionURL = TRANSACTION_URL;
+        String meaURL = env.getProperty("MEA");
+        System.out.println(meaURL);
+//        if (meaURL == null || meaURL.equals("")) meaURL = MEA_URL;
+
         String globalresponse = "";
         String responseTransaction = "";
         String responseMea = "";
-        responseTransaction = this.restTemplate.getForObject(TRANSACTION_URL + "/prettyDump", String.class);
-        responseMea = this.restTemplate.getForObject(MEA_URL + "/prettyDump", String.class);
+        responseTransaction = this.restTemplate.getForObject(transactionURL + "/prettyDump", String.class);
+        responseMea = this.restTemplate.getForObject(meaURL + "/prettyDump", String.class);
 
         Calendar date = Calendar.getInstance();
         int year = date.get(Calendar.YEAR);

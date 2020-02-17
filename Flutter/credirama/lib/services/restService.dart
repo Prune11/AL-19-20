@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:credirama/model/accountObject.dart';
 import 'package:credirama/model/clientObject.dart';
+import 'package:credirama/model/simulation.dart';
+import 'package:credirama/model/simulationPerDay.dart';
 import 'package:credirama/model/transactionObject.dart';
 import 'package:credirama/request/createAccountRequest.dart';
 import 'package:credirama/request/feeBtw2DatesRequest.dart';
@@ -10,6 +12,7 @@ import 'package:credirama/request/feeRequest.dart';
 import 'package:credirama/request/transactionsBtwTwoDatesRequest.dart';
 import 'package:credirama/request/transactionRequest.dart';
 import 'package:credirama/response/TransactionsBtwToDatesResponse.dart';
+import 'package:credirama/response/feeResponse.dart';
 import 'package:http/http.dart' as http;
 import 'package:credirama/shared.dart';
 
@@ -138,13 +141,14 @@ class RestService {
     }
   }
 
-  Future getFee(FeeRequest request) async {
+  Future<FeeResponse> getFee(FeeRequest request) async {
     var url = new Uri.http(_ipAddress + _analyze, "/analyse/fees/day");
     //print("sendRequest");
     print(url);
     var response = await http.post(url, body: request.toSend());
     //print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response body: ${response.body}');
+    return FeeResponse.fromJson(jsonDecode(response.body));
   }
 
   Future getFeeBtw2Dates(FeeBtwTwoDatesRequest request) async {
@@ -164,6 +168,28 @@ class RestService {
     var response = await http.post(url, body: request.toSend());
     //print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
+    return toSimulationMap(response);
+  }
+
+  Map<String, Simulation> toSimulationMap(http.Response response) {
+    if (response.statusCode == 200) {
+      final decoded = jsonDecode(response.body);
+      Map<String, Simulation> map = new HashMap();
+      for(String contract in decoded.keys.toList()) {
+        final dailyResult = decoded[contract]["dailyResult"];
+        Map<String, SimulationPerDay> simulationPerDay = new HashMap();
+        for(String date in dailyResult.keys.toList()){
+          simulationPerDay.putIfAbsent(date, () => SimulationPerDay.fromJson(dailyResult[date]));
+        }
+        map.putIfAbsent(contract, () => Simulation(dailyResult: simulationPerDay,
+                                                   totalSum: decoded[contract]["totalSum"],
+                                                   totalAvg: decoded[contract]["totalAvg"],
+                                                   totalNbTransaction: decoded[contract]["totalNbTransaction"]));
+      }
+      return map;
+    } else {
+      throw Exception('Failed to load Response');
+    }
   }
 
   void getPrettyDump() async {

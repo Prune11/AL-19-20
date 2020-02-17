@@ -112,9 +112,8 @@
                             <executable>docker-compose</executable>
                             <workingDirectory>${project.basedir}</workingDirectory>
                             <arguments>
-                                <argument>up</argument>
-                                <argument>-d</argument>
-                                <argument>--build</argument>
+                                <argument>run</argument>
+                                <argument>start_dependencies</argument>
                             </arguments>
                         </configuration>
                     </execution>

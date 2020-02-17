@@ -1,6 +1,7 @@
 package fr.polytech.unice.creadirama.analyse.component.impl;
 
 import fr.polytech.unice.creadirama.analyse.component.AnalyseData;
+import fr.polytech.unice.creadirama.analyse.dto.SimulationDTO;
 import fr.polytech.unice.creadirama.analyse.entity.FeeBtw2Day;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import fr.polytech.unice.creadirama.analyse.entity.contract.Contract;
@@ -24,12 +25,12 @@ public class AnalyseDataImpl implements AnalyseData {
 
     @Override
     public Transaction minTransactionFee(List<Transaction> transactions) {
-        return transactions.stream().min(Comparator.comparingDouble(Transaction::getFeeAmount)).get();
+        return transactions.stream().min(Comparator.comparingDouble(Transaction::getFeeAmount)).orElse(new Transaction());
     }
 
     @Override
     public Transaction maxTransactionFee(List<Transaction> transactions) {
-        return transactions.stream().max(Comparator.comparingDouble(Transaction::getFeeAmount)).get();
+        return transactions.stream().max(Comparator.comparingDouble(Transaction::getFeeAmount)).orElse(new Transaction());
     }
 
     @Override
@@ -85,8 +86,8 @@ public class AnalyseDataImpl implements AnalyseData {
     }
 
     @Override
-    public List<FeeBtw2Day> simulationWithAnotherContract(Map<DateTime, List<Transaction>> transactionPerDay) {
-        List<FeeBtw2Day> simulatedList = new ArrayList<>();
+    public Map<String, SimulationDTO>  simulationWithAnotherContract(Map<DateTime, List<Transaction>> transactionPerDay) {
+        Map<String, SimulationDTO>  simulatedMap = new HashMap<>();
         FeeBtw2Day feeBtw2DayWOOD = new FeeBtw2Day();
         FeeBtw2Day feeBtw2DaySTONE = new FeeBtw2Day();
         FeeBtw2Day feeBtw2DayIRON = new FeeBtw2Day();
@@ -98,21 +99,21 @@ public class AnalyseDataImpl implements AnalyseData {
 
 
         /*Wood making*/
-        runSimulation(transactionPerDay, simulatedList, feeBtw2DayWOOD, wood);
+        runSimulation(transactionPerDay, simulatedMap, feeBtw2DayWOOD, wood);
 
         /*Stone making*/
-        runSimulation(transactionPerDay, simulatedList, feeBtw2DaySTONE, stone);
+        runSimulation(transactionPerDay, simulatedMap, feeBtw2DaySTONE, stone);
 
         /*Iron making*/
-        runSimulation(transactionPerDay, simulatedList, feeBtw2DayIRON, iron);
+        runSimulation(transactionPerDay, simulatedMap, feeBtw2DayIRON, iron);
 
         /*Diamond making*/
-        runSimulation(transactionPerDay, simulatedList, feeBtw2DayDIAMOND, diamond);
+        runSimulation(transactionPerDay, simulatedMap, feeBtw2DayDIAMOND, diamond);
 
-        return simulatedList;
+        return simulatedMap;
     }
 
-    private void runSimulation(Map<DateTime, List<Transaction>> transactionPerDay, List<FeeBtw2Day> simulatedList, FeeBtw2Day feeBtw2DayType, Contract contract) {
+    private void runSimulation(Map<DateTime, List<Transaction>> transactionPerDay, Map<String, SimulationDTO> simulatedMap, FeeBtw2Day feeBtw2DayType, Contract contract) {
         for (DateTime dateTime : transactionPerDay.keySet()) {
             List<Transaction> transactionList = transactionPerDay.get(dateTime);
             for (Transaction t : transactionList) {
@@ -124,6 +125,6 @@ public class AnalyseDataImpl implements AnalyseData {
         sumBetweenTwoDate(transactionPerDay, feeBtw2DayType);
         minBetweenTwoDate(transactionPerDay, feeBtw2DayType);
         maxBetweenTwoDate(transactionPerDay, feeBtw2DayType);
-        simulatedList.add(feeBtw2DayType);
+        simulatedMap.put(contract.name(), new SimulationDTO(feeBtw2DayType));
     }
 }

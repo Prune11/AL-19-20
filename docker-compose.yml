@@ -1,6 +1,7 @@
 version: '3'
 services:
 
+
   ############  MANAGE ENTERPRISE ACCOUNTS  #################
 
   mea-server:
@@ -14,9 +15,11 @@ services:
     expose:
       - 8081
     ports:
-      - 8081:8080
+      - 8081:8081
     logging:
       driver: json-file
+    networks:
+      - credirama-network
 
 
   ############ PRETTY DUMP  #################
@@ -32,12 +35,18 @@ services:
     expose:
       - 8085
     ports:
-      - 8085:8080
+      - 8085:8085
     logging:
       driver: json-file
+    networks:
+      - credirama-network
+    environment:
+      MEA: http://mea-server:8081
+      TRANSACTION: http://transaction-server:8084
 
 
   ############ TRANSACTIONS  #################
+
   transaction-server:
     container_name: credirama-transaction-server
     build:
@@ -49,11 +58,47 @@ services:
     expose:
       - 8084
     ports:
-      - 8084:8080
+      - 8084:8084
     logging:
       driver: json-file
+    networks:
+      - credirama-network
+    environment:
+      MEA: http://mea-server:8081
 
-    #environment:
-     # NOTIFICATION_HOST: notification
-     # DRONE_HOST: http://drone-server:8080
-     # KAFKA_HOST: http://kafka:9092
+
+  ############ ANALYSE DATA  #################
+
+  analyse-data-server:
+    container_name: credirama-analyse-data-sever
+    build:
+      context: AnalyseData
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: target/AnalyseData-1.0-SNAPSHOT.jar
+    image: credirama-analyse-data-server:latest
+    expose:
+      - 8088
+    ports:
+      - 8088:8088
+    logging:
+      driver: json-file
+    networks:
+      - credirama-network
+
+  ############ DEPENDENCIES #################
+
+  start_dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - analyse-data-server
+      - mea-server
+      - prettydump-server
+      - transaction-server
+    command: analyse-data-server:8088 mea-server:8081 prettydump-server:8085 transaction-server:8084
+    networks:
+      - credirama-network
+
+networks:
+  credirama-network:
+    driver: bridge

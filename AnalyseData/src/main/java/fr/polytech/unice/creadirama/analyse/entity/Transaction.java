@@ -10,7 +10,6 @@ import javax.persistence.*;
 
 @ToString
 @EqualsAndHashCode
-@Entity
 @Data
 public class Transaction {
 

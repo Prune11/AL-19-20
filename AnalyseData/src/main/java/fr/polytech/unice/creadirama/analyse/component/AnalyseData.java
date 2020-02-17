@@ -1,5 +1,6 @@
 package fr.polytech.unice.creadirama.analyse.component;
 
+import fr.polytech.unice.creadirama.analyse.dto.SimulationDTO;
 import fr.polytech.unice.creadirama.analyse.entity.FeeBtw2Day;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import org.joda.time.DateTime;
@@ -25,5 +26,5 @@ public interface AnalyseData {
 
     FeeBtw2Day maxBetweenTwoDate(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2Day feeBtw2Day);
 
-    List<FeeBtw2Day> simulationWithAnotherContract(Map<DateTime, List<Transaction>> transactionPerDay);
+    Map<String, SimulationDTO>  simulationWithAnotherContract(Map<DateTime, List<Transaction>> transactionPerDay);
 }
