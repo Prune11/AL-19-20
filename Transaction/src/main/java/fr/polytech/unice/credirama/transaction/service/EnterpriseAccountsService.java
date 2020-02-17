@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class EnterpriseAccountsService {
 
-//    private static final String MEA_URL = "http://localhost:8081";
+    private static final String MEA_URL = "http://localhost:8081";
 
     @Autowired
     private RestTemplate restTemplate;
@@ -21,7 +21,7 @@ public class EnterpriseAccountsService {
     public Double addTransactionToAccount(long idTransaction, int accountFrom, int accountTo, double amount) {
         String meaURL = env.getProperty("MEA");
         System.out.println(meaURL);
-//        if (meaURL == null || meaURL.equals("")) meaURL = MEA_URL;
+        if (meaURL == null || meaURL.equals("")) meaURL = MEA_URL;
         MEAAddTransactionRequest request = new MEAAddTransactionRequest(idTransaction, accountFrom, accountTo, amount);
         return this.restTemplate.postForObject(meaURL + "/transaction/add", request, Double.class);
     }

@@ -90,7 +90,7 @@ public class TransactionComponentImpl implements TransactionComponent {
 
     @Override
     public List<Transaction> getAllTransactionsByUserIdTo(int idTo) {
-        return this.transactionRepo.getTransactionsByFromId(idTo);
+        return this.transactionRepo.getTransactionsByToId(idTo);
     }
 
     @Override

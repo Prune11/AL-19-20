@@ -1,5 +1,5 @@
 import 'package:credirama/model/accountObject.dart';
-import 'package:credirama/pages/myaccount.dart';
+import 'package:credirama/pages/AccountMenu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../model/accountObject.dart';
@@ -11,7 +11,7 @@ class AccountWidget {
       child: MaterialButton(
         onPressed: () {
           Navigator.push( context,
-              MaterialPageRoute(builder: (context) => MyAccount()));
+              MaterialPageRoute(builder: (context) => AccountMenu("Account " + numAccount.toString() + "", accountObject.balance)));
         } ,
         child: Column(
           children: <Widget>[
