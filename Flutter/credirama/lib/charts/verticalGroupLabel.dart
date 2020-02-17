@@ -52,7 +52,11 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         new charts.ChartTitle(getTitle(seriesList),
             behaviorPosition: charts.BehaviorPosition.top,
             titleOutsideJustification: charts.OutsideJustification.start,
-            innerPadding: 20
+            //innerPadding: 20
+        ),
+        new charts.SeriesLegend(
+          position: charts.BehaviorPosition.bottom,
+          desiredMaxColumns: 2,
         ),
       ],
     );

@@ -73,12 +73,12 @@ class _MysimulationState extends State<MySimulation> {
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 10.0),
-              height: 200.0,
+              height: 250.0,
               child: VerticalGroupBarLabelChart.feesPerDay(),
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 10.0),
-              height: 200.0,
+              height: 250.0,
               child: VerticalGroupBarLabelChart.avgPerDay(),
             ),
           ],
