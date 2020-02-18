@@ -41,6 +41,7 @@ public class AnalyseDataController {
         analyseData.sumBetweenTwoDate(transactionPerDay, feeBtw2Day);
         analyseData.minBetweenTwoDate(transactionPerDay, feeBtw2Day);
         analyseData.maxBetweenTwoDate(transactionPerDay, feeBtw2Day);
+        analyseData.nbTransactionPerDay(transactionPerDay, feeBtw2Day);
         return new FeeBtw2DateResponseDTO(request.getDateTimeFrom(),
                 request.getDateTimeTo(),
                 request.getAccountId(),

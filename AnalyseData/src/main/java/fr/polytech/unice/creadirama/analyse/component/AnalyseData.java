@@ -27,4 +27,6 @@ public interface AnalyseData {
     FeeBtw2Day maxBetweenTwoDate(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2Day feeBtw2Day);
 
     Map<String, SimulationDTO>  simulationWithAnotherContract(Map<DateTime, List<Transaction>> transactionPerDay);
+
+    Map<DateTime, Integer> nbTransactionPerDay(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2Day feeBtw2Day);
 }

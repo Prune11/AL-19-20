@@ -15,21 +15,26 @@ public class AnalyseDataImpl implements AnalyseData {
 
     @Override
     public double sumFeesPerDay(List<Transaction> transactions) {
+        if (transactions.isEmpty()) return 0;
         return transactions.stream().mapToDouble(Transaction::getFeeAmount).sum();
     }
 
     @Override
     public double avgFeePerDay(List<Transaction> transactions) {
+        if (transactions.isEmpty()) return 0;
+
         return sumFeesPerDay(transactions) / transactions.size();
     }
 
     @Override
     public Transaction minTransactionFee(List<Transaction> transactions) {
+        if (transactions.isEmpty()) return new Transaction();
         return transactions.stream().min(Comparator.comparingDouble(Transaction::getFeeAmount)).orElse(new Transaction());
     }
 
     @Override
     public Transaction maxTransactionFee(List<Transaction> transactions) {
+        if (transactions.isEmpty()) return new Transaction();
         return transactions.stream().max(Comparator.comparingDouble(Transaction::getFeeAmount)).orElse(new Transaction());
     }
 
@@ -111,6 +116,13 @@ public class AnalyseDataImpl implements AnalyseData {
         runSimulation(transactionPerDay, simulatedMap, feeBtw2DayDIAMOND, diamond);
 
         return simulatedMap;
+    }
+
+    @Override
+    public Map<DateTime, Integer> nbTransactionPerDay(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2Day feeBtw2Day) {
+        Map<DateTime, Integer> res = new HashMap<>();
+        transactionPerDay.forEach((dateTime, transactions) -> res.put(dateTime, transactions.size()));
+        return res;
     }
 
     private void runSimulation(Map<DateTime, List<Transaction>> transactionPerDay, Map<String, SimulationDTO> simulatedMap, FeeBtw2Day feeBtw2DayType, Contract contract) {
