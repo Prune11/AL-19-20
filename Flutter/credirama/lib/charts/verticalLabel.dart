@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:credirama/model/simulationPerDay.dart';
@@ -107,18 +105,21 @@ class VerticalBarLabelChart extends StatelessWidget {
     ];
   }
 
-  static List<charts.Series<CumulativeNbTransactions, String>> _createNbTransactionsPerDay(Map<String, SimulationPerDay> data) {
+  static List<charts.Series<CumulativeData, String>> _createNbTransactionsPerDay(Map<String, SimulationPerDay> data) {
     final dataNbTransactions = [];
+    data.forEach(
+            (day, simulation) => dataNbTransactions.add(CumulativeData(day, simulation.nbTransaction.toDouble()))
+    );
 
     return [
-      new charts.Series<CumulativeNbTransactions, String>(
+      new charts.Series<CumulativeData, String>(
         id: NB_TRANSACTIONS,
-        domainFn: (CumulativeNbTransactions cNT, _) => cNT.date,
-        measureFn: (CumulativeNbTransactions cNT, _) => cNT.nbTransactions,
+        domainFn: (CumulativeData cNT, _) => cNT.date,
+        measureFn: (CumulativeData cNT, _) => cNT.data.toInt(),
         data: dataNbTransactions,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeNbTransactions cNT, _) =>
-        '${cNT.nbTransactions.toString()} €',
+        labelAccessorFn: (CumulativeData cNT, _) =>
+        '${cNT.data.toInt().toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) =>
@@ -127,7 +128,7 @@ class VerticalBarLabelChart extends StatelessWidget {
     ];
   }
 
-  static String getTitle(List<charts.Series<TemplateElement, String>> chartList){
+  static String getTitle(List<charts.Series<CumulativeData, String>> chartList){
     String title = "";
     String chartID = chartList[0].id;
     switch(chartID) {
@@ -148,12 +149,4 @@ class CumulativeData {
   final double data;
 
   CumulativeData(this.date, this.data);
-}
-
-/// Data structure to manage NbTransactions per day
-class CumulativeNbTransactions {
-  final String date;
-  final int nbTransactions;
-
-  CumulativeNbTransactions(this.date, this.nbTransactions);
 }
