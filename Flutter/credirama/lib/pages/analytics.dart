@@ -21,7 +21,7 @@ class MyAnalytics extends StatefulWidget {
 
 class _MyAnalyticsState extends State<MyAnalytics> {
 
-  Future<Map<String, SimulationObject>> simulations;
+  Future<SimulationObject> stats;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DateTime _dateFrom;
   DateTime _dateTo;
@@ -90,7 +90,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
                               FeeBtwTwoDatesRequest req = FeeBtwTwoDatesRequest(_dateFrom,_dateTo, 1);
-                              simulations = restSer.getFeesWithOtherContracts(req);
+                              //stats = restSer.getFeesWithOtherContracts(req);
                             }
                             if (_dateFrom.isBefore(_dateTo)) {
                               print("I should show the results");
@@ -113,96 +113,115 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    "Total number of transactions: ",
-                    textAlign: TextAlign.left,
-                    style: formatTitleStats,
-                  ),
-                  Text(
-                    "value",
-                    style: formatValueStats,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        Text ("Total fees: ",
-                          style: formatTitleStats,
+            FutureBuilder<SimulationObject> (
+              future: stats,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  //Vars?
+                  return ListView (
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              "Total number of transactions: ",
+                              textAlign: TextAlign.left,
+                              style: formatTitleStats,
+                            ),
+                            Text(
+                              "value",
+                              style: formatValueStats,
+                            ),
+                          ],
                         ),
-                        Text(
-                          "value",
-                          style: formatValueStats,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Expanded(
+                              child: Row(
+                                children: <Widget>[
+                                  Text ("Total fees: ",
+                                    style: formatTitleStats,
+                                  ),
+                                  Text(
+                                    "value",
+                                    style: formatValueStats,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row (
+                                children: <Widget>[
+                                  Text(
+                                    "Total average: ",
+                                    textAlign: TextAlign.left,
+                                    style: formatTitleStats,
+                                  ),
+                                  Text(
+                                    "value",
+                                    style: formatValueStats,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row (
-                      children: <Widget>[
-                        Text(
-                          "Total average: ",
-                          textAlign: TextAlign.left,
-                          style: formatTitleStats,
+                      ),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Minimum transaction ",
+                                textAlign: TextAlign.left,
+                                style: formatTitleStats,
+                              ),
+                            ),
+                            TransactionWidget().transaction(tMin),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Maximum transaction ",
+                                style: formatTitleStats,
+                              ),
+                            ),
+                            TransactionWidget().transaction(tMax),
+                          ],
                         ),
-                        Text(
-                          "value",
-                          style: formatValueStats,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Minimum transaction ",
-                      textAlign: TextAlign.left,
-                      style: formatTitleStats,
-                    ),
-                  ),
-                  TransactionWidget().transaction(tMin),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Maximum transaction ",
-                      style: formatTitleStats,
-                    ),
-                  ),
-                  TransactionWidget().transaction(tMax),
-                ],
-              ),
-            ),
-            Container(
-              height: 200.0,
-              child: VerticalBarLabelChart.feesPerDay(),
-            ),
-            Container(
-              height: 200.0,
-              child: VerticalBarLabelChart.avgPerDay(),
-            ),
-            Container(
-              height: 200.0,
-              child: VerticalBarLabelChart.nbTransactionsPerDay(),
-            ),
+                      ),
+                      Container(
+                        height: 200.0,
+                        child: VerticalBarLabelChart.feesPerDay(snapshot.data.dailyResult),
+                      ),
+                      Container(
+                        height: 200.0,
+                        child: VerticalBarLabelChart.avgPerDay(snapshot.data.dailyResult),
+                      ),
+                      Container(
+                        height: 200.0,
+                        child: VerticalBarLabelChart.nbTransactionsPerDay(snapshot.data.dailyResult),
+                      ),
+                    ],
+                  );
+                }
+                else if (snapshot.hasError){
+                  return Column(children: <Widget>[
+                    Text("${snapshot.error}"),
+                    Divider(),
+                  ]);
+                }
+                return Center(child: Text("Please introduce two dates"),);
+              },
+            )
           ],
         ),
     );

@@ -1,5 +1,8 @@
+import 'dart:html';
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:credirama/model/simulationPerDay.dart';
 
 class VerticalBarLabelChart extends StatelessWidget {
   static const String FEES = "Fees";
@@ -11,23 +14,23 @@ class VerticalBarLabelChart extends StatelessWidget {
 
   VerticalBarLabelChart(this.seriesList, {this.animate});
 
-  factory VerticalBarLabelChart.feesPerDay(/*Map<DateTime, double> data*/) {
+  factory VerticalBarLabelChart.feesPerDay(Map<String, SimulationPerDay> data) {
     return new VerticalBarLabelChart(
-      _createFeesPerDay(/*data*/),
+      _createFeesPerDay(data),
       animate: true,
     );
   }
 
-  factory VerticalBarLabelChart.avgPerDay(/*Map<DateTime, double> data*/) {
+  factory VerticalBarLabelChart.avgPerDay(Map<String, SimulationPerDay> data) {
     return new VerticalBarLabelChart(
-      _createAvgPerDay(/*data*/),
+      _createAvgPerDay(data),
       animate: true,
     );
   }
 
-  factory VerticalBarLabelChart.nbTransactionsPerDay(/*Map<DateTime, int> data*/) {
+  factory VerticalBarLabelChart.nbTransactionsPerDay(Map<String, SimulationPerDay> data) {
     return new VerticalBarLabelChart(
-      _createNbTransactionsPerDay(/*data*/),
+      _createNbTransactionsPerDay(data),
       animate: true,
     );
   }
@@ -58,23 +61,21 @@ class VerticalBarLabelChart extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<CumulativeFees, String>> _createFeesPerDay(/*Map<DateTime, double> data*/) {
-    final data = [
-      new CumulativeFees('Janvier', 5.0),
-      new CumulativeFees('Fevrier', 25.3),
-      new CumulativeFees('Mars', 100.8),
-      new CumulativeFees('Avril', 75.7),
-    ];
+  static List<charts.Series<CumulativeData, String>> _createFeesPerDay(Map<String, SimulationPerDay> data) {
+    final dataFees = [];
+    data.forEach(
+            (day, simulation) => dataFees.add(CumulativeData(day, simulation.sum))
+    );
 
     return [
-      new charts.Series<CumulativeFees, String>(
+      new charts.Series<CumulativeData, String>(
           id: FEES,
-          domainFn: (CumulativeFees cF, _) => cF.month,
-          measureFn: (CumulativeFees cF, _) => cF.fees,
-          data: data,
+          domainFn: (CumulativeData cD, _) => cD.date,
+          measureFn: (CumulativeData cD, _) => cD.data,
+          data: dataFees,
           // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (CumulativeFees cF, _) =>
-          '${cF.fees.toString()} €',
+          labelAccessorFn: (CumulativeData cD, _) =>
+          '${cD.data.toString()} €',
           //Change fill color
           colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
           fillColorFn: (_, __) =>
@@ -83,23 +84,21 @@ class VerticalBarLabelChart extends StatelessWidget {
     ];
   }
 
-  static List<charts.Series<CumulativeFees, String>> _createAvgPerDay(/*Map<DateTime, double> data*/) {
-    final data = [
-      new CumulativeFees('13-02-2020', 5.0),
-      new CumulativeFees('14-02-2020', 25.3),
-      new CumulativeFees('15-02-2020', 22.2),
-      new CumulativeFees('16-02-2020', 37.5),
-    ];
+  static List<charts.Series<CumulativeData, String>> _createAvgPerDay(Map<String, SimulationPerDay> data) {
+    final dataAvg = [];
+    data.forEach(
+        (day, simulation) => dataAvg.add(CumulativeData(day, simulation.avg))
+    );
 
     return [
-      new charts.Series<CumulativeFees, String>(
+      new charts.Series<CumulativeData, String>(
         id: AVG,
-        domainFn: (CumulativeFees cF, _) => cF.month,
-        measureFn: (CumulativeFees cF, _) => cF.fees,
-        data: data,
+        domainFn: (CumulativeData cD, _) => cD.date,
+        measureFn: (CumulativeData cD, _) => cD.data,
+        data: dataAvg,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeFees cF, _) =>
-        '${cF.fees.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) =>
+        '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) =>
@@ -108,23 +107,18 @@ class VerticalBarLabelChart extends StatelessWidget {
     ];
   }
 
-  static List<charts.Series<CumulativeFees, String>> _createNbTransactionsPerDay(/*Map<DateTime, int> data*/) {
-    final data = [
-      new CumulativeFees('Janvier', 10),
-      new CumulativeFees('Fevrier', 25),
-      new CumulativeFees('Mars', 8),
-      new CumulativeFees('Avril', 3),
-    ];
+  static List<charts.Series<CumulativeNbTransactions, String>> _createNbTransactionsPerDay(Map<String, SimulationPerDay> data) {
+    final dataNbTransactions = [];
 
     return [
-      new charts.Series<CumulativeFees, String>(
+      new charts.Series<CumulativeNbTransactions, String>(
         id: NB_TRANSACTIONS,
-        domainFn: (CumulativeFees cF, _) => cF.month,
-        measureFn: (CumulativeFees cF, _) => cF.fees,
-        data: data,
+        domainFn: (CumulativeNbTransactions cNT, _) => cNT.date,
+        measureFn: (CumulativeNbTransactions cNT, _) => cNT.nbTransactions,
+        data: dataNbTransactions,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeFees cF, _) =>
-        '${cF.fees.toString()} €',
+        labelAccessorFn: (CumulativeNbTransactions cNT, _) =>
+        '${cNT.nbTransactions.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) =>
@@ -133,7 +127,7 @@ class VerticalBarLabelChart extends StatelessWidget {
     ];
   }
 
-  static String getTitle(List<charts.Series<CumulativeFees, String>> chartList){
+  static String getTitle(List<charts.Series<TemplateElement, String>> chartList){
     String title = "";
     String chartID = chartList[0].id;
     switch(chartID) {
@@ -148,10 +142,18 @@ class VerticalBarLabelChart extends StatelessWidget {
   }
 }
 
-/// Sample ordinal data type.
-class CumulativeFees {
-  final String month;
-  final double fees;
+/// Data structure to manage Fees and Avg per day
+class CumulativeData {
+  final String date;
+  final double data;
 
-  CumulativeFees(this.month, this.fees);
+  CumulativeData(this.date, this.data);
+}
+
+/// Data structure to manage NbTransactions per day
+class CumulativeNbTransactions {
+  final String date;
+  final int nbTransactions;
+
+  CumulativeNbTransactions(this.date, this.nbTransactions);
 }
