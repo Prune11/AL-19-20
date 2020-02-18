@@ -1,5 +1,4 @@
 import 'package:credirama/common/MyAppBar.dart';
-import 'package:credirama/common/myDrawer.dart';
 import 'package:credirama/pages/simulation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,7 @@ class _MyAnalyticsMenuState extends State<MyAnalyticsMenu> {
       appBar: MyAppBar(),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             FlatButton(
               onPressed: () {

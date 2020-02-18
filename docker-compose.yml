@@ -85,6 +85,8 @@ services:
       driver: json-file
     networks:
       - credirama-network
+    environment:
+      TRANSACTION: http://transaction-server:8084
 
   ############ DEPENDENCIES #################
 

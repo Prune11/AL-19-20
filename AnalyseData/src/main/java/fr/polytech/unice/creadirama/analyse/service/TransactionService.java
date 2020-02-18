@@ -7,6 +7,7 @@ import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,10 +21,15 @@ public class TransactionService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private Environment env;
+
 
     public List<Transaction> getTransactionsFor1Day(DateTime date, int idFrom) {
+        String transactionUrl = env.getProperty("TRANSACTION");
+        if (transactionUrl == null || transactionUrl.equals("")) transactionUrl = TRANSACTION_URL;
         TransactionsBtw2DatesRequest request = new TransactionsBtw2DatesRequest(date, date);
-        TransactionsBtw2DatesResponse result = this.restTemplate.postForObject(TRANSACTION_URL + "/access/operations/" + idFrom + "/dates", request.toSend(), TransactionsBtw2DatesResponse.class);
+        TransactionsBtw2DatesResponse result = this.restTemplate.postForObject(transactionUrl + "/access/operations/" + idFrom + "/dates", request.toSend(), TransactionsBtw2DatesResponse.class);
         assert result != null;
         DateTime dateTime = new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 0, 0);
         String timeStamp = dateTime.toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
@@ -31,8 +37,10 @@ public class TransactionService {
     }
 
     public Map<String, List<Transaction>> getTransactionBtw2Day(DateTime from, DateTime to, int idFrom) {
+        String transactionUrl = env.getProperty("TRANSACTION");
+        if (transactionUrl == null || transactionUrl.equals("")) transactionUrl = TRANSACTION_URL;
         TransactionsBtw2DatesRequest request = new TransactionsBtw2DatesRequest(from, to);
-        TransactionsBtw2DatesResponse result = this.restTemplate.postForObject(TRANSACTION_URL + "/access/operations/" + idFrom + "/dates" , request.toSend(), TransactionsBtw2DatesResponse.class);
+        TransactionsBtw2DatesResponse result = this.restTemplate.postForObject(transactionUrl + "/access/operations/" + idFrom + "/dates" , request.toSend(), TransactionsBtw2DatesResponse.class);
         assert result != null;
         return result.getTransactionPerDay();
     }
