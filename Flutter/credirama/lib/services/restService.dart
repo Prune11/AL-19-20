@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:credirama/model/accountObject.dart';
 import 'package:credirama/model/clientObject.dart';
-import 'package:credirama/model/simulation.dart';
+import 'package:credirama/model/simulationObject.dart';
 import 'package:credirama/model/simulationPerDay.dart';
 import 'package:credirama/model/transactionObject.dart';
 import 'package:credirama/request/createAccountRequest.dart';

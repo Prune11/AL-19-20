@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:credirama/common/MyAppBar.dart';
 import 'package:credirama/common/myDrawer.dart';
 import 'package:credirama/model/transactionObject.dart';
-import 'package:credirama/model/simulation.dart';
+import 'package:credirama/model/simulationObject.dart';
 import 'package:credirama/charts/verticalLabel.dart';
 import 'package:credirama/services/restService.dart';
 import 'package:credirama/widget/transaction.dart';

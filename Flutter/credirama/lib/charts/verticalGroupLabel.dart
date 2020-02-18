@@ -1,5 +1,5 @@
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:credirama/model/simulation.dart';
+import 'package:credirama/model/simulationObject.dart';
 import 'package:flutter/material.dart';
 
 class VerticalGroupBarLabelChart extends StatelessWidget {
@@ -65,36 +65,16 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<CumulativeData, String>> _createFeesPerDay(Map<String, SimulationObject> data) {
-    final dataWood = [];
-    final dataStone = [];
-    final dataIron = [];
-    final dataDiamond = [];
-    data.forEach((contract, simulation) {
-      if (contract == "wood") {
-        simulation.dailyResult.forEach( (day, value)
-            {
-              dataWood.add(CumulativeData(day, value.sum));
-            });
-      }
-      else if (contract == "stone") {
-        simulation.dailyResult.forEach( (day, value)
-        {
-          dataStone.add(CumulativeData(day, value.sum));
-        });
-      }
-      else if (contract == "iron") {
-        simulation.dailyResult.forEach( (day, value)
-        {
-          dataIron.add(CumulativeData(day, value.sum));
-        });
-      }
-      else {
-        simulation.dailyResult.forEach( (day, value)
-        {
-          dataDiamond.add(CumulativeData(day, value.sum));
-        });
-      }
-    });
+    List<CumulativeData> dataWood = [];
+    List<CumulativeData> dataStone = [];
+    List<CumulativeData> dataIron = [];
+    List<CumulativeData> dataDiamond = [];
+    for( String date in data["WOOD"].dailyResult.keys){
+      dataWood..add(CumulativeData(date, data["WOOD"].dailyResult[date].sum));
+      dataStone..add(CumulativeData(date, data["STONE"].dailyResult[date].sum));
+      dataIron..add(CumulativeData(date, data["IRON"].dailyResult[date].sum));
+      dataDiamond..add(CumulativeData(date, data["DIAMOND"].dailyResult[date].sum));
+    }
 
 
     return [
@@ -104,12 +84,10 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataWood,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) =>
-        '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) =>
-        charts.MaterialPalette.teal.shadeDefault,
+        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
       ),
       new charts.Series<CumulativeData, String>(
         id: FEES_STONE,
@@ -117,12 +95,10 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataStone,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) =>
-        '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) =>'${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) =>
-        charts.MaterialPalette.teal.shadeDefault.lighter.lighter,
+        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter.lighter,
       ),
       new charts.Series<CumulativeData, String>(
         id: FEES_IRON,
@@ -130,12 +106,10 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataIron,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) =>
-        '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) =>
-        charts.MaterialPalette.teal.shadeDefault.darker,
+        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.darker,
       ),
       new charts.Series<CumulativeData, String>(
         id: FEES_DIAMOND,
@@ -143,47 +117,25 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataDiamond,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) =>
-        '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) =>
-        charts.MaterialPalette.teal.shadeDefault.lighter,
+        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter,
       )
     ];
   }
 
   static List<charts.Series<CumulativeData, String>> _createAvgPerDay(Map<String, SimulationObject> data) {
-    final dataWood = [];
-    final dataStone = [];
-    final dataIron = [];
-    final dataDiamond = [];
-    data.forEach((contract, simulation) {
-      if (contract == "wood") {
-        simulation.dailyResult.forEach( (day, value)
-        {
-          dataWood.add(CumulativeData(day, value.avg));
-        });
-      }
-      else if (contract == "stone") {
-        simulation.dailyResult.forEach( (day, value)
-        {
-          dataStone.add(CumulativeData(day, value.avg));
-        });
-      }
-      else if (contract == "iron") {
-        simulation.dailyResult.forEach( (day, value)
-        {
-          dataIron.add(CumulativeData(day, value.avg));
-        });
-      }
-      else {
-        simulation.dailyResult.forEach( (day, value)
-        {
-          dataDiamond.add(CumulativeData(day, value.avg));
-        });
-      }
-    });
+    List<CumulativeData> dataWood = [];
+    List<CumulativeData> dataStone = [];
+    List<CumulativeData> dataIron = [];
+    List<CumulativeData> dataDiamond = [];
+    for( String date in data["WOOD"].dailyResult.keys){
+      dataWood..add(CumulativeData(date, data["WOOD"].dailyResult[date].avg));
+      dataStone..add(CumulativeData(date, data["STONE"].dailyResult[date].avg));
+      dataIron..add(CumulativeData(date, data["IRON"].dailyResult[date].avg));
+      dataDiamond..add(CumulativeData(date, data["DIAMOND"].dailyResult[date].avg));
+    }
 
     return [
       new charts.Series<CumulativeData, String>(
@@ -192,12 +144,10 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataWood,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) =>
-        '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) =>
-        charts.MaterialPalette.teal.shadeDefault,
+        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
       ),
       new charts.Series<CumulativeData, String>(
         id: AVG_STONE,
@@ -205,12 +155,10 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataStone,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) =>
-        '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) =>
-        charts.MaterialPalette.teal.shadeDefault.lighter.lighter,
+        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter.lighter,
       ),
       new charts.Series<CumulativeData, String>(
         id: AVG_IRON,
@@ -218,12 +166,10 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataIron,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) =>
-        '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) =>
-        charts.MaterialPalette.teal.shadeDefault.darker,
+        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.darker,
       ),
       new charts.Series<CumulativeData, String>(
         id: AVG_DIAMOND,
@@ -231,12 +177,10 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataDiamond,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) =>
-        '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) =>
-        charts.MaterialPalette.teal.shadeDefault.lighter,
+        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter,
       ),
 
     ];
@@ -261,4 +205,11 @@ class CumulativeData {
   final double data;
 
   CumulativeData(this.date, this.data);
+
+  @override
+  String toString() {
+    return 'CumulativeData{date: $date, data: $data}';
+  }
+
+
 }
