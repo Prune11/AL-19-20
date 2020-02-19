@@ -17,7 +17,7 @@ class _ParameterState extends State<Parameter> {
   List<String> _listName = [];
   TextEditingController _nameController = TextEditingController();
   TextEditingController _clientIdController = TextEditingController();
-  TextEditingController _contractController = TextEditingController();
+  List<String> _listContract = ["WOOD", "STONE", "IRON", "DIAMOND"];
   String _name;
   String _clientId;
   String _contract;
@@ -35,6 +35,7 @@ class _ParameterState extends State<Parameter> {
     return Scaffold(
         appBar: MyAppBar(),
         drawer: MyDrawer(),
+        resizeToAvoidBottomInset: false,
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -122,21 +123,24 @@ class _ParameterState extends State<Parameter> {
                     ),
                   )
               ),
-              Container(
-                  child:
-                  TextField(
-                    textAlign: TextAlign.center,
-                    textCapitalization: TextCapitalization.words,
-                    controller: _contractController,
-                    onChanged: (String newValue) {
-                      setState(() {
-                        _contract = newValue;
-                      });
-                    },
-                    decoration: InputDecoration.collapsed(
-                      hintText: 'Contrat du compte',
-                    ),
-                  )
+              DropdownButton<String>(
+                hint: Text("Contract"),
+                value: _contract,
+                icon: Icon(Icons.arrow_drop_down),
+                iconSize: 24,
+                elevation: 16,
+                underline: Container(height: 2, color: Color(0xff0F707E)),
+                onChanged: (String newValue) {
+                  this.setState(() {
+                    _contract = newValue;
+                  });
+                },
+                items: _listContract.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               ),
               FlatButton(
                 onPressed: () {
@@ -162,6 +166,7 @@ class _ParameterState extends State<Parameter> {
                   child: Text('Creer compte', style: TextStyle(fontSize: 20)),
                 ),
               ),
+              Container()
             ],
           ),
         )

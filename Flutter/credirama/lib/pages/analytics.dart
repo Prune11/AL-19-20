@@ -26,8 +26,6 @@ class _MyAnalyticsState extends State<MyAnalytics> {
   DateTime _dateFrom;
   DateTime _dateTo;
 
-  RestService restSer = RestService();
-
   TextStyle formatTitleStats = TextStyle(fontSize: 18.0/*, fontWeight: FontWeight.w600*/);
   TextStyle formatValueStats = TextStyle(fontSize: 16.0);
 
@@ -89,11 +87,11 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
-                              FeeBtwTwoDatesRequest req = FeeBtwTwoDatesRequest(_dateFrom,_dateTo, 1);
-                              //stats = restSer.getFeesWithOtherContracts(req);
                             }
                             if (_dateFrom.isBefore(_dateTo)) {
-                              print("I should show the results");
+                              FeeBtwTwoDatesRequest req = FeeBtwTwoDatesRequest(_dateFrom,_dateTo, 1);
+                              RestService restService = new RestService();
+                              stats = restService.getFeeBtw2Dates(req);
                             }
                             else {
                               showDialog(
@@ -117,8 +115,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
               future: stats,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  //Vars?
-                  return ListView (
+                  return Column (
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -219,7 +216,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                     Divider(),
                   ]);
                 }
-                return Center(child: Text("Please introduce two dates"),);
+                return Center(child: Text("Please introduce two dates"));
               },
             )
           ],
