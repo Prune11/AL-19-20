@@ -1,4 +1,5 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:credirama/model/simulationObject.dart';
 import 'package:flutter/material.dart';
 import 'package:credirama/model/simulationPerDay.dart';
 
@@ -12,21 +13,21 @@ class VerticalBarLabelChart extends StatelessWidget {
 
   VerticalBarLabelChart(this.seriesList, {this.animate});
 
-  factory VerticalBarLabelChart.feesPerDay(Map<String, SimulationPerDay> data) {
+  factory VerticalBarLabelChart.feesPerDay(SimulationObject data) {
     return new VerticalBarLabelChart(
       _createFeesPerDay(data),
       animate: true,
     );
   }
 
-  factory VerticalBarLabelChart.avgPerDay(Map<String, SimulationPerDay> data) {
+  factory VerticalBarLabelChart.avgPerDay(SimulationObject data) {
     return new VerticalBarLabelChart(
       _createAvgPerDay(data),
       animate: true,
     );
   }
 
-  factory VerticalBarLabelChart.nbTransactionsPerDay(Map<String, SimulationPerDay> data) {
+  factory VerticalBarLabelChart.nbTransactionsPerDay(SimulationObject data) {
     return new VerticalBarLabelChart(
       _createNbTransactionsPerDay(data),
       animate: true,
@@ -59,9 +60,9 @@ class VerticalBarLabelChart extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<CumulativeData, String>> _createFeesPerDay(Map<String, SimulationPerDay> data) {
+  static List<charts.Series<CumulativeData, String>> _createFeesPerDay(SimulationObject data) {
     final dataFees = [];
-    data.forEach(
+    data.dailyResult.forEach(
             (day, simulation) => dataFees.add(CumulativeData(day, simulation.sum))
     );
 
@@ -72,19 +73,17 @@ class VerticalBarLabelChart extends StatelessWidget {
           measureFn: (CumulativeData cD, _) => cD.data,
           data: dataFees,
           // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (CumulativeData cD, _) =>
-          '${cD.data.toString()} €',
+          labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
           //Change fill color
           colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-          fillColorFn: (_, __) =>
-          charts.MaterialPalette.teal.shadeDefault,
+          fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
       )
     ];
   }
 
-  static List<charts.Series<CumulativeData, String>> _createAvgPerDay(Map<String, SimulationPerDay> data) {
+  static List<charts.Series<CumulativeData, String>> _createAvgPerDay(SimulationObject data) {
     final dataAvg = [];
-    data.forEach(
+    data.dailyResult.forEach(
         (day, simulation) => dataAvg.add(CumulativeData(day, simulation.avg))
     );
 
@@ -95,19 +94,17 @@ class VerticalBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataAvg,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) =>
-        '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) =>
-        charts.MaterialPalette.teal.shadeDefault,
+        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
       )
     ];
   }
 
-  static List<charts.Series<CumulativeData, String>> _createNbTransactionsPerDay(Map<String, SimulationPerDay> data) {
+  static List<charts.Series<CumulativeData, String>> _createNbTransactionsPerDay(SimulationObject data) {
     final dataNbTransactions = [];
-    data.forEach(
+    data.dailyResult.forEach(
             (day, simulation) => dataNbTransactions.add(CumulativeData(day, simulation.nbTransaction.toDouble()))
     );
 
@@ -118,12 +115,10 @@ class VerticalBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cNT, _) => cNT.data.toInt(),
         data: dataNbTransactions,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cNT, _) =>
-        '${cNT.data.toInt().toString()} €',
+        labelAccessorFn: (CumulativeData cNT, _) => '${cNT.data.toInt().toString()} €',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) =>
-        charts.MaterialPalette.teal.shadeDefault,
+        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
       )
     ];
   }

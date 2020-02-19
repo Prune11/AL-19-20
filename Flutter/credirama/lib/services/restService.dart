@@ -158,7 +158,7 @@ class RestService {
     return FeeResponse.fromJson(jsonDecode(response.body));
   }
 
-  Future getFeeBtw2Dates(FeeBtwTwoDatesRequest request) async {
+  Future<SimulationObject>  getFeeBtw2Dates(FeeBtwTwoDatesRequest request) async {
     var url = new Uri.http(_ipAddress + _analyze, "/analyse/fees/btw/day");
     //print("sendRequest");
     print(url);

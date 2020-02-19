@@ -87,12 +87,15 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
+                              if (_dateFrom.isBefore(_dateTo)) {
+                                this.setState((){
+                                  FeeBtwTwoDatesRequest req = FeeBtwTwoDatesRequest(_dateFrom,_dateTo, 1);
+                                  RestService restService = new RestService();
+                                  stats = restService.getFeeBtw2Dates(req);
+                                });
+                              }
                             }
-                            if (_dateFrom.isBefore(_dateTo)) {
-                              FeeBtwTwoDatesRequest req = FeeBtwTwoDatesRequest(_dateFrom,_dateTo, 1);
-                              RestService restService = new RestService();
-                              stats = restService.getFeeBtw2Dates(req);
-                            }
+
                             else {
                               showDialog(
                                 context: context,
@@ -197,15 +200,15 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                       ),
                       Container(
                         height: 200.0,
-                        child: VerticalBarLabelChart.feesPerDay(snapshot.data.dailyResult),
+                        child: VerticalBarLabelChart.feesPerDay(snapshot.data),
                       ),
                       Container(
                         height: 200.0,
-                        child: VerticalBarLabelChart.avgPerDay(snapshot.data.dailyResult),
+                        child: VerticalBarLabelChart.avgPerDay(snapshot.data),
                       ),
                       Container(
                         height: 200.0,
-                        child: VerticalBarLabelChart.nbTransactionsPerDay(snapshot.data.dailyResult),
+                        child: VerticalBarLabelChart.nbTransactionsPerDay(snapshot.data),
                       ),
                     ],
                   );

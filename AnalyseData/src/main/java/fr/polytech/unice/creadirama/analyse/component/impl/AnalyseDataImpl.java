@@ -1,7 +1,7 @@
 package fr.polytech.unice.creadirama.analyse.component.impl;
 
 import fr.polytech.unice.creadirama.analyse.component.AnalyseData;
-import fr.polytech.unice.creadirama.analyse.dto.SimulationDTO;
+import fr.polytech.unice.creadirama.analyse.dto.*;
 import fr.polytech.unice.creadirama.analyse.entity.FeeBtw2Day;
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 import fr.polytech.unice.creadirama.analyse.entity.contract.Contract;
@@ -16,26 +16,25 @@ public class AnalyseDataImpl implements AnalyseData {
     @Override
     public double sumFeesPerDay(List<Transaction> transactions) {
         if (transactions.isEmpty()) return 0;
-        return transactions.stream().mapToDouble(Transaction::getFeeAmount).sum();
+        return transactions.stream().filter(Objects::nonNull).mapToDouble(Transaction::getFeeAmount).sum();
     }
 
     @Override
     public double avgFeePerDay(List<Transaction> transactions) {
         if (transactions.isEmpty()) return 0;
-
         return sumFeesPerDay(transactions) / transactions.size();
     }
 
     @Override
     public Transaction minTransactionFee(List<Transaction> transactions) {
-        if (transactions.isEmpty()) return new Transaction();
-        return transactions.stream().min(Comparator.comparingDouble(Transaction::getFeeAmount)).orElse(new Transaction());
+        if (transactions.isEmpty()) return null;
+        return transactions.stream().filter(Objects::nonNull).min(Comparator.comparingDouble(Transaction::getFeeAmount)).orElse(null);
     }
 
     @Override
     public Transaction maxTransactionFee(List<Transaction> transactions) {
-        if (transactions.isEmpty()) return new Transaction();
-        return transactions.stream().max(Comparator.comparingDouble(Transaction::getFeeAmount)).orElse(new Transaction());
+        if (transactions.isEmpty()) return null;
+        return transactions.stream().filter(Objects::nonNull).max(Comparator.comparingDouble(Transaction::getFeeAmount)).orElse(null);
     }
 
     @Override
@@ -57,9 +56,7 @@ public class AnalyseDataImpl implements AnalyseData {
         for (DateTime dateTime : transactionPerDay.keySet())
             avgBtw2Date.put(dateTime, avgFeePerDay(transactionPerDay.get(dateTime)));
         feeBtw2Day.setAvgFeeBtw(avgBtw2Date);
-        double totalAvg = 0.0;
-        for (List<Transaction> transactions : transactionPerDay.values())
-            totalAvg += transactions.stream().mapToDouble(Transaction::getFeeAmount).sum() / transactions.size();
+        double totalAvg = feeBtw2Day.getTotalSum() / feeBtw2Day.getTotalNbTransaction();
         feeBtw2Day.setTotalAvg(totalAvg);
         return feeBtw2Day;
     }
@@ -91,6 +88,44 @@ public class AnalyseDataImpl implements AnalyseData {
     }
 
     @Override
+    public FeeBtw2Day nbTransactionBetweenTwoDate(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2Day feeBtw2Day) {
+        Map<DateTime, Integer> res = new HashMap<>();
+        transactionPerDay.keySet().stream().forEach((dateTime -> res.put(dateTime, transactionPerDay.get(dateTime).size())));
+        //transactionPerDay.forEach((dateTime, transactions) -> res.put(dateTime, transactions.size()));
+        feeBtw2Day.setNbTransactionPerDay(res);
+        int totalNbTransaction = 0;
+        for (List<Transaction> list : transactionPerDay.values()) {
+            totalNbTransaction += list.size();
+        }
+        feeBtw2Day.setTotalNbTransaction(totalNbTransaction);
+        return feeBtw2Day;
+    }
+
+    @Override
+    public FeeResponseDTO sumFeePerDat(List<Transaction> transactions, FeeRequestDTO request) {
+        double sum = sumFeesPerDay(transactions);
+        double avg = avgFeePerDay(transactions);
+        return new FeeResponseDTO(request.getDateTime(), request.getAccountId(), sum, avg, transactions.size());
+    }
+
+    @Override
+    public FeeBtw2DateResponseDTO sumFeeBtw2Date(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2DateRequestDTO request) {
+        FeeBtw2Day feeBtw2Day = new FeeBtw2Day();
+        nbTransactionBetweenTwoDate(transactionPerDay, feeBtw2Day);
+        sumBetweenTwoDate(transactionPerDay, feeBtw2Day);
+        avgBetweenTwoDate(transactionPerDay, feeBtw2Day);
+        return new FeeBtw2DateResponseDTO(request.getDateTimeFrom(),
+                request.getDateTimeTo(),
+                request.getAccountId(),
+                feeBtw2Day.getSumFeeBtwDay(),
+                feeBtw2Day.getAvgFeeBtw(),
+                feeBtw2Day.getTotalSum(),
+                feeBtw2Day.getTotalAvg(),
+                feeBtw2Day.getNbTransactionPerDay(),
+                feeBtw2Day.getTotalNbTransaction());
+    }
+
+    @Override
     public Map<String, SimulationDTO>  simulationWithAnotherContract(Map<DateTime, List<Transaction>> transactionPerDay) {
         Map<String, SimulationDTO>  simulatedMap = new HashMap<>();
         FeeBtw2Day feeBtw2DayWOOD = new FeeBtw2Day();
@@ -118,13 +153,6 @@ public class AnalyseDataImpl implements AnalyseData {
         return simulatedMap;
     }
 
-    @Override
-    public Map<DateTime, Integer> nbTransactionPerDay(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2Day feeBtw2Day) {
-        Map<DateTime, Integer> res = new HashMap<>();
-        transactionPerDay.forEach((dateTime, transactions) -> res.put(dateTime, transactions.size()));
-        return res;
-    }
-
     private void runSimulation(Map<DateTime, List<Transaction>> transactionPerDay, Map<String, SimulationDTO> simulatedMap, FeeBtw2Day feeBtw2DayType, Contract contract) {
         for (DateTime dateTime : transactionPerDay.keySet()) {
             List<Transaction> transactionList = transactionPerDay.get(dateTime);
@@ -132,9 +160,9 @@ public class AnalyseDataImpl implements AnalyseData {
                 t.setFeeAmount(contract.getFee(t, transactionList));
             }
         }
-        feeBtw2DayType.setTotalNbTransaction(transactionPerDay.size());
-        avgBetweenTwoDate(transactionPerDay, feeBtw2DayType);
+        nbTransactionBetweenTwoDate(transactionPerDay, feeBtw2DayType);
         sumBetweenTwoDate(transactionPerDay, feeBtw2DayType);
+        avgBetweenTwoDate(transactionPerDay, feeBtw2DayType);
         minBetweenTwoDate(transactionPerDay, feeBtw2DayType);
         maxBetweenTwoDate(transactionPerDay, feeBtw2DayType);
         simulatedMap.put(contract.name(), new SimulationDTO(feeBtw2DayType));
