@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -42,7 +44,7 @@ public class Account {
     public Account(Client owner, Contract contract, double balance) {
         this.owner = owner;
         this.contract = contract;
-        this.balance = balance;
+        this.balance = new BigDecimal(balance).setScale(2, RoundingMode.HALF_UP).doubleValue();
         this.transactionIDs = new ArrayList<>();
     }
 
@@ -71,7 +73,7 @@ public class Account {
     }
 
     public double getBalance() {
-        return balance;
+        return new BigDecimal(this.balance).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     public void setBalance(double balance) {
@@ -95,19 +97,20 @@ public class Account {
     public Double addTransaction(MEAAddTransactionRequest transactionRequest) {
         this.transactionIDs.add(transactionRequest.getTransactionId());
         if (transactionRequest.getAccountFrom() == this.id) {
-            this.balance -= transactionRequest.getAmount();
+            this.balance -= new BigDecimal(transactionRequest.getAmount()).setScale(2, RoundingMode.HALF_UP).doubleValue();
             return 0.0;
         } else {
-            this.balance += transactionRequest.getAmount();
-            double amountFee = contract.getFee(transactionRequest.getAmount(), this);
+            this.balance += new BigDecimal(transactionRequest.getAmount()).setScale(2, RoundingMode.HALF_UP).doubleValue();
+            double amountFee = new BigDecimal(contract.getFee(transactionRequest.getAmount(), this)).setScale(2, RoundingMode.HALF_UP).doubleValue();
             this.balance -= amountFee;
             return amountFee;
         }
     }
 
     public Double payBankFees() {
-        this.balance -= this.contract.getPricePerMonth();
-        return this.balance;
+        this.balance -= new BigDecimal(this.contract.getPricePerMonth()).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        return new BigDecimal(this.balance).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
     }
 
 

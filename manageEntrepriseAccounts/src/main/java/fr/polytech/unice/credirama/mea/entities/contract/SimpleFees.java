@@ -1,5 +1,8 @@
 package fr.polytech.unice.credirama.mea.entities.contract;
 
+import java.math.RoundingMode;
+import java.math.BigDecimal;
+
 public class SimpleFees extends ContractAspect {
     private int percentage;
 
@@ -10,6 +13,6 @@ public class SimpleFees extends ContractAspect {
 
     @Override
     public double calculateFees(double transactionAmount) {
-        return transactionAmount * percentage / 100;
+        return new BigDecimal(transactionAmount * percentage / 100).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 }

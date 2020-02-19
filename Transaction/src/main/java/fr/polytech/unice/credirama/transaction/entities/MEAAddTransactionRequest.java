@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @ToString
 @EqualsAndHashCode
 @Data
@@ -25,6 +28,6 @@ public class MEAAddTransactionRequest {
         this.transactionId = transactionId;
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
-        this.amount = amount;
+        this.amount = new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 }

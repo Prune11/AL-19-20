@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +63,7 @@ public class TransactionController {
 
     @GetMapping("/fees/{id}")
     public Double getTotalFees(@PathVariable(name = "id") int id) {
-        return this.transactionComponent.getTotalFees(id);
+        return new BigDecimal(this.transactionComponent.getTotalFees(id)).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     @GetMapping("/operations/{id}/today")

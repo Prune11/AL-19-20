@@ -7,6 +7,8 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @ToString
 @EqualsAndHashCode
@@ -38,7 +40,7 @@ public class Transaction {
     public Transaction(int accountFrom, int accountTo, double amount, double feeAmount, TransactionType transactionType) {
         this.fromId = accountFrom;
         this.toId = accountTo;
-        this.amount = amount;
+        this.amount = new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP).doubleValue();
         this.feeAmount = feeAmount;
         this.transactionType = transactionType;
         this.timeStamp = DateTime.now().toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
@@ -47,7 +49,7 @@ public class Transaction {
     public Transaction(int accountFrom, int accountTo, double amount, TransactionType transactionType) {
         this.fromId = accountFrom;
         this.toId = accountTo;
-        this.amount = amount;
+        this.amount = new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP).doubleValue();
         this.feeAmount = 0.0;
         this.transactionType = transactionType;
         this.timeStamp = DateTime.now().toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
