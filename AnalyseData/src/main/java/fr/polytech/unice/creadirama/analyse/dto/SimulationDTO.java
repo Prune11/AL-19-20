@@ -23,9 +23,9 @@ public class SimulationDTO {
 
     private double totalAvg;
 
-    /*private Transaction globalMinTransaction;
+    private Transaction globalMinTransaction;
 
-    private Transaction globalMaxTransaction;*/
+    private Transaction globalMaxTransaction;
 
     private int totalNbTransaction;
 
@@ -37,10 +37,10 @@ public class SimulationDTO {
                                                             fees.getAvgFeeBtw().get(dateTime),
                                                             /*fees.getMinTransactionBtw().get(dateTime),
                                                             fees.getMaxTransactionFeeBtw().get(dateTime),*/
-                                                            fees.getTotalNbTransaction()));
+                                                            fees.getNbTransactionPerDay().get(dateTime)));
         }
-        /*this.globalMaxTransaction = fees.getGlobalMaxTransaction();
-        this.globalMinTransaction = fees.getGlobalMinTransaction();*/
+        this.globalMaxTransaction = fees.getGlobalMaxTransaction();
+        this.globalMinTransaction = fees.getGlobalMinTransaction();
         this.totalNbTransaction = fees.getTotalNbTransaction();
         this.totalAvg = fees.getTotalAvg();
         this.totalSum = fees.getTotalSum();

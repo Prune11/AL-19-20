@@ -166,6 +166,7 @@ class RestService {
     var response = await http.post(url, body: request.toSend());
     //print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
+    return toSimulation(response);
   }
 
   Future<Map<String, SimulationObject>> getFeesWithOtherContracts(FeeBtwTwoDatesRequest request) async {
@@ -176,6 +177,23 @@ class RestService {
     //print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     return toSimulationMap(response);
+  }
+
+  SimulationObject toSimulation(http.Response response) {
+    if (response.statusCode == 200) {
+      final decoded = jsonDecode(response.body);
+      final dailyResult = decoded["dailyResult"];
+      Map<String, SimulationPerDay> simulationPerDay = new HashMap();
+      for(String date in dailyResult.keys.toList()){
+        simulationPerDay.putIfAbsent(date, () => SimulationPerDay.fromJson(dailyResult[date]));
+      }
+      return SimulationObject(dailyResult: simulationPerDay,
+          totalSum: decoded["totalSum"],
+          totalAvg: decoded["totalAvg"],
+          totalNbTransaction: decoded["totalNbTransaction"]);
+    } else {
+      throw Exception('Failed to load Response');
+    }
   }
 
   Map<String, SimulationObject> toSimulationMap(http.Response response) {

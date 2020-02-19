@@ -84,7 +84,7 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataWood,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
@@ -95,7 +95,7 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataStone,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) =>'${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) =>'${cD.data.toString()} DKK',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter.lighter,
@@ -106,7 +106,7 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataIron,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.darker,
@@ -117,7 +117,7 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataDiamond,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter,
@@ -144,7 +144,7 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataWood,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
@@ -155,7 +155,7 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataStone,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter.lighter,
@@ -166,7 +166,7 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataIron,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.darker,
@@ -177,7 +177,7 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataDiamond,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter,

@@ -25,16 +25,17 @@ public class AnalyseDataController {
     private TransactionService transactionService;
 
     @PostMapping(value = "/fees/day", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public FeeResponseDTO sumFeePerDat(/*@Valid @RequestBody*/ FeeRequestDTO request) {
+    public FeeResponseDTO sumFeePerDate(/*@Valid @RequestBody*/ FeeRequestDTO request) {
         List<Transaction> transactions = transactionService.getTransactionsFor1Day(request.getDateTime(), request.getAccountId());
-        return this.analyseData.sumFeePerDat(transactions, request);
+        if (transactions.isEmpty()) return new FeeResponseDTO(request.getDateTime(), 0,0,0,0);
+        return this.analyseData.sumFeePerDate(transactions, request);
         //double sum = analyseData.sumFeesPerDay(transactions);
         //double avg = analyseData.avgFeePerDay(transactions);
         //return new FeeResponseDTO(request.getDateTime(), request.getAccountId(), sum, avg, transactions.size());
     }
 
     @PostMapping(value = "/fees/btw/day", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public FeeBtw2DateResponseDTO sumFeeBtw2Date(/*@Valid @RequestBody*/ FeeBtw2DateRequestDTO request) {
+    public SimulationDTO sumFeeBtw2Date(/*@Valid @RequestBody*/ FeeBtw2DateRequestDTO request) {
         Map<String, List<Transaction>> response = transactionService.getTransactionBtw2Day(request.getDateTimeFrom(), request.getDateTimeTo(), request.getAccountId());
         Map<DateTime, List<Transaction>> transactionPerDay = new TransactionsBtw2DatesResponse(response).toDateTime();
         return analyseData.sumFeeBtw2Date(transactionPerDay, request);

@@ -61,7 +61,7 @@ class VerticalBarLabelChart extends StatelessWidget {
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<CumulativeData, String>> _createFeesPerDay(SimulationObject data) {
-    final dataFees = [];
+    List<CumulativeData> dataFees = [];
     data.dailyResult.forEach(
             (day, simulation) => dataFees.add(CumulativeData(day, simulation.sum))
     );
@@ -73,7 +73,7 @@ class VerticalBarLabelChart extends StatelessWidget {
           measureFn: (CumulativeData cD, _) => cD.data,
           data: dataFees,
           // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
+          labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
           //Change fill color
           colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
           fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
@@ -82,7 +82,7 @@ class VerticalBarLabelChart extends StatelessWidget {
   }
 
   static List<charts.Series<CumulativeData, String>> _createAvgPerDay(SimulationObject data) {
-    final dataAvg = [];
+    List<CumulativeData> dataAvg = [];
     data.dailyResult.forEach(
         (day, simulation) => dataAvg.add(CumulativeData(day, simulation.avg))
     );
@@ -94,7 +94,7 @@ class VerticalBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cD, _) => cD.data,
         data: dataAvg,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} €',
+        labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
@@ -103,7 +103,7 @@ class VerticalBarLabelChart extends StatelessWidget {
   }
 
   static List<charts.Series<CumulativeData, String>> _createNbTransactionsPerDay(SimulationObject data) {
-    final dataNbTransactions = [];
+    List<CumulativeData> dataNbTransactions = [];
     data.dailyResult.forEach(
             (day, simulation) => dataNbTransactions.add(CumulativeData(day, simulation.nbTransaction.toDouble()))
     );
@@ -115,7 +115,7 @@ class VerticalBarLabelChart extends StatelessWidget {
         measureFn: (CumulativeData cNT, _) => cNT.data.toInt(),
         data: dataNbTransactions,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (CumulativeData cNT, _) => '${cNT.data.toInt().toString()} €',
+        labelAccessorFn: (CumulativeData cNT, _) => '${cNT.data.toInt().toString()}',
         //Change fill color
         colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,

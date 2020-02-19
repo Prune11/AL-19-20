@@ -28,9 +28,9 @@ public interface AnalyseData {
 
     FeeBtw2Day nbTransactionBetweenTwoDate(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2Day feeBtw2Day);
 
-    FeeResponseDTO sumFeePerDat(List<Transaction> transactions, FeeRequestDTO request);
+    FeeResponseDTO sumFeePerDate(List<Transaction> transactions, FeeRequestDTO request);
 
-    FeeBtw2DateResponseDTO sumFeeBtw2Date(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2DateRequestDTO request);
+    SimulationDTO sumFeeBtw2Date(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2DateRequestDTO request);
 
     Map<String, SimulationDTO>  simulationWithAnotherContract(Map<DateTime, List<Transaction>> transactionPerDay);
 }

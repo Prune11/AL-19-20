@@ -87,7 +87,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
-                              if (_dateFrom.isBefore(_dateTo)) {
+                              if (_dateFrom.isBefore(_dateTo) || _dateFrom.isAtSameMomentAs(_dateTo)) {
                                 this.setState((){
                                   FeeBtwTwoDatesRequest req = FeeBtwTwoDatesRequest(_dateFrom,_dateTo, 1);
                                   RestService restService = new RestService();
@@ -131,7 +131,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                               style: formatTitleStats,
                             ),
                             Text(
-                              "value",
+                              snapshot.data.totalNbTransaction.toString(),
                               style: formatValueStats,
                             ),
                           ],
@@ -146,10 +146,10 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                               child: Row(
                                 children: <Widget>[
                                   Text ("Total fees: ",
-                                    style: formatTitleStats,
+                                    style: formatValueStats,
                                   ),
                                   Text(
-                                    "value",
+                                    snapshot.data.totalSum.toString(),
                                     style: formatValueStats,
                                   ),
                                 ],
@@ -161,10 +161,10 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                                   Text(
                                     "Total average: ",
                                     textAlign: TextAlign.left,
-                                    style: formatTitleStats,
+                                    style: formatValueStats,
                                   ),
                                   Text(
-                                    "value",
+                                    snapshot.data.totalAvg.toString(),
                                     style: formatValueStats,
                                   ),
                                 ],

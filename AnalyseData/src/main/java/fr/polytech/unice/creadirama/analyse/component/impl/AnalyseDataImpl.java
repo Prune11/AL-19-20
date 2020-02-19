@@ -56,8 +56,12 @@ public class AnalyseDataImpl implements AnalyseData {
         for (DateTime dateTime : transactionPerDay.keySet())
             avgBtw2Date.put(dateTime, avgFeePerDay(transactionPerDay.get(dateTime)));
         feeBtw2Day.setAvgFeeBtw(avgBtw2Date);
-        double totalAvg = feeBtw2Day.getTotalSum() / feeBtw2Day.getTotalNbTransaction();
-        feeBtw2Day.setTotalAvg(totalAvg);
+        if(feeBtw2Day.getTotalNbTransaction() != 0) {
+            double totalAvg = feeBtw2Day.getTotalSum() / feeBtw2Day.getTotalNbTransaction();
+            feeBtw2Day.setTotalAvg(totalAvg);
+        } else {
+            feeBtw2Day.setTotalAvg(0);
+        }
         return feeBtw2Day;
     }
 
@@ -102,19 +106,22 @@ public class AnalyseDataImpl implements AnalyseData {
     }
 
     @Override
-    public FeeResponseDTO sumFeePerDat(List<Transaction> transactions, FeeRequestDTO request) {
+    public FeeResponseDTO sumFeePerDate(List<Transaction> transactions, FeeRequestDTO request) {
         double sum = sumFeesPerDay(transactions);
         double avg = avgFeePerDay(transactions);
         return new FeeResponseDTO(request.getDateTime(), request.getAccountId(), sum, avg, transactions.size());
     }
 
     @Override
-    public FeeBtw2DateResponseDTO sumFeeBtw2Date(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2DateRequestDTO request) {
+    public SimulationDTO sumFeeBtw2Date(Map<DateTime, List<Transaction>> transactionPerDay, FeeBtw2DateRequestDTO request) {
         FeeBtw2Day feeBtw2Day = new FeeBtw2Day();
         nbTransactionBetweenTwoDate(transactionPerDay, feeBtw2Day);
         sumBetweenTwoDate(transactionPerDay, feeBtw2Day);
         avgBetweenTwoDate(transactionPerDay, feeBtw2Day);
-        return new FeeBtw2DateResponseDTO(request.getDateTimeFrom(),
+        maxBetweenTwoDate(transactionPerDay, feeBtw2Day);
+        minBetweenTwoDate(transactionPerDay, feeBtw2Day);
+        return new SimulationDTO(feeBtw2Day);
+                /*FeeBtw2DateResponseDTO(request.getDateTimeFrom(),
                 request.getDateTimeTo(),
                 request.getAccountId(),
                 feeBtw2Day.getSumFeeBtwDay(),
@@ -122,7 +129,7 @@ public class AnalyseDataImpl implements AnalyseData {
                 feeBtw2Day.getTotalSum(),
                 feeBtw2Day.getTotalAvg(),
                 feeBtw2Day.getNbTransactionPerDay(),
-                feeBtw2Day.getTotalNbTransaction());
+                feeBtw2Day.getTotalNbTransaction());*/
     }
 
     @Override
