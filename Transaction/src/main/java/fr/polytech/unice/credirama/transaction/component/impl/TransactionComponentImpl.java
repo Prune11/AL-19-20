@@ -114,6 +114,7 @@ public class TransactionComponentImpl implements TransactionComponent {
     //TODO check if tomorrow for dateTo
     @Override
     public TransactionsBtw2DatesResponse getAllReceivedTransactionsByUserIdBetweenToDates(Integer id, DateTime dateFrom, DateTime dateTo) {
+        if (dateFrom.equals(dateTo) && dateFrom.getSecondOfDay() == 0) dateTo = dateTo.plusDays(1).minusMillis(1);
         List<Transaction> userTransactions = this.transactionRepo.getTransactionsByToId(id);
         Map<String, List<Transaction>> result = new HashMap<>();
         DateTime date = new DateTime(dateFrom.getYear(), dateFrom.getMonthOfYear(), dateFrom.getDayOfMonth(), 0, 0);
