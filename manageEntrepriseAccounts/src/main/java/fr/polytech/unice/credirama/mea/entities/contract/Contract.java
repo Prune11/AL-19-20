@@ -3,7 +3,7 @@ package fr.polytech.unice.credirama.mea.entities.contract;
 import fr.polytech.unice.credirama.mea.entities.Account;
 
 public enum Contract {
-    WOOD(new ThresholdFees(10, 5, 1), 50),
+    WOOD(new ThresholdFees(10, 5, 6), 50),
     STONE(new LimitFees(5, 10, 5), 100),
     IRON(new SimpleFees(5), 120),
     DIAMOND(new SimpleFees(1), 500);

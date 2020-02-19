@@ -36,8 +36,12 @@ public class TestStepDefinition extends AbstractStep {
         request = new HttpRequest();
         request.withMethod("POST").withPath("/transaction/add");
         mockServer.when(request).respond(response().withStatusCode(200));
+        HttpRequest request2 = new HttpRequest();
+        request2.withMethod("POST").withPath("/access/operations");
+        Transaction t = new Transaction(clientID, merchantID, amount, 0, TransactionType.valueOf(transactionTypeName));
+        mockServer.when(request2).respond(response().withStatusCode(200).withBody(String.valueOf(t)));
 
-        post("/access/operations",
+        post("127.0.0.1/access/operations",
                 new ObjectMapper().writeValueAsString(transactionRequest));
         this.transaction = new ObjectMapper().readValue(
                 getLastPostResponse().getContentAsString(),
@@ -50,8 +54,8 @@ public class TestStepDefinition extends AbstractStep {
     public void merchantHasFees(int merchantID) throws Exception {
         get("/access/fees/" + merchantID);
         Double totalFees = new ObjectMapper().readValue(
-            getLastGetResponse().getContentAsString(),
-            Double.class);
+                getLastGetResponse().getContentAsString(),
+                Double.class);
 
         assertEquals(this.transaction.getFeeAmount(), totalFees);
         mockServer.stop();

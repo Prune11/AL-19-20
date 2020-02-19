@@ -1,6 +1,5 @@
 package fr.polytech.unice.credirama.transaction.entities.dto;
 
-import fr.polytech.unice.credirama.transaction.entities.Contract;
 import fr.polytech.unice.credirama.transaction.entities.TransactionType;
 import lombok.*;
 
