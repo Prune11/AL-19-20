@@ -4,6 +4,9 @@ import fr.polytech.unice.credirama.mea.entities.Account;
 import fr.polytech.unice.credirama.mea.entities.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * * STONE : 5% de frais si en dessous de 5 transactions/jour sinon 10%
  */
@@ -31,9 +34,9 @@ public class LimitFees extends ContractAspect {
     public double calculateFees(double transactionAmount, Account account) {
         int dailyTransaction = accountService.getNumberOfTransactionToday(account.getId());
         if (dailyTransaction < transactionLimit) {
-            return transactionAmount * lowerPercentage / 100;
+            return new BigDecimal(transactionAmount * lowerPercentage / 100).setScale(2, RoundingMode.HALF_UP).doubleValue();
         } else {
-            return transactionAmount * upperPercentage / 100;
+            return new BigDecimal(transactionAmount * upperPercentage / 100).setScale(2, RoundingMode.HALF_UP).doubleValue();
         }
     }
 }

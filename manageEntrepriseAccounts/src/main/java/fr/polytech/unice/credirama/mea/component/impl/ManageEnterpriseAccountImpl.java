@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Component
 public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
@@ -31,7 +33,7 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
 
     public double getBalanceById(Integer id) {
         Account account = accountRepo.findById(id).get();
-        return account.getBalance();
+        return new BigDecimal(account.getBalance()).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     public List<Account> getAllAccounts() {
@@ -126,7 +128,7 @@ public class ManageEnterpriseAccountImpl implements ManageEnterpriseAccount {
     public Double addTransaction(MEAAddTransactionRequest transactionRequest) {
         try {
             Account accountTo = accountRepo.findById(transactionRequest.getAccountTo()).get();
-            Double feeAmount = accountTo.addTransaction(transactionRequest);
+            Double feeAmount = new BigDecimal(accountTo.addTransaction(transactionRequest)).setScale(2, RoundingMode.HALF_UP).doubleValue();
             accountRepo.save(accountTo);
             if (transactionRequest.getAccountFrom() != 0) {
                 Account accountFrom = accountRepo.findById(transactionRequest.getAccountFrom()).get();

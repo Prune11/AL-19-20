@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.RoundingMode;
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping(path = "/transaction", produces = "application/json")
 public class UpdateDataController {
@@ -17,7 +20,8 @@ public class UpdateDataController {
 
     @PostMapping("/add")
     public Double addTransaction(@RequestBody MEAAddTransactionRequest transactionRequest) {
-        return this.manageEnterpriseAccount.addTransaction(transactionRequest);
+        return new BigDecimal(this.manageEnterpriseAccount.addTransaction(transactionRequest)).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
     }
 
 }

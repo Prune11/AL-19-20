@@ -11,6 +11,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 @Component
@@ -43,6 +45,7 @@ public class TransactionComponentImpl implements TransactionComponent {
     @Override
     public Transaction addTransaction(Integer idFrom, Integer idTo, Double amount, TransactionType transactionType){
         Transaction transactionWithID;
+        amount = new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP).doubleValue();
         if (idFrom == 0) {
             Transaction transaction = new Transaction(0, idTo, amount, transactionType);
             transactionWithID = transactionRepo.save(transaction);
@@ -50,7 +53,9 @@ public class TransactionComponentImpl implements TransactionComponent {
         } else {
             Transaction transaction = new Transaction(idFrom, idTo, amount, transactionType);
             transactionWithID = transactionRepo.save(transaction);
-            double feeAmount = enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), idFrom, idTo, amount);
+            double feeAmount = new BigDecimal(
+                    enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), idFrom, idTo, amount)
+            ).setScale(2, RoundingMode.HALF_UP).doubleValue();
             transactionWithID.setFeeAmount(feeAmount);
             transactionRepo.save(transactionWithID);
         }
@@ -65,7 +70,7 @@ public class TransactionComponentImpl implements TransactionComponent {
             t = transactionRepo.findById(i).get();
             total += t.getFeeAmount();
         }
-        return total;
+        return new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     @Override
@@ -103,7 +108,7 @@ public class TransactionComponentImpl implements TransactionComponent {
                 total += t.getFeeAmount();
             }
         }
-        return total;
+        return new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     //TODO check if tomorrow for dateTo
