@@ -1,4 +1,5 @@
 import 'package:credirama/common/MyAppBar.dart';
+import 'package:credirama/pages/analyticsMenu.dart';
 import 'package:credirama/services/restService.dart';
 import 'package:credirama/model/clientObject.dart';
 import 'package:credirama/model/accountObject.dart';
@@ -10,12 +11,13 @@ import 'package:flutter/widgets.dart';
 
 import 'AccountMenu.dart';
 
-class MyProfile extends StatefulWidget {
+class AnalyticAccountSelection extends StatefulWidget {
+
   @override
-  _MyProfileState createState() => _MyProfileState();
+  _AnalyticAccountSelectionState createState() => _AnalyticAccountSelectionState();
 }
 
-class _MyProfileState extends State<MyProfile> {
+class _AnalyticAccountSelectionState extends State<AnalyticAccountSelection> {
   Future<ClientObject> client;
 
   @override
@@ -75,7 +77,7 @@ class _MyProfileState extends State<MyProfile> {
   displayAccountList(BuildContext context, List<AccountObject> accounts) {
     int i = 1;
     var accountWidget = accounts.map(
-          (account) => AccountWidget().account(account,i++ , AccountMenu(account, "Account " + i.toString()), context)
+          (account) => AccountWidget().account(account,i++ , MyAnalyticsMenu(), context )
     );
     return Container(
       child: Column(

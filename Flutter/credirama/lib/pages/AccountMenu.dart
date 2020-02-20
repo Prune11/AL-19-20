@@ -1,4 +1,5 @@
 import 'package:credirama/common/MyAppBar.dart';
+import 'package:credirama/model/accountObject.dart';
 import 'package:credirama/pages/accountTransactionList.dart';
 import 'package:credirama/pages/updateContract.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,27 +7,22 @@ import 'package:flutter/material.dart';
 
 class AccountMenu extends StatefulWidget {
 
-  final int _accountId;
+  final AccountObject _account;
   final String _accountName;
-  final String _currentContract;
-  final double _balance;
 
-
-  AccountMenu(this._accountId, this._accountName, this._currentContract, this._balance);
+  AccountMenu(this._account, this._accountName);
 
   @override
-  _AccountMenuState createState() => _AccountMenuState(_accountId, _accountName, _currentContract, _balance);
+  _AccountMenuState createState() => _AccountMenuState(_account, _accountName);
 
 }
 
 class _AccountMenuState extends State<AccountMenu> {
 
-  int _accountId;
+  AccountObject _account;
   String _accountName;
-  String _currentContract;
-  double _balance;
 
-  _AccountMenuState(this._accountId, this._accountName, this._currentContract, this._balance);
+  _AccountMenuState(this._account, this._accountName);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +49,7 @@ class _AccountMenuState extends State<AccountMenu> {
                         Center(
                           child: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text(r"DKK " + _balance.toString(),
+                            child: Text(r"DKK " + _account.balance.toString(),
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 24.0)),
                           ),
@@ -65,7 +61,7 @@ class _AccountMenuState extends State<AccountMenu> {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountTransactionList("All", _accountName, _balance)));
+                    MaterialPageRoute(builder: (context) => AccountTransactionList("All", _accountName, _account.balance)));
               },
               textColor: Colors.white,
               child: Container(
@@ -88,7 +84,7 @@ class _AccountMenuState extends State<AccountMenu> {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountTransactionList("IN", _accountName, _balance)));
+                    MaterialPageRoute(builder: (context) => AccountTransactionList("IN", _accountName, _account.balance)));
               },
               textColor: Colors.white,
               child: Container(
@@ -111,7 +107,7 @@ class _AccountMenuState extends State<AccountMenu> {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountTransactionList("OUT", _accountName, _balance)));
+                    MaterialPageRoute(builder: (context) => AccountTransactionList("OUT", _accountName, _account.balance)));
               },
               textColor: Colors.white,
               child: Container(
@@ -134,7 +130,7 @@ class _AccountMenuState extends State<AccountMenu> {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ContractUpdate(_accountId, _currentContract)));
+                    MaterialPageRoute(builder: (context) => ContractUpdate(_account.id, _account.contract)));
               },
               textColor: Colors.white,
               child: Container(
