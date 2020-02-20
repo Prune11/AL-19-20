@@ -151,7 +151,7 @@ class _MySimulationState extends State<MySimulation> {
                           ),
                           TableRow(
                               children: [
-                                Text("Moyenne totale", style: TextStyle(fontSize: 16.0),),
+                                Text("Frais totaux", style: TextStyle(fontSize: 16.0),),
                                 /*Column( children: <Widget>[
                                   Text("Frais", style: TextStyle(fontSize: 16.0)),
                                   Text("totaux", style: TextStyle(fontSize: 16.0))
@@ -163,7 +163,7 @@ class _MySimulationState extends State<MySimulation> {
                                 color: Colors.teal.shade100,
                               ),
                               children: [
-                                Text("Frais totaux", style: TextStyle(fontSize: 16.0),),
+                                Text("Moyenne totale", style: TextStyle(fontSize: 16.0),),
                                 /*Column( children: <Widget>[
                                   Text("Moyenne", style: TextStyle(fontSize: 16.0)),
                                   Text("totale", style: TextStyle(fontSize: 16.0))
@@ -191,7 +191,7 @@ class _MySimulationState extends State<MySimulation> {
                     Divider(),
                   ]);
                 }
-                return Center(child: Text("Please introduce two dates"));
+                return Center(child: Text("S'il vous plaît, sélectionnez deux dates"));
               },
             ),
           ],
