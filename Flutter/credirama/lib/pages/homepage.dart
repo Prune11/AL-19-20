@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:credirama/common/MyAppBar.dart';
 import 'package:credirama/main.dart';
+import 'package:credirama/pages/AccountMenu.dart';
 import 'package:credirama/pages/analyticsMenu.dart';
 import 'package:credirama/pages/accountTransactionList.dart';
 import 'package:credirama/pages/parameters.dart';
@@ -14,6 +15,8 @@ import 'package:credirama/request/transactionsBtwTwoDatesRequest.dart';
 import 'package:credirama/services/restService.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'analyticAccountSelection.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -74,7 +77,7 @@ class HomePage extends StatelessWidget {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyAnalyticsMenu()));
+                    MaterialPageRoute(builder: (context) => AnalyticAccountSelection()));
               },
               textColor: Colors.white,
               child: Container(

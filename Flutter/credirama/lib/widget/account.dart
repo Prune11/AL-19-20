@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import '../model/accountObject.dart';
 
 class AccountWidget {
-  Container account(AccountObject accountObject, int numAccount, BuildContext context) => Container(
+  Container account(AccountObject account, int numAccount, Widget widget, BuildContext context) => Container(
       decoration: BoxDecoration(color: Colors.white),
       padding: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 5.0, right: 5.0),
       child: MaterialButton(
         onPressed: () {
           Navigator.push( context,
-              MaterialPageRoute(builder: (context) => AccountMenu(accountObject.id, "Account " + numAccount.toString() + "", accountObject.contract, accountObject.balance)));
+              MaterialPageRoute(builder: (context) => widget/*AccountMenu(accountObject)*/));
         } ,
         child: Column(
           children: <Widget>[
@@ -20,7 +20,7 @@ class AccountWidget {
               children: <Widget>[
                 Text("Account " + numAccount.toString() + "", style: TextStyle(fontSize: 16.0)),
                 //ATTENTION: € change in order to accept more types of money?
-                Text(accountObject.balance.toString() + " €", style: TextStyle(fontSize: 16.0))
+                Text(account.balance.toString() + " DDK", style: TextStyle(fontSize: 16.0))
               ],
             ),
             SizedBox(
@@ -29,7 +29,7 @@ class AccountWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(accountObject.contract,
+                Text(account.contract,
                     style: TextStyle(color: Colors.grey, fontSize: 14.0)),
               ],
             ),

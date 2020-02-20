@@ -15,18 +15,27 @@ import 'package:intl/intl.dart';
 import 'package:credirama/request/feeBtw2DatesRequest.dart';
 
 class MyAnalytics extends StatefulWidget {
+
+  final int _accountId;
+
+  MyAnalytics(this._accountId);
+
   @override
-  _MyAnalyticsState createState() => _MyAnalyticsState();
+  _MyAnalyticsState createState() => _MyAnalyticsState(_accountId);
 }
 
 class _MyAnalyticsState extends State<MyAnalytics> {
+
+  final int _accountId;
+
+  _MyAnalyticsState(this._accountId);
 
   Future<SimulationObject> stats;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DateTime _dateFrom;
   DateTime _dateTo;
 
-  TextStyle formatTitleStats = TextStyle(fontSize: 18.0/*, fontWeight: FontWeight.w600*/);
+  TextStyle formatTitleStats = TextStyle(fontSize: 18.0);
   TextStyle formatValueStats = TextStyle(fontSize: 16.0);
 
   TransactionObject tMin = new TransactionObject(toId:"Default Transaction", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
@@ -89,7 +98,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                               _formKey.currentState.save();
                               if (_dateFrom.isBefore(_dateTo) || _dateFrom.isAtSameMomentAs(_dateTo)) {
                                 this.setState((){
-                                  FeeBtwTwoDatesRequest req = FeeBtwTwoDatesRequest(_dateFrom,_dateTo, 1);
+                                  FeeBtwTwoDatesRequest req = FeeBtwTwoDatesRequest(_dateFrom,_dateTo, _accountId);
                                   RestService restService = new RestService();
                                   stats = restService.getFeeBtw2Dates(req);
                                 });

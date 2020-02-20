@@ -1,4 +1,5 @@
 import 'package:credirama/data/User.dart';
+import 'package:credirama/pages/analyticAccountSelection.dart';
 import 'package:credirama/pages/homepage.dart';
 import 'package:credirama/pages/parameters.dart';
 import 'package:credirama/pages/transactionForm.dart';
@@ -65,10 +66,10 @@ class MyDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Statistiques'),
+              title: Text('Analytics'),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyAnalyticsMenu()));
+                    MaterialPageRoute(builder: (context) => AnalyticAccountSelection()));
               },
             ),
             ListTile(
