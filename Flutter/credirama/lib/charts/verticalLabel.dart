@@ -1,7 +1,6 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:credirama/model/simulationObject.dart';
 import 'package:flutter/material.dart';
-import 'package:credirama/model/simulationPerDay.dart';
 
 class VerticalBarLabelChart extends StatelessWidget {
   static const String FEES = "Fees";
@@ -128,11 +127,11 @@ class VerticalBarLabelChart extends StatelessWidget {
     String chartID = chartList[0].id;
     switch(chartID) {
       case FEES:
-        return "Fees per day";
+        return "Des frais par jous";
       case AVG:
-        return "Average per day";
+        return "La moyenne de frais par jour";
       case NB_TRANSACTIONS:
-        return "Number of transactions per day";
+        return "Nombre de transactions par jour";
     }
     return title;
   }

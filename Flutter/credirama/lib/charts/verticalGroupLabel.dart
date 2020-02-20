@@ -14,6 +14,11 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
   static const String AVG_IRON = "Avg iron";
   static const String AVG_DIAMOND = "Avg diamond";
 
+  static charts.Color WOOD_COLOR = charts.MaterialPalette.teal.shadeDefault;
+  static charts.Color STONE_COLOR = charts.MaterialPalette.teal.shadeDefault.lighter;
+  static charts.Color IRON_COLOR = charts.MaterialPalette.teal.shadeDefault.darker;
+  static charts.Color DIAMOND_COLOR = charts.MaterialPalette.teal.shadeDefault.lighter.lighter;
+
   final List<charts.Series> seriesList;
   final bool animate;
 
@@ -86,8 +91,8 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         // Set a label accessor to control the text of the bar label.
         labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
-        colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
+        colorFn: (_, __) => WOOD_COLOR,
+        fillColorFn: (_, __) => WOOD_COLOR,
       ),
       new charts.Series<CumulativeData, String>(
         id: FEES_STONE,
@@ -97,8 +102,8 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         // Set a label accessor to control the text of the bar label.
         labelAccessorFn: (CumulativeData cD, _) =>'${cD.data.toString()} DKK',
         //Change fill color
-        colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter.lighter,
+        colorFn: (_, __) => STONE_COLOR,
+        fillColorFn: (_, __) => STONE_COLOR,
       ),
       new charts.Series<CumulativeData, String>(
         id: FEES_IRON,
@@ -108,8 +113,8 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         // Set a label accessor to control the text of the bar label.
         labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
-        colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.darker,
+        colorFn: (_, __) => IRON_COLOR,
+        fillColorFn: (_, __) => IRON_COLOR,
       ),
       new charts.Series<CumulativeData, String>(
         id: FEES_DIAMOND,
@@ -119,8 +124,8 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         // Set a label accessor to control the text of the bar label.
         labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
-        colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter,
+        colorFn: (_, __) => DIAMOND_COLOR,
+        fillColorFn: (_, __) => DIAMOND_COLOR,
       )
     ];
   }
@@ -146,8 +151,8 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         // Set a label accessor to control the text of the bar label.
         labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
-        colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
+        colorFn: (_, __) => WOOD_COLOR,
+        fillColorFn: (_, __) => WOOD_COLOR,
       ),
       new charts.Series<CumulativeData, String>(
         id: AVG_STONE,
@@ -157,8 +162,8 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         // Set a label accessor to control the text of the bar label.
         labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
-        colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter.lighter,
+        colorFn: (_, __) => STONE_COLOR,
+        fillColorFn: (_, __) => STONE_COLOR,
       ),
       new charts.Series<CumulativeData, String>(
         id: AVG_IRON,
@@ -168,8 +173,8 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         // Set a label accessor to control the text of the bar label.
         labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
-        colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.darker,
+        colorFn: (_, __) => IRON_COLOR,
+        fillColorFn: (_, __) => IRON_COLOR,
       ),
       new charts.Series<CumulativeData, String>(
         id: AVG_DIAMOND,
@@ -179,8 +184,8 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
         // Set a label accessor to control the text of the bar label.
         labelAccessorFn: (CumulativeData cD, _) => '${cD.data.toString()} DKK',
         //Change fill color
-        colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-        fillColorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault.lighter,
+        colorFn: (_, __) => DIAMOND_COLOR,
+        fillColorFn: (_, __) => DIAMOND_COLOR,
       ),
 
     ];
@@ -190,10 +195,10 @@ class VerticalGroupBarLabelChart extends StatelessWidget {
     String title = "";
     String chartID = chartList[0].id;
     if (chartID.contains(FEES)) {
-      return "Comparative FEES per day";
+      return "Comparaison des FRAIS par jour";
     }
     else if ( chartID.contains(AVG)) {
-      return "Comparative AVERAGE per day";
+      return "Comparaison de MOYENNE par jour";
     }
     return title;
   }
