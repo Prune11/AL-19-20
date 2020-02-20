@@ -42,7 +42,7 @@ class _MySimulationState extends State<MySimulation> {
                       child: DateTimeFormField(
                         initialValue: DateTime.now(),
                         formatter: DateFormat("d-MM-yyyy"),
-                        label: "From",
+                        label: "De",
                         onlyDate: true,
                         validator: (DateTime dateTime) {
                           if (dateTime == null) {
@@ -61,7 +61,7 @@ class _MySimulationState extends State<MySimulation> {
                         initialValue: DateTime.now(),
                         onlyDate: true,
                         formatter: DateFormat("d-MM-yyyy"),
-                        label: "To",
+                        label: "À",
                         validator: (DateTime dateTime) {
                           if (dateTime == null) {
                             return "Date Time Required";
@@ -76,7 +76,7 @@ class _MySimulationState extends State<MySimulation> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: RaisedButton(
-                          child: Text("Go!"),
+                          child: Text("On y va!"),
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
@@ -95,7 +95,7 @@ class _MySimulationState extends State<MySimulation> {
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: Text("ATTENTION!!"),
-                                    content: Text("From must be before To"),
+                                    content: Text("De doit précéder à À"),
                                   );
                                 },
                               );
@@ -132,21 +132,20 @@ class _MySimulationState extends State<MySimulation> {
                     children: <Widget>[
                       Table(
                         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                        defaultColumnWidth: IntrinsicColumnWidth(),
-                        columnWidths: {0: FractionColumnWidth(.2)},
                         children: [
                           TableRow(
-                              decoration: BoxDecoration(
-                                color: Colors.teal.shade100,
-                              ),
-                              children: <Widget>[] ..add(Container()) ..addAll(contractRow),
+                            decoration: BoxDecoration(
+                              color: Colors.teal.shade100,
+                            ),
+                            children: <Widget>[] ..add(Container()) ..addAll(contractRow),
                           ),
                           TableRow(
                               children: [
-                                Column( children: <Widget>[
-                                  Text("Total", style: TextStyle(fontSize: 16.0)),
-                                  Text("fees", style: TextStyle(fontSize: 16.0))
-                                ]),
+                                Text("Moyenne totale", style: TextStyle(fontSize: 16.0),),
+                                /*Column( children: <Widget>[
+                                  Text("Frais", style: TextStyle(fontSize: 16.0)),
+                                  Text("totaux", style: TextStyle(fontSize: 16.0))
+                                ]),*/
                               ]..addAll(totalFeeRow)
                           ),
                           TableRow(
@@ -154,10 +153,11 @@ class _MySimulationState extends State<MySimulation> {
                                 color: Colors.teal.shade100,
                               ),
                               children: [
-                                Column( children: <Widget>[
-                                  Text("Total", style: TextStyle(fontSize: 16.0)),
-                                  Text("average", style: TextStyle(fontSize: 16.0))
-                                ]),
+                                Text("Frais totaux", style: TextStyle(fontSize: 16.0),),
+                                /*Column( children: <Widget>[
+                                  Text("Moyenne", style: TextStyle(fontSize: 16.0)),
+                                  Text("totale", style: TextStyle(fontSize: 16.0))
+                                ]),*/
                               ]..addAll(totalAverageRow)
                           ),
                         ],
