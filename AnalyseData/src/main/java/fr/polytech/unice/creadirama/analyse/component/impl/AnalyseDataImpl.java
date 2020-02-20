@@ -8,6 +8,8 @@ import fr.polytech.unice.creadirama.analyse.entity.contract.Contract;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
+import java.math.RoundingMode;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Component
@@ -16,13 +18,13 @@ public class AnalyseDataImpl implements AnalyseData {
     @Override
     public double sumFeesPerDay(List<Transaction> transactions) {
         if (transactions.isEmpty()) return 0;
-        return transactions.stream().filter(Objects::nonNull).mapToDouble(Transaction::getFeeAmount).sum();
+        return new BigDecimal(transactions.stream().filter(Objects::nonNull).mapToDouble(Transaction::getFeeAmount).sum()).setScale(2,RoundingMode.HALF_UP).doubleValue();
     }
 
     @Override
     public double avgFeePerDay(List<Transaction> transactions) {
         if (transactions.isEmpty()) return 0;
-        return sumFeesPerDay(transactions) / transactions.size();
+        return new BigDecimal(sumFeesPerDay(transactions) / transactions.size()).setScale(2,RoundingMode.HALF_UP).doubleValue();
     }
 
     @Override
@@ -45,7 +47,7 @@ public class AnalyseDataImpl implements AnalyseData {
         feeBtw2Day.setSumFeeBtwDay(sumBtw2Date);
         double totalSum = 0.0;
         for (List<Transaction> transactions : transactionPerDay.values())
-            totalSum += transactions.stream().mapToDouble(Transaction::getFeeAmount).sum();
+            totalSum += new BigDecimal(transactions.stream().mapToDouble(Transaction::getFeeAmount).sum()).setScale(2,RoundingMode.HALF_UP).doubleValue();
         feeBtw2Day.setTotalSum(totalSum);
         return feeBtw2Day;
     }
@@ -57,7 +59,7 @@ public class AnalyseDataImpl implements AnalyseData {
             avgBtw2Date.put(dateTime, avgFeePerDay(transactionPerDay.get(dateTime)));
         feeBtw2Day.setAvgFeeBtw(avgBtw2Date);
         if(feeBtw2Day.getTotalNbTransaction() != 0) {
-            double totalAvg = feeBtw2Day.getTotalSum() / feeBtw2Day.getTotalNbTransaction();
+            double totalAvg = new BigDecimal(feeBtw2Day.getTotalSum() / feeBtw2Day.getTotalNbTransaction()).setScale(2,RoundingMode.HALF_UP).doubleValue();
             feeBtw2Day.setTotalAvg(totalAvg);
         } else {
             feeBtw2Day.setTotalAvg(0);
@@ -107,8 +109,8 @@ public class AnalyseDataImpl implements AnalyseData {
 
     @Override
     public FeeResponseDTO sumFeePerDate(List<Transaction> transactions, FeeRequestDTO request) {
-        double sum = sumFeesPerDay(transactions);
-        double avg = avgFeePerDay(transactions);
+        double sum = new BigDecimal(sumFeesPerDay(transactions)).setScale(2,RoundingMode.HALF_UP).doubleValue();
+        double avg = new BigDecimal(avgFeePerDay(transactions)).setScale(2,RoundingMode.HALF_UP).doubleValue();
         return new FeeResponseDTO(request.getDateTime(), request.getAccountId(), sum, avg, transactions.size());
     }
 

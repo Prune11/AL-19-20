@@ -41,7 +41,7 @@ public class Transaction {
         this.fromId = accountFrom;
         this.toId = accountTo;
         this.amount = new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        this.feeAmount = feeAmount;
+        this.feeAmount = new BigDecimal(feeAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
         this.transactionType = transactionType;
         this.timeStamp = DateTime.now().toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
     }
@@ -59,8 +59,8 @@ public class Transaction {
     public Transaction(int accountFrom, int accountTo, double amount, double feeAmount, TransactionType transactionType, DateTime date) {
         this.fromId = accountFrom;
         this.toId = accountTo;
-        this.amount = amount;
-        this.feeAmount = feeAmount;
+        this.amount = new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        this.feeAmount = new BigDecimal(feeAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
         this.transactionType = transactionType;
         this.timeStamp = date.toString(DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss"));
     }

@@ -6,6 +6,8 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,9 +50,9 @@ public class LimitFees extends ContractAspect {
         }
 
         if (dailyTransaction < transactionLimit) {
-            return currentTransaction.getAmount() * lowerPercentage / 100;
+            return new BigDecimal(currentTransaction.getAmount() * lowerPercentage / 100).setScale(2,RoundingMode.HALF_UP).doubleValue();
         } else {
-            return currentTransaction.getAmount() * upperPercentage / 100;
+            return new BigDecimal(currentTransaction.getAmount() * upperPercentage / 100).setScale(2, RoundingMode.HALF_UP).doubleValue();
         }
     }
 }

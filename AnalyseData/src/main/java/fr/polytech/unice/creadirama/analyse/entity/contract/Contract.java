@@ -2,6 +2,8 @@ package fr.polytech.unice.creadirama.analyse.entity.contract;
 
 import fr.polytech.unice.creadirama.analyse.entity.Transaction;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 public enum Contract {
@@ -16,18 +18,18 @@ public enum Contract {
 
     Contract(ContractAspect aspect, double pricePerMonth) {
         this.aspect = aspect;
-        this.pricePerMonth = pricePerMonth;
+        this.pricePerMonth = new BigDecimal(pricePerMonth).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     public double getFee(Transaction transaction, List<Transaction> transactionList) {
         if (this.aspect instanceof LimitFees) {
             return this.aspect.calculateFees(transaction, transactionList);
         }
-        return this.aspect.calculateFees(transaction.getAmount());
+        return new BigDecimal(this.aspect.calculateFees(transaction.getAmount())).setScale(2,RoundingMode.HALF_UP).doubleValue();
     }
 
     public double getPricePerMonth() {
-        return pricePerMonth;
+        return new BigDecimal(this.pricePerMonth).setScale(2,RoundingMode.HALF_UP).doubleValue();
     }
 
     @Override
