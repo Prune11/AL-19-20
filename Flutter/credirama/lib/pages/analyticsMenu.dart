@@ -5,11 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:credirama/pages/analytics.dart';
 
 class MyAnalyticsMenu extends StatefulWidget {
+
+  final int _accountId;
+
+  MyAnalyticsMenu(this._accountId);
+
   @override
-  _MyAnalyticsMenuState createState() => _MyAnalyticsMenuState();
+  _MyAnalyticsMenuState createState() => _MyAnalyticsMenuState(_accountId);
 }
 
 class _MyAnalyticsMenuState extends State<MyAnalyticsMenu> {
+
+  int _accountId;
+
+  _MyAnalyticsMenuState(this._accountId);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +31,7 @@ class _MyAnalyticsMenuState extends State<MyAnalyticsMenu> {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyAnalytics()));
+                    MaterialPageRoute(builder: (context) => MyAnalytics(_accountId)));
               },
               textColor: Colors.white,
               child: Container(
@@ -45,7 +54,7 @@ class _MyAnalyticsMenuState extends State<MyAnalyticsMenu> {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MySimulation()));
+                    MaterialPageRoute(builder: (context) => MySimulation(_accountId)));
               },
               textColor: Colors.white,
               child: Container(

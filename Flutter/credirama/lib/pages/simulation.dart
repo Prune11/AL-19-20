@@ -13,11 +13,21 @@ import 'package:intl/intl.dart';
 import 'package:credirama/request/feeBtw2DatesRequest.dart';
 
 class MySimulation extends StatefulWidget {
+
+  final int _accountId;
+
+  MySimulation(this._accountId);
+
   @override
-  _MySimulationState createState() => _MySimulationState();
+  _MySimulationState createState() => _MySimulationState(_accountId);
 }
 
 class _MySimulationState extends State<MySimulation> {
+
+  final int _accountId;
+
+  _MySimulationState(this._accountId);
+
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DateTime _dateFrom;
@@ -82,7 +92,7 @@ class _MySimulationState extends State<MySimulation> {
                               _formKey.currentState.save();
                               if (_dateFrom.isBefore(_dateTo)) {
                                 this.setState((){
-                                  FeeBtwTwoDatesRequest req = FeeBtwTwoDatesRequest(_dateFrom,_dateTo, 1);
+                                  FeeBtwTwoDatesRequest req = FeeBtwTwoDatesRequest(_dateFrom,_dateTo, _accountId);
                                   RestService restService = new RestService();
                                   simulations = restService.getFeesWithOtherContracts(req);
                                 });

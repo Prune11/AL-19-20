@@ -77,7 +77,7 @@ class _AnalyticAccountSelectionState extends State<AnalyticAccountSelection> {
   displayAccountList(BuildContext context, List<AccountObject> accounts) {
     int i = 1;
     var accountWidget = accounts.map(
-          (account) => AccountWidget().account(account,i++ , MyAnalyticsMenu(), context )
+          (account) => AccountWidget().account(account,i++ , MyAnalyticsMenu(account.id), context )
     );
     return Container(
       child: Column(
