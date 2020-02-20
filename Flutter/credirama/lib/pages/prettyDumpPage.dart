@@ -28,7 +28,7 @@ class _PrettyDumpPageState extends State<PrettyDumpPage> {
     return Scaffold(
       appBar: MyAppBar(),
       body: Center(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             FutureBuilder<String>(
               future: prettyDump,

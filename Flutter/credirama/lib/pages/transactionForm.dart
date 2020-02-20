@@ -97,9 +97,10 @@ class _TransactionForm extends State<TransactionForm> {
                   print(transactionRequest.toString());
                   RestService restService = new RestService();
                   restService.postTransaction(transactionRequest);
-                  Navigator.push(context,
+                  /*Navigator.push(context,
                       MaterialPageRoute(builder: (context) => HomePage())
-                  );
+                  );*/
+                  _amountController.clear();
                 },
                 textColor: Colors.white,
                 child: Container(
