@@ -38,9 +38,6 @@ class _MyAnalyticsState extends State<MyAnalytics> {
   TextStyle formatTitleStats = TextStyle(fontSize: 18.0);
   TextStyle formatValueStats = TextStyle(fontSize: 16.0);
 
-  TransactionObject tMin = new TransactionObject(toId:"Default Transaction", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
-  TransactionObject tMax = new TransactionObject(toId:"Default Transaction", amount:r"+ $ 4,946.00", timeStamp:"28-04-16", transactionType:"credit");
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,11 +55,11 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                       child: DateTimeFormField(
                         initialValue: DateTime.now(),
                         formatter: DateFormat("d-MM-yyyy"),
-                        label: "From",
+                        label: "Date début",
                         onlyDate: true,
                         validator: (DateTime dateTime) {
                           if (dateTime == null) {
-                            return "Date Time Required";
+                            return "Date requise";
                           }
                           return null;
                         },
@@ -77,10 +74,10 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                         initialValue: DateTime.now(),
                         onlyDate: true,
                         formatter: DateFormat("d-MM-yyyy"),
-                        label: "To",
+                        label: "Date fin",
                         validator: (DateTime dateTime) {
                           if (dateTime == null) {
-                            return "Date Time Required";
+                            return "Date Requise";
                           }
                           return null;
                         },
@@ -92,7 +89,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: RaisedButton(
-                          child: Text("Go!"),
+                          child: Text("Calcul"),
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
@@ -111,7 +108,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: Text("ATTENTION!!"),
-                                    content: Text("From must be before To"),
+                                    content: Text("Dates saisies invalides"),
                                   );
                                 },
                               );
@@ -135,7 +132,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Text(
-                              "Total number of transactions: ",
+                              "Nombre totale de transactions: ",
                               textAlign: TextAlign.left,
                               style: formatTitleStats,
                             ),
@@ -154,7 +151,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                             Expanded(
                               child: Row(
                                 children: <Widget>[
-                                  Text ("Total fees: ",
+                                  Text ("Total frais: ",
                                     style: formatValueStats,
                                   ),
                                   Text(
@@ -168,7 +165,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                               child: Row (
                                 children: <Widget>[
                                   Text(
-                                    "Total average: ",
+                                    "Moyenne: ",
                                     textAlign: TextAlign.left,
                                     style: formatValueStats,
                                   ),
@@ -190,20 +187,20 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Minimum transaction ",
+                                "Plus petite transaction ",
                                 textAlign: TextAlign.left,
                                 style: formatTitleStats,
                               ),
                             ),
-                            TransactionWidget().transaction(snapshot.data.globalMinTransaction),
+                            TransactionWidget().transaction(snapshot.data.globalMinTransaction, _accountId),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Maximum transaction ",
+                                "Plus grosse transaction ",
                                 style: formatTitleStats,
                               ),
                             ),
-                            TransactionWidget().transaction(snapshot.data.globalMaxTransaction),
+                            TransactionWidget().transaction(snapshot.data.globalMaxTransaction, _accountId),
                           ],
                         ),
                       ),
@@ -228,7 +225,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                     Divider(),
                   ]);
                 }
-                return Center(child: Text("Please introduce two dates"));
+                return Center(child: Text("Veuillez selectionner deux dates"));
               },
             )
           ],

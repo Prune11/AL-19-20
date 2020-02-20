@@ -61,7 +61,7 @@ class _AccountMenuState extends State<AccountMenu> {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountTransactionList("All", _accountName, _account.balance)));
+                    MaterialPageRoute(builder: (context) => AccountTransactionList("All", _accountName, _account)));
               },
               textColor: Colors.white,
               child: Container(
@@ -84,7 +84,7 @@ class _AccountMenuState extends State<AccountMenu> {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountTransactionList("IN", _accountName, _account.balance)));
+                    MaterialPageRoute(builder: (context) => AccountTransactionList("IN", _accountName, _account)));
               },
               textColor: Colors.white,
               child: Container(
@@ -107,7 +107,7 @@ class _AccountMenuState extends State<AccountMenu> {
             FlatButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountTransactionList("OUT", _accountName, _account.balance)));
+                    MaterialPageRoute(builder: (context) => AccountTransactionList("OUT", _accountName, _account)));
               },
               textColor: Colors.white,
               child: Container(

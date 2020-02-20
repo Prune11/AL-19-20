@@ -86,7 +86,7 @@ class _MySimulationState extends State<MySimulation> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: RaisedButton(
-                          child: Text("On y va!"),
+                          child: Text("Lancer"),
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
@@ -156,7 +156,7 @@ class _MySimulationState extends State<MySimulation> {
                                   Text("Frais", style: TextStyle(fontSize: 16.0)),
                                   Text("totaux", style: TextStyle(fontSize: 16.0))
                                 ]),*/
-                              ]..addAll(totalFeeRow)
+                              ]..addAll(totalAverageRow)
                           ),
                           TableRow(
                               decoration: BoxDecoration(
@@ -168,7 +168,7 @@ class _MySimulationState extends State<MySimulation> {
                                   Text("Moyenne", style: TextStyle(fontSize: 16.0)),
                                   Text("totale", style: TextStyle(fontSize: 16.0))
                                 ]),*/
-                              ]..addAll(totalAverageRow)
+                              ]..addAll(totalFeeRow)
                           ),
                         ],
                       ),

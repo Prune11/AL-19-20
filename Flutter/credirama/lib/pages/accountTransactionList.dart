@@ -1,4 +1,5 @@
 import 'package:credirama/common/MyAppBar.dart';
+import 'package:credirama/model/accountObject.dart';
 import 'package:credirama/model/transactionObject.dart';
 import 'package:credirama/services/restService.dart';
 import 'package:credirama/widget/transaction.dart';
@@ -12,12 +13,12 @@ class AccountTransactionList extends StatefulWidget {
 
   final String _filter;
   final String _accountName;
-  final double _balance;
+  final AccountObject _account;
 
-  AccountTransactionList(this._filter, this._accountName, this._balance);
+  AccountTransactionList(this._filter, this._accountName, this._account);
 
   @override
-  _AccountTransactionListState createState() => _AccountTransactionListState(_filter, _accountName, _balance);
+  _AccountTransactionListState createState() => _AccountTransactionListState(_filter, _accountName, _account);
 
 }
 
@@ -25,18 +26,18 @@ class _AccountTransactionListState extends State<AccountTransactionList> {
   Future<List<TransactionObject>> transactions;
   String _filter;
   String _accountName;
-  double _balance;
+  AccountObject _account;
 
-  _AccountTransactionListState(this._filter, this._accountName, this._balance);
+  _AccountTransactionListState(this._filter, this._accountName, this._account);
 
   @override
   void initState() {
     super.initState();
     RestService restService = RestService();
     if(_filter == "IN") {
-      transactions = restService.getAllTransactionsToUser(1);
+      transactions = restService.getAllTransactionsToUser(_account.id);
     } else if (_filter == "OUT") {
-      transactions = restService.getAllTransactionsFromUser(1);
+      transactions = restService.getAllTransactionsFromUser(_account.id);
     } else {
       transactions = restService.getAllTransactions();
     }
@@ -67,7 +68,7 @@ class _AccountTransactionListState extends State<AccountTransactionList> {
                           Center(
                             child: Padding(
                               padding: EdgeInsets.all(5.0),
-                              child: Text(r"DKK " + _balance.toString(),
+                              child: Text(r"DKK " + _account.balance.toString(),
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 24.0)),
                             ),
@@ -81,7 +82,7 @@ class _AccountTransactionListState extends State<AccountTransactionList> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     var transactionsWidget = snapshot.data.map(
-                          (transaction) => TransactionWidget().transaction(transaction),
+                          (transaction) => TransactionWidget().transaction(transaction, _account.id),
                     );
                     return Container(
                       child: Column(

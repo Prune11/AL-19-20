@@ -75,7 +75,7 @@ class _MyProfileState extends State<MyProfile> {
   displayAccountList(BuildContext context, List<AccountObject> accounts) {
     int i = 1;
     var accountWidget = accounts.map(
-          (account) => AccountWidget().account(account,i++ , AccountMenu(account, "Account " + i.toString()), context)
+          (account) => AccountWidget().account(account,i , AccountMenu(account, "Account " + (i++).toString()), context)
     );
     return Container(
       child: Column(

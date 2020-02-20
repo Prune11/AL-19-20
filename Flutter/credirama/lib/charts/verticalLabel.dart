@@ -127,9 +127,9 @@ class VerticalBarLabelChart extends StatelessWidget {
     String chartID = chartList[0].id;
     switch(chartID) {
       case FEES:
-        return "Des frais par jous";
+        return "Somme des frais par jours";
       case AVG:
-        return "La moyenne de frais par jour";
+        return "La moyenne des frais par jour";
       case NB_TRANSACTIONS:
         return "Nombre de transactions par jour";
     }
