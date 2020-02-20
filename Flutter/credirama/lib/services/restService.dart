@@ -190,6 +190,8 @@ class RestService {
       return SimulationObject(dailyResult: simulationPerDay,
           totalSum: decoded["totalSum"],
           totalAvg: decoded["totalAvg"],
+          globalMinTransaction: TransactionObject.fromJson(decoded["globalMinTransaction"]),
+          globalMaxTransaction: TransactionObject.fromJson(decoded["globalMaxTransaction"]),
           totalNbTransaction: decoded["totalNbTransaction"]);
     } else {
       throw Exception('Failed to load Response');

@@ -195,7 +195,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                                 style: formatTitleStats,
                               ),
                             ),
-                            TransactionWidget().transaction(tMin),
+                            TransactionWidget().transaction(snapshot.data.globalMinTransaction),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -203,7 +203,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                                 style: formatTitleStats,
                               ),
                             ),
-                            TransactionWidget().transaction(tMax),
+                            TransactionWidget().transaction(snapshot.data.globalMaxTransaction),
                           ],
                         ),
                       ),
