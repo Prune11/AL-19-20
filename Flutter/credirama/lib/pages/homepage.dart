@@ -5,6 +5,7 @@ import 'package:credirama/main.dart';
 import 'package:credirama/pages/analyticsMenu.dart';
 import 'package:credirama/pages/accountTransactionList.dart';
 import 'package:credirama/pages/parameters.dart';
+import 'package:credirama/pages/prettyDumpPage.dart';
 import 'package:credirama/pages/profileDetail.dart';
 import 'package:credirama/pages/transactionForm.dart';
 import 'package:credirama/request/feeBtw2DatesRequest.dart';
@@ -96,20 +97,8 @@ class HomePage extends StatelessWidget {
 
             FlatButton(
               onPressed: () {
-                RestService restService = new RestService();
-                DateTime dateFrom = DateTime(2020, 2, 14, 0, 0);
-                DateTime now = DateTime.now();
-                DateTime today = DateTime(now.year, now.month, now.day, 0, 0);
-                FeeRequest request = FeeRequest(now, 1);
-                FeeBtwTwoDatesRequest request1 = FeeBtwTwoDatesRequest(dateFrom, now, 1);
-                FeeBtwTwoDatesRequest request2 = FeeBtwTwoDatesRequest(today, now, 1);
-                /*restService.getFeesWithOtherContracts(request2).then((value) => print("WOOD: "+ value["WOOD"].toString()
-                                                                              + "\nSTONE: "+ value["STONE"].toString()
-                                                                              + "\nIRON: "+ value["IRON"].toString()
-                                                                              + "\nDIAMOND: "+ value["DIAMOND"].toString()));*/
-                //restService.getFeeBtw2Dates(request2); //TODO Cette requete ne marche pas merci de le fix Hugo =)
-                //restService.getFee(request).then((value) => print("Fee : " + value.toString()));
-                //restService.updateContract(1, "IRON").then((value) => print(value));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PrettyDumpPage()));
               },
               textColor: Colors.white,
               child: Container(

@@ -217,11 +217,12 @@ class RestService {
     }
   }
 
-  void getPrettyDump() async {
+  Future<String> getPrettyDump() async {
     print("requete envoyée");
     var url = new Uri.http(_ipAddress + _prettyDump, '/prettyDump');
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
+    return response.body.toString();
   }
 }
