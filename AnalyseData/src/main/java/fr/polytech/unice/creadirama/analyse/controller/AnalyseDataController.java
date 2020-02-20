@@ -57,10 +57,17 @@ public class AnalyseDataController {
     }
 
     @PostMapping(value = "/simulation", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public Map<String, SimulationDTO> feesWithOtherContracts(/*@Valid @RequestBody*/ FeeBtw2DateRequestDTO request) {
+    public SimulationResponseDTO feesWithOtherContracts(/*@Valid @RequestBody*/ FeeBtw2DateRequestDTO request) {
         Map<String, List<Transaction>> response = transactionService.getTransactionBtw2Day(request.getDateTimeFrom(), request.getDateTimeTo(), request.getAccountId());
         Map<DateTime, List<Transaction>> transactions = new TransactionsBtw2DatesResponse(response).toDateTime();
-        return analyseData.simulationWithAnotherContract(transactions);
+        return new SimulationResponseDTO(analyseData.simulationWithAnotherContract(transactions));
+    }
+
+    @PostMapping("/simulation/json")
+    public SimulationResponseDTO feesWithOtherContractsJson(@RequestBody FeeBtw2DateRequestDTO request) {
+        Map<String, List<Transaction>> response = transactionService.getTransactionBtw2Day(request.getDateTimeFrom(), request.getDateTimeTo(), request.getAccountId());
+        Map<DateTime, List<Transaction>> transactions = new TransactionsBtw2DatesResponse(response).toDateTime();
+        return new SimulationResponseDTO(analyseData.simulationWithAnotherContract(transactions));
     }
 
     @GetMapping("/test")
