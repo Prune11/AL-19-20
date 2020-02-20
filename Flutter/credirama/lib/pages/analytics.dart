@@ -190,7 +190,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Minimum transaction ",
+                                "Transaction minimum ",
                                 textAlign: TextAlign.left,
                                 style: formatTitleStats,
                               ),
@@ -199,7 +199,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Maximum transaction ",
+                                "Transaction maximale ",
                                 style: formatTitleStats,
                               ),
                             ),
@@ -228,7 +228,7 @@ class _MyAnalyticsState extends State<MyAnalytics> {
                     Divider(),
                   ]);
                 }
-                return Center(child: Text("Please introduce two dates"));
+                return Center(child: Text("S'il vous plaît, sélectionnez deux dates"));
               },
             )
           ],
