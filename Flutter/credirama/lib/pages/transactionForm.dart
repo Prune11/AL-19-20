@@ -33,7 +33,7 @@ class _TransactionForm extends State<TransactionForm> {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  Text("Ici on prend de la thune", style: TextStyle(fontSize: 20)),
+                  Text("Compte à débiter", style: TextStyle(fontSize: 20)),
                   Container(
                     child:
                       TextField(
@@ -47,7 +47,7 @@ class _TransactionForm extends State<TransactionForm> {
                           });
                         },
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Id du compte créditeur',
+                          hintText: 'Id du compte à débiter',
                         ),
                       )
                   )
@@ -55,7 +55,7 @@ class _TransactionForm extends State<TransactionForm> {
               ),
               Column(
                 children: <Widget>[
-                  Text("Et on la met là", style: TextStyle(fontSize: 20)),
+                  Text("Compte crédité", style: TextStyle(fontSize: 20)),
                   TextField(
                     textAlign: TextAlign.center,
                     textCapitalization: TextCapitalization.words,
@@ -67,7 +67,7 @@ class _TransactionForm extends State<TransactionForm> {
                       });
                     },
                     decoration: InputDecoration.collapsed(
-                      hintText: 'Id du compte débiteur',
+                      hintText: 'Id du compte crédité',
                     ),
                   ),
                 ]
