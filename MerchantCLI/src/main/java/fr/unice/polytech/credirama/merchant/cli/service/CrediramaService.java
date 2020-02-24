@@ -1,9 +1,12 @@
 package fr.unice.polytech.credirama.merchant.cli.service;
 
-import fr.unice.polytech.credirama.merchant.cli.entity.Contract;
 import fr.unice.polytech.credirama.merchant.cli.entity.Transaction;
 import fr.unice.polytech.credirama.merchant.cli.entity.TransactionType;
 import fr.unice.polytech.credirama.merchant.cli.entity.dto.TransactionRequest;
+import fr.unice.polytech.credirama.merchant.cli.entity.dto.analyse.FeeBtw2DateRequestDTO;
+import fr.unice.polytech.credirama.merchant.cli.entity.dto.analyse.SimulationDTO;
+import fr.unice.polytech.credirama.merchant.cli.entity.dto.analyse.SimulationResponseDTO;
+import fr.unice.polytech.credirama.merchant.cli.entity.dto.analyse.contract.Contract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,6 +19,7 @@ public class CrediramaService {
     private static final String MEA_URL = "http://localhost:8081";
     private static final String TRANSACTION_URL = "http://localhost:8084";
     private static final String PRETTY_DUMP_URL = "http://localhost:8085";
+    private static final String ANALYSE_URL = "http://localhost:8088";
 
     @Autowired
     private RestTemplate restTemplate;
@@ -43,6 +47,14 @@ public class CrediramaService {
 
     public Double getTotalFees(int accountId) {
         return this.restTemplate.getForObject(TRANSACTION_URL + "/access/fees/" + accountId, Double.class);
+    }
+
+    public SimulationDTO getFeeBtw2Date(FeeBtw2DateRequestDTO requestDTO) {
+        return this.restTemplate.postForObject(ANALYSE_URL + "/analyse/fees/btw/day/json", requestDTO, SimulationDTO.class);
+    }
+
+    public SimulationResponseDTO getSimulation(FeeBtw2DateRequestDTO requestDTO) {
+        return this.restTemplate.postForObject(ANALYSE_URL + "/analyse/simulation/json", requestDTO, SimulationResponseDTO.class);
     }
 
     /************ PRETTY DUMP *************/

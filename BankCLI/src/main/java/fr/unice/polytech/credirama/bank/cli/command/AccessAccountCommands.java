@@ -1,8 +1,8 @@
 package fr.unice.polytech.credirama.bank.cli.command;
 
-import fr.unice.polytech.credirama.bank.cli.entities.Contract;
 import fr.unice.polytech.credirama.bank.cli.entities.Transaction;
 import fr.unice.polytech.credirama.bank.cli.entities.TransactionType;
+import fr.unice.polytech.credirama.bank.cli.entities.dto.analyse.contract.Contract;
 import fr.unice.polytech.credirama.bank.cli.service.CrediramaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -32,7 +32,7 @@ public class AccessAccountCommands {
     @ShellMethod("Show the contract for an account")
     public String showContract(@ShellOption(value = {"-a", "--accountId"}, help = "The account Id") int accountKey) {
         Contract contract = crediramaService.getContract(accountKey);
-        return "The account " + accountKey + " has the following contract : " + contract.name() + ", " + contract.getFee() + "% of fees";
+        return "The account " + accountKey + " has the following contract : " + contract.name();
     }
 
     @ShellMethod(value = "Make a transaction from an account ot another account with specific amount of money", key = "transaction")

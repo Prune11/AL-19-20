@@ -56,6 +56,11 @@ public class AnalyseDataController {
                 feeBtw2Day.getTotalNbTransaction());*/
     }
 
+    @PostMapping("/fees/btw/day/json")
+    public SimulationDTO sumFeeBtw2DateJson(@RequestBody FeeBtw2DateRequestDTO requestDTO) {
+        return this.sumFeeBtw2Date(requestDTO);
+    }
+
     @PostMapping(value = "/simulation", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public SimulationResponseDTO feesWithOtherContracts(/*@Valid @RequestBody*/ FeeBtw2DateRequestDTO request) {
         Map<String, List<Transaction>> response = transactionService.getTransactionBtw2Day(request.getDateTimeFrom(), request.getDateTimeTo(), request.getAccountId());

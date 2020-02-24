@@ -1,5 +1,6 @@
 package fr.unice.polytech.credirama.merchant.cli.entity;
 
+import fr.unice.polytech.credirama.merchant.cli.entity.dto.analyse.contract.Contract;
 import lombok.*;
 
 import java.util.List;

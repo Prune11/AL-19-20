@@ -13,7 +13,7 @@ Le dump est accessible depuis la CLI avec la commande `dump` avec l'option `-p` 
 
 ## Tests d'intégration 
 
-Pour lancer les tests d'intégration, il suffit de lancer mvn verify.
+Pour lancer les tests d'intégration, il suffit de lancer `mvn verify`.
 
 ## Commandes dans la CLI
 
@@ -47,22 +47,22 @@ dump -p
 ### Finale
 
 ```
-# Bank
-create-client Michel
-create-account 1 WOOD
-create-client Roger
-create-account 2 WOOD
-
-# Merchant
-transaction 1 2 100.50 TRANSFER
-transaction 1 2 10.50 TRANSFER
-transaction 1 2 10.50 TRANSFER
-transaction 1 2 10.50 TRANSFER
-transaction 1 2 10.50 TRANSFER
-transaction 1 2 10.50 TRANSFER
-transaction 1 2 10.50 TRANSFER
-fees 2
-simulation 2
+    # Bank
+    create-client Michel
+    create-account 1 WOOD
+    create-client Roger
+    create-account 2 WOOD
+    
+    # Merchant
+    transaction 1 2 100.50 TRANSFER
+    transaction 1 2 10.50 TRANSFER
+    transaction 1 2 10.50 TRANSFER
+    transaction 1 2 10.50 TRANSFER
+    transaction 1 2 10.50 TRANSFER
+    transaction 1 2 10.50 TRANSFER
+    transaction 1 2 10.50 TRANSFER
+    stats 2 "MM/dd/yyyy HH:mm:ss" "MM/dd/yyyy HH:mm:ss"
+    simulation 2 "MM/dd/yyyy HH:mm:ss" "MM/dd/yyyy HH:mm:ss"
 ```
 
 

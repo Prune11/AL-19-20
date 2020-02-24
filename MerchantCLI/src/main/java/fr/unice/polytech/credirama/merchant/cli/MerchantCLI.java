@@ -2,7 +2,6 @@ package fr.unice.polytech.credirama.merchant.cli;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.Collections;
 
@@ -10,11 +9,11 @@ import java.util.Collections;
 
 
 @SpringBootApplication
-public class App {
+public class MerchantCLI {
 
     public static void main(String[] args) {
 //        ConfigurableApplicationContext context = SpringApplication.run(App.class, args);
-        SpringApplication app = new SpringApplication(App.class);
+        SpringApplication app = new SpringApplication(MerchantCLI.class);
         app.setDefaultProperties(Collections
                 .singletonMap("server.port", "8083"));
         app.run(args);

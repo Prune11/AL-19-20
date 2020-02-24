@@ -2,7 +2,7 @@ package fr.unice.polytech.credirama.bank.cli.command;
 
 import fr.unice.polytech.credirama.bank.cli.entities.Account;
 import fr.unice.polytech.credirama.bank.cli.entities.Client;
-import fr.unice.polytech.credirama.bank.cli.entities.Contract;
+import fr.unice.polytech.credirama.bank.cli.entities.dto.analyse.contract.Contract;
 import fr.unice.polytech.credirama.bank.cli.service.CrediramaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -20,7 +20,7 @@ public class AdministrationCommands {
                                 @ShellOption(value = {"-c", "--contract"}, help = "The original contract for this account, possible values : WOOD, STONE, IRON, DIAMOND") String contract) {
         Contract c = Contract.valueOf(contract);
         Account account = crediramaService.createAccount(clientId, c);
-        return "Account successfully created with id " + account.getId() + " for client " + account.getOwner().getName() + " with contract " + account.getContract().name() + ", " + account.getContract().getFee() + "% of fees";
+        return "Account successfully created with id " + account.getId() + " for client " + account.getOwner().getName() + " with contract " + account.getContract().name();
     }
 
     @ShellMethod(value = "Create a client", key = "create-client")
@@ -45,7 +45,7 @@ public class AdministrationCommands {
         Contract before = crediramaService.getContract(accountId);
         Contract c = Contract.valueOf(contract);
         Account a = crediramaService.updateContract(accountId, c);
-        return "The account " + accountId + " of " + a.getOwner().getName() + " has change contract from " + before.name() + " with " + before.getFee() + "% of fees, to " + c.name() + " with " + c.getFee() + "% of fees";
+        return "The account " + accountId + " of " + a.getOwner().getName() + " has change contract from " + before.name() + ", to " + c.name();
     }
 
     @ShellMethod("Get client by Id")
