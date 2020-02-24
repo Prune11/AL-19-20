@@ -106,7 +106,7 @@ public class AnalyseDataTest {
         //WOOD
         assertEquals(2.5, wood.getTotalAvg(), 0);
         //STONE
-        assertEquals(3.2142, stone.getTotalAvg(), 0.0001);
+        assertEquals(3.21, stone.getTotalAvg(), 0);
         //IRON
         assertEquals(2.5, iron.getTotalAvg(), 0);
         //DIAMOND
