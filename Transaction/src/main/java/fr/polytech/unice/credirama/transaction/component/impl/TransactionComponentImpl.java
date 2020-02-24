@@ -53,9 +53,7 @@ public class TransactionComponentImpl implements TransactionComponent {
         } else {
             Transaction transaction = new Transaction(idFrom, idTo, amount, transactionType);
             transactionWithID = transactionRepo.save(transaction);
-            double feeAmount = new BigDecimal(
-                    enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), idFrom, idTo, amount)
-            ).setScale(2, RoundingMode.HALF_UP).doubleValue();
+            double feeAmount = BigDecimal.valueOf(enterpriseAccountsService.addTransactionToAccount(transactionWithID.getId(), idFrom, idTo, amount)).setScale(2, RoundingMode.HALF_UP).doubleValue();
             transactionWithID.setFeeAmount(feeAmount);
             transactionRepo.save(transactionWithID);
         }

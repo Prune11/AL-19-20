@@ -26,6 +26,7 @@ public class EnterpriseAccountsService {
         System.out.println(meaURL);
         if (meaURL == null || meaURL.equals("")) meaURL = MEA_URL;
         MEAAddTransactionRequest request = new MEAAddTransactionRequest(idTransaction, accountFrom, accountTo, new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP).doubleValue());
-        return new BigDecimal(this.restTemplate.postForObject(meaURL + "/transaction/add", request, Double.class)).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        Double d = this.restTemplate.postForObject(meaURL + "/transaction/add", request, Double.class);
+        return BigDecimal.valueOf(Double.parseDouble(d.toString())).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 }

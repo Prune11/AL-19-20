@@ -18,7 +18,7 @@ public class TestStepDefinition extends AbstractStep {
 
     private Transaction transaction;
 
-    private ClientAndServer clientServer;
+    private static ClientAndServer clientServer;
     private MockServerClient mockServer;
     private HttpRequest request;
 
@@ -31,17 +31,17 @@ public class TestStepDefinition extends AbstractStep {
                 amount,
                 TransactionType.valueOf(transactionTypeName)
         );
-        this.clientServer = startClientAndServer(8081);
+        clientServer = startClientAndServer(8081);
         mockServer = new MockServerClient("127.0.0.1", 8081);
         request = new HttpRequest();
         request.withMethod("POST").withPath("/transaction/add");
-        mockServer.when(request).respond(response().withStatusCode(200));
+        mockServer.when(request).respond(response().withStatusCode(200).withBody("2.5").withHeader("Content-type", "application/json"));
         HttpRequest request2 = new HttpRequest();
         request2.withMethod("POST").withPath("/access/operations");
         Transaction t = new Transaction(clientID, merchantID, amount, 0, TransactionType.valueOf(transactionTypeName));
         mockServer.when(request2).respond(response().withStatusCode(200).withBody(String.valueOf(t)));
 
-        post("127.0.0.1/access/operations",
+        post("http://localhost:8084/access/operations",
                 new ObjectMapper().writeValueAsString(transactionRequest));
         this.transaction = new ObjectMapper().readValue(
                 getLastPostResponse().getContentAsString(),
