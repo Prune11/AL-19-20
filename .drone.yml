@@ -6,7 +6,12 @@ steps:
   - name: build
     image: maven:latest
     commands:
-      - mvn clean package verify
+      - mvn clean package
+
+#  - name: integration-tests
+#    image: docker:latest
+#    commands:
+#      - mvn clean package
 #  - name: build docker
 #    image: a voir
 #    commands:
