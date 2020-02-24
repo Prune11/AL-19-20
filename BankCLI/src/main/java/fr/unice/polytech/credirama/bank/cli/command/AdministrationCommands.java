@@ -59,8 +59,8 @@ public class AdministrationCommands {
     }
 
     @ShellMethod("Update the owner of the account")
-    public String updateOwner(@ShellOption(value = {"-a", "--accountId"}, help = "The account Id") int accountId, @ShellOption({"-c"}) Client client) {
-        return crediramaService.updateOwner(accountId, client).toString();
+    public String updateOwner(@ShellOption(value = {"-a", "--accountId"}, help = "The account Id") int accountId, @ShellOption(value = {"-c", "--clientId"}, help = "The new client Id") int clientId) {
+        return crediramaService.updateOwner(accountId, clientId).toString();
     }
 
     @ShellMethod("Delete an account")

@@ -58,7 +58,7 @@ public class CrediramaService {
     }
 
     public List getTransaction(int accountKey) {
-        return this.restTemplate.getForObject(CREDIRAMA_URL + "/access/operations/" + accountKey, List.class);
+        return this.restTemplate.getForObject(TRANSACTION_URL + "/access/operations/" + accountKey, List.class);
     }
 
     public Contract getContract(int accountKey) {
@@ -94,8 +94,8 @@ public class CrediramaService {
         return this.restTemplate.postForObject(CREDIRAMA_URL + "/accounts/update/" + accountId + "/contract", contract, Account.class);
     }
 
-    public Account updateOwner(int accountId, Client client) {
-        return this.restTemplate.postForObject(CREDIRAMA_URL + "/accounts/update/" + accountId + "/owner", client, Account.class);
+    public Account updateOwner(int accountId, int clientId) {
+        return this.restTemplate.postForObject(CREDIRAMA_URL + "/accounts/update/" + accountId + "/owner", clientId, Account.class);
     }
 
     /************ PRETTY DUMP *************/
