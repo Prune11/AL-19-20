@@ -25,10 +25,10 @@ public class PrettyDumpImpl implements PrettyDump {
     public String getPrettyDump() {
         String transactionURL = env.getProperty("TRANSACTION");
         System.out.println(transactionURL);
-//        if (transactionURL == null || transactionURL.equals("")) transactionURL = TRANSACTION_URL;
+        if (transactionURL == null || transactionURL.equals("")) transactionURL = TRANSACTION_URL;
         String meaURL = env.getProperty("MEA");
         System.out.println(meaURL);
-//        if (meaURL == null || meaURL.equals("")) meaURL = MEA_URL;
+        if (meaURL == null || meaURL.equals("")) meaURL = MEA_URL;
 
         String globalresponse = "";
         String responseTransaction = "";
