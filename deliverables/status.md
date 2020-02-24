@@ -1,3 +1,11 @@
+# Week 09:
+- Finalizing last changes
+- Add tests
+- Update Readme
+- Add final slides
+- Fix CLI 
+- Green flag
+
 # Week 08
 - INTEGRATION TEST
 - FLUTTER FULLY INTEGRATED
